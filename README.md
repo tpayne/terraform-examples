@@ -1,4 +1,4 @@
-# terraform-examples
+# Terraform-examples
 Some simple educational terraform work. This file is WIP, so will change as I build up examples.
 Note: These examples only work for Mac and need Docker installed
 
@@ -20,7 +20,11 @@ Then, run the following...
 	3) cd samples/docker
 	4) terraform plan && terraform apply -auto-approve
 
+The samples will return an error as the OS example will simply exit after creation.
+
 As Terraform is not a "proper" CM tool, like Ansible, resources have to be deleted before they are recreated - using these samples anyway. You can change/destroy the resources by modifying the files to add (+) or remove resources (-) using the +/- syntax, but this means changing the files all the time.
+
+You can also delete all the resources using `terraform destroy -auto-approve -force`
 
 Notes
 =====
