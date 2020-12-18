@@ -25,9 +25,7 @@ Then, run the following...
 
 The samples will return an error as the OS example will simply exit after creation.
 
-As Terraform is not a "proper" CM tool, like Ansible, resources have to be deleted before they are recreated - using these samples anyway. You can change/destroy the resources by modifying the files to add (+) or remove resources (-) using the +/- syntax, but this means changing the files all the time.
-
-You can also delete all the resources using `terraform destroy -auto-approve -force`
+You can delete all the resources using `terraform destroy -auto-approve -force`
 
 Running GCP Samples
 -------------------
@@ -42,7 +40,7 @@ Then, run the following...
 	1) cd project/terraform-examples
 	2) ./get-started.sh
 	3) cd samples/GCP
-	4) edit the `terraform.tfvars` file to replace the project and creds values with those specific for you
+	4) edit the "terraform.tfvars" file to replace the project and creds values with those specific for you
 	5) terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
@@ -51,3 +49,4 @@ Notes
 -----
 * Only run "terraform init" after you have created the TF files (.tf) as it needs to install the needed plugins
 * Use `terraform refresh` to reapply changes and fix drift
+* To put changes into the files and apply them incrementally use (+) to add/replace DSC and (-) to remove DSC
