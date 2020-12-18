@@ -7,10 +7,8 @@ brew upgrade hashicorp/tap/terraform
 terraform -install-autocomplete
 
 # Initialise project...
-cd /tmp
-rm -fr project > /dev/null 2>&1
-mkdir project
-cd project
+cd samples
+cd docker
 
 terraform init
 
@@ -20,4 +18,4 @@ terraform init
 #terraform plan
 
 # To apply deployments...
-#terraform apply
+#terraform apply or terraform apply -auto-approve
