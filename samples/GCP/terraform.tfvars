@@ -1,2 +1,3 @@
+# Replace these with your versions...
 project = "macro-mender-279016"
 creds = "saauth.json"
