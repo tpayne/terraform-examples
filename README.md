@@ -47,3 +47,4 @@ You can delete all the resources using `terraform destroy -auto-approve -force`
 Notes
 -----
 * Only run "terraform init" after you have created the TF files (.tf) as it needs to install the needed plugins
+* Use `terraform refresh` to reapply changes and fix drift
