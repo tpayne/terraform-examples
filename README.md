@@ -3,11 +3,11 @@ Some simple educational terraform work. This file is WIP, so will change as I bu
 Note: These examples only work for Mac and need Docker installed
 
 How to Install
-==============
+--------------
 Install Terraform using appropriate instructions for your OS [Getting started](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started)
 
 Running Docker Samples
-======================
+----------------------
 The first set of examples are for Docker and are based on the Terraform starting examples
 
   * Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project) 
@@ -27,5 +27,5 @@ As Terraform is not a "proper" CM tool, like Ansible, resources have to be delet
 You can also delete all the resources using `terraform destroy -auto-approve -force`
 
 Notes
-=====
+-----
 * Only run "terraform init" after you have created the TF files (.tf) as it needs to install the needed plugins
