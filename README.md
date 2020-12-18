@@ -50,3 +50,4 @@ Notes
 * Only run "terraform init" after you have created the TF files (.tf) as it needs to install the needed plugins
 * Use `terraform refresh` to reapply changes and fix drift
 * To put changes into the files and apply them incrementally use (+) to add/replace DSC and (-) to remove DSC
+* The Terraform tutorials are located [here](https://learn.hashicorp.com/collections/terraform/gcp-get-started)
