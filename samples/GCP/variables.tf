@@ -1,0 +1,14 @@
+# Declare variables that can be used. They do not need to be populated...
+
+variable "project" {}
+variable "creds" {}
+
+variable "region" {
+  type = string # Type - not needed, but showing it...
+  default = "us-central1"
+}
+
+variable "zone" {
+  default = "us-central1-c"
+}
+
