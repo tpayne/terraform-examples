@@ -26,12 +26,12 @@ resource "google_compute_instance" "gce_instance_1" {
   depends_on = [google_storage_bucket.sample_storage_bucket]
 
   name         = "instance-1"
-  machine_type = "f1-micro"
-  tags         = ["dev","project-12"]
+  machine_type = var.machine_types.dev
+  tags         = var.tags
 
   boot_disk {
     initialize_params {
-      image = "cos-cloud/cos-stable"
+      image = var.images.cos
     }
   }
 
@@ -45,12 +45,12 @@ resource "google_compute_instance" "gce_instance_1" {
 # Create a GCE instance using Debian...
 resource "google_compute_instance" "gce_instance_2" {
   name         = "instance-2"
-  machine_type = "f1-micro"
-  tags         = ["dev","project-12"]
+  machine_type = var.machine_types.dev
+  tags         = var.tags
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-9"
+      image = var.images.deb
     }
   }
 
@@ -69,12 +69,12 @@ resource "google_compute_address" "static_ipaddr" {
 # Create a GCE instance using the IP resource...
 resource "google_compute_instance" "gce_instance_3" {
   name         = "instance-3"
-  machine_type = "f1-micro"
-  tags         = ["dev","project-12"]
+  machine_type = var.machine_types.dev
+  tags         = var.tags
 
   boot_disk {
     initialize_params {
-      image = "debian-cloud/debian-9"
+      image = var.images.deb
     }
   }
 
