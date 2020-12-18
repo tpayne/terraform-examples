@@ -14,12 +14,12 @@ terraform {
 provider "google" {
 
   # Enter the credentials file here...
-  credentials = file("saauth.json")
+  credentials = file(var.creds)
 
   # Replace this project with the name of your project...
-  project = "macro-mender-279016"
-  region  = "us-central1"
-  zone    = "us-central1-c"
+  project = var.project
+  region  = var.region  
+  zone    = var.zone  
 }
 
 resource "google_compute_network" "vpc_network" {
