@@ -10,8 +10,8 @@ Running Docker Samples
 ======================
 The first set of examples are for Docker and are based on the Terraform starting examples
 
-  1. Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project) 
-  2. Clone the repo
+  * Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project) 
+  * Clone the repo
 
 Then, run the following...
 
