@@ -1,6 +1,9 @@
 # Terraform-examples
-Some simple educational terraform work. This file is WIP, so will change as I build up examples.
-Note: These examples only work for Mac and need Docker installed
+Some simple educational terraform work. Examples will be added as I do them.
+
+Note: These examples only work for Mac and need Docker installed. There are currently examples for...
+* Docker
+* GCP
 
 How to Install
 --------------
