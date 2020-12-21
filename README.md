@@ -59,8 +59,7 @@ Then, run the following...
 	1) cd project/terraform-examples
 	2) ./get-started.sh
 	3) cd samples/Azure
-	4) edit the "terraform.tfvars" file to replace the project and creds values with those specific for you
-	5) terraform init && terraform plan && terraform apply -auto-approve
+	4) terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
 
