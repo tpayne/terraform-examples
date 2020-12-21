@@ -9,6 +9,15 @@ terraform {
       version = ">= 2.26"
     }
   }
+
+  # This can be used to store state about the Terraform project in the Terraform cloud...
+  #backend "remote" {
+  #  organization = "<YourOrg>"
+  #  workspaces {
+  #    name = "Example-Workspace"
+  #  }
+  #}
+
 }
 
 provider "azurerm" {
@@ -67,13 +76,13 @@ resource "azurerm_network_security_group" "nsg" {
 }
 
 # Create network interface
-resource "azurerm_network_interface" "nic" {
+resource "azurerm_network_interface" "nic01" {
   name                      = "NIC001"
   location = var.location
   resource_group_name       = azurerm_resource_group.resourceGroup.name
 
   ip_configuration {
-    name                          = "myNICConfg"
+    name                          = "myNICConfg001"
     subnet_id                     = azurerm_subnet.subnet.id
     private_ip_address_allocation = "dynamic"
     public_ip_address_id          = azurerm_public_ip.publicip.id
@@ -81,15 +90,15 @@ resource "azurerm_network_interface" "nic" {
 }
 
 # Create a Linux virtual machine
-resource "azurerm_virtual_machine" "vm" {
+resource "azurerm_virtual_machine" "vm01" {
   name                  = "LinuxVm001"
   location = var.location
   resource_group_name   = azurerm_resource_group.resourceGroup.name
-  network_interface_ids = [azurerm_network_interface.nic.id]
+  network_interface_ids = [azurerm_network_interface.nic01.id]
   vm_size               = "Standard_DS1_v2"
 
   storage_os_disk {
-    name              = "myOsDisk"
+    name              = "myOsDisk001"
     caching           = "ReadWrite"
     create_option     = "FromImage"
     managed_disk_type = "Premium_LRS"
@@ -115,8 +124,8 @@ resource "azurerm_virtual_machine" "vm" {
 
 data "azurerm_public_ip" "ip" {
   name                = azurerm_public_ip.publicip.name
-  resource_group_name = azurerm_virtual_machine.vm.resource_group_name
-  depends_on          = [azurerm_virtual_machine.vm]
+  resource_group_name = azurerm_virtual_machine.vm01.resource_group_name
+  depends_on          = [azurerm_virtual_machine.vm01]
 }
 
 

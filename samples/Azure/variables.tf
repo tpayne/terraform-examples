@@ -24,3 +24,10 @@ variable "admin_password" {
   description = "Password must meet Azure complexity requirements"
   default = "ThisIsA.BigPassword-15243"
 }
+
+variable "sku" {
+  default = {
+    westus2 = "16.04-LTS"
+    eastus  = "18.04-LTS"
+  }
+}
