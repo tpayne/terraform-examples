@@ -28,14 +28,14 @@ provider "azurerm" {
 resource "azurerm_resource_group" "resourceGroup" {
   name     = "rg_001"
   location = var.location
-  tags = var.tags
+  tags     = var.tags
 }
 
 # Create a virtual network...
 resource "azurerm_virtual_network" "vnet" {
   name                = "vpn001"
   address_space       = ["10.0.0.0/16"]
-  location = var.location
+  location            = var.location
   resource_group_name = azurerm_resource_group.resourceGroup.name
 }
 
@@ -50,7 +50,7 @@ resource "azurerm_subnet" "subnet" {
 # Create public IP
 resource "azurerm_public_ip" "publicip" {
   name                = "PubIpAddr001"
-  location = var.location
+  location            = var.location
   resource_group_name = azurerm_resource_group.resourceGroup.name
   allocation_method   = "Static"
 }
@@ -59,7 +59,7 @@ resource "azurerm_public_ip" "publicip" {
 # Create Network Security Group and rule
 resource "azurerm_network_security_group" "nsg" {
   name                = "NSG001"
-  location = var.location
+  location            = var.location
   resource_group_name = azurerm_resource_group.resourceGroup.name
 
   security_rule {
@@ -78,7 +78,7 @@ resource "azurerm_network_security_group" "nsg" {
 # Create network interface
 resource "azurerm_network_interface" "nic01" {
   name                      = "NIC001"
-  location = var.location
+  location                  = var.location
   resource_group_name       = azurerm_resource_group.resourceGroup.name
 
   ip_configuration {
@@ -92,7 +92,7 @@ resource "azurerm_network_interface" "nic01" {
 # Create a Linux virtual machine
 resource "azurerm_virtual_machine" "vm01" {
   name                  = "LinuxVm001"
-  location = var.location
+  location              = var.location
   resource_group_name   = azurerm_resource_group.resourceGroup.name
   network_interface_ids = [azurerm_network_interface.nic01.id]
   vm_size               = "Standard_DS1_v2"
