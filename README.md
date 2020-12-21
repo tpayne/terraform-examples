@@ -48,7 +48,7 @@ You can delete all the resources using `terraform destroy -auto-approve -force`
 
 Running Azure Samples
 ---------------------
-The second set of examples are for Azure and are based on the Terraform starting examples. To use them you will have to have access to an Azure project in the cloud, then use `az login` to connect to it.
+The third set of examples are for Azure and are based on the Terraform starting examples. To use them you will have to have access to an Azure project in the cloud, then use `az login` to connect to it.
 
 
   * Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project) 
