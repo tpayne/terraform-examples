@@ -70,3 +70,4 @@ Notes
 * Use `terraform show` to show what has been deployed
 * To put changes into the files and apply them incrementally use (+) to add/replace DSC and (-) to remove DSC
 * The Terraform tutorials are located [here](https://learn.hashicorp.com/collections/terraform/gcp-get-started)
+* The Terraform tutorials on Terraform Cloud and state saving are [here](https://learn.hashicorp.com/tutorials/terraform/azure-remote?in=terraform/azure-get-started). Essentially, it is about how to save the state files to the cloud, rather than local dirs.
