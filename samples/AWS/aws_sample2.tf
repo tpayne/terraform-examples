@@ -90,7 +90,7 @@ data "template_file" "user_data" {
 }
 
 # Create a AWS instance and install packages and users on it...
-# ssh terraform@$(echo "aws_instance.web.public_ip" | terraform console) -i ../tf-cloud-init
+# ssh terraform@$(echo "aws_instance.web.public_ip" | terraform console) 
 resource "aws_instance" "web" {
   ami                         = data.aws_ami.ubuntu.id
   instance_type               = "t2.micro"
