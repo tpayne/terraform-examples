@@ -4,8 +4,8 @@ variable "location" {
   default = "westus2"
 }
 
-variable "tags" { 
-  type    = map
+variable "tags" {
+  type = map(any)
   default = {
     env  = "development"
     team = "dev"
@@ -14,15 +14,15 @@ variable "tags" {
 }
 
 variable "admin_username" {
-  type = string
+  type        = string
   description = "Administrator user name for virtual machine"
-  default = "azureadmin"
+  default     = "azureadmin"
 }
 
 variable "admin_password" {
-  type = string
+  type        = string
   description = "Password must meet Azure complexity requirements"
-  default = "ThisIsA.BigPassword-15243"
+  default     = "ThisIsA.BigPassword-15243"
 }
 
 variable "sku" {

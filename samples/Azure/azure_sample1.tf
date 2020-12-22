@@ -5,7 +5,7 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = ">= 2.26"
     }
   }
@@ -77,9 +77,9 @@ resource "azurerm_network_security_group" "nsg" {
 
 # Create network interface
 resource "azurerm_network_interface" "nic01" {
-  name                      = "NIC001"
-  location                  = var.location
-  resource_group_name       = azurerm_resource_group.resourceGroup.name
+  name                = "NIC001"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.resourceGroup.name
 
   ip_configuration {
     name                          = "myNICConfg001"
