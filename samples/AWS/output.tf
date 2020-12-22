@@ -8,3 +8,6 @@ output "InstanceID" {
   value = aws_instance.vm01.id
 }
 
+output "WebPublicIp" {
+  value = aws_instance.web.public_ip
+}
