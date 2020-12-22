@@ -5,7 +5,7 @@
 terraform {
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
       version = "3.5.0"
     }
   }
@@ -13,9 +13,9 @@ terraform {
 
 provider "google" {
   credentials = file(var.creds)
-  project = var.project
-  region  = var.region  
-  zone    = var.zone  
+  project     = var.project
+  region      = var.region
+  zone        = var.zone
 }
 
 # Create a VPC network...

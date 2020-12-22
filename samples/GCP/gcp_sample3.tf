@@ -9,7 +9,7 @@ resource "google_compute_instance" "gce_instance_5" {
 
   # Run a command on the machine and pipe the results locally...
   provisioner "local-exec" {
-    command = "echo ${google_compute_instance.gce_instance_5.name}:  ${google_compute_instance.gce_instance_5.network_interface[0].access_config[0].nat_ip} >> ip_address.txt"  
+    command = "echo ${google_compute_instance.gce_instance_5.name}:  ${google_compute_instance.gce_instance_5.network_interface[0].access_config[0].nat_ip} >> ip_address.txt"
   }
 
   boot_disk {

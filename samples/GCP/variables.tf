@@ -4,7 +4,7 @@ variable "project" {}
 variable "creds" {}
 
 variable "region" {
-  type = string # Type - not needed, but showing it...
+  type    = string # Type - not needed, but showing it...
   default = "us-central1"
 }
 
@@ -15,7 +15,7 @@ variable "zone" {
 variable "tags" { default = [] }
 
 variable "machine_types" {
-  type    = map
+  type = map(any)
   default = {
     dev  = "f1-micro"
     test = "n1-highcpu-32"
@@ -24,9 +24,9 @@ variable "machine_types" {
 }
 
 variable "images" {
-  type    = map
+  type = map(any)
   default = {
-    cos  = "cos-cloud/cos-stable"
-    deb  = "debian-cloud/debian-9"
+    cos = "cos-cloud/cos-stable"
+    deb = "debian-cloud/debian-9"
   }
 }
