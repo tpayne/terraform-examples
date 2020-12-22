@@ -8,8 +8,9 @@ resource "docker_image" "ubuntu" {
 }
 
 resource "docker_container" "ubuntu" {
-  image = docker_image.ubuntu.latest
-  name  = "sample_os"
+  image   = docker_image.ubuntu.latest
+  name    = "sample_os"
+  command = ["apt", "update"]
 }
 
 
