@@ -5,6 +5,7 @@ Note: These examples only work for Mac and need Docker installed. There are curr
 * Docker
 * GCP
 * Azure
+* AWS
 
 How to Install
 --------------
@@ -59,6 +60,23 @@ Then, run the following...
 	1) cd project/terraform-examples
 	2) ./get-started.sh
 	3) cd samples/Azure
+	4) terraform init && terraform plan && terraform apply -auto-approve
+
+You can delete all the resources using `terraform destroy -auto-approve -force`
+
+Running AWS Samples
+-------------------
+The last set of examples are for AWS and are based on the Terraform starting examples. To use them you will have to have access to an AWS project in the cloud, then use `aws configure` to connect to it. You will need to create a secure key using the IAM console under `Access keys (access key ID and secret access key)`, download the key and then input the values during the configure process.
+
+
+  * Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project) 
+  * Clone the repo
+
+Then, run the following...
+
+	1) cd project/terraform-examples
+	2) ./get-started.sh
+	3) cd samples/AWS
 	4) terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
