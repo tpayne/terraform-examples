@@ -1,0 +1,32 @@
+#cloud-config
+# Add groups to the system
+# Adds the ubuntu group with members 'root' and 'sys'
+# and the empty group webusers.
+groups:
+  - ubuntu: [root,sys]
+  - webusers
+
+# Add users to the system. Users are added after groups are added.
+users:
+  - default
+  - name: terraform
+    gecos: terraform
+    shell: /bin/bash
+    primary_group: webusers
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    ssh_import_id:
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ssh-rsa AAAAHHHHHH
+
+# Downloads the golang package ansible
+packages:
+  - golang-go
+  - nginx
+  - ansible
+
+# Updates the packages...
+runcmd:
+  - sudo apt update
+  - env
