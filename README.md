@@ -25,8 +25,6 @@ Then, run the following...
 	3) cd samples/docker
 	4) terraform init && terraform plan && terraform apply -auto-approve
 
-The samples will return an error as the OS example will simply exit after creation.
-
 You can delete all the resources using `terraform destroy -auto-approve -force`
 
 Running GCP Samples
