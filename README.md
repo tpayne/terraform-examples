@@ -1,5 +1,5 @@
 # Terraform-examples
-Some simple educational terraform work. Examples will be added as I do them.
+Some simple educational terraform work for people to use. Examples will be added as I get around to them.
 
 Note: These examples only work for Mac and need Docker installed. There are currently examples for...
 * Docker
