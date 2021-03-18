@@ -89,3 +89,4 @@ Notes
 * The Terraform tutorials on Terraform Cloud and state saving are [here](https://learn.hashicorp.com/tutorials/terraform/azure-remote?in=terraform/azure-get-started). Essentially, it is about how to save the state files to the cloud, rather than local dirs.
 * Use `terraform fmt` to change your .tf files to Terraform standard
 * Use `terraform validate` to validate your configuration definition is valid
+* https://docs.microsoft.com/en-us/azure/developer/terraform/
