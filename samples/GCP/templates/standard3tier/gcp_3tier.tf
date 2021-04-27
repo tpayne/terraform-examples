@@ -1,5 +1,6 @@
 # This sample has been adapted from the Terraform standard examples for getting started
 # https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started
+# Provider syntax: https://registry.terraform.io/providers/hashicorp/google/latest/docs
 
 # This section will declare the providers needed...
 # terraform init -upgrade
@@ -17,7 +18,7 @@ provider "google" {
   credentials = file(var.creds)
   project     = var.project
   region      = var.region
-  zone        = var.zone
+  zone        = var.zone1
 }
 
 resource "random_id" "random_suffix" {
@@ -34,17 +35,29 @@ resource "random_id" "random_suffix" {
 
 # Create a frontend VPC network...
 resource "google_compute_network" "frontend_vpc_network" {
-  name = "${var.project}-vpc-frontend-001"
+  name                    = "${var.project}-vpc-frontend-001"
   auto_create_subnetworks = false
 }
 
 # Subnet frontend layer
 resource "google_compute_subnetwork" "frontend_subnet" {
-  name          = "${var.project}-subnet-frontend-001"
-  region        = var.region
-  network       = google_compute_network.frontend_vpc_network.name
-  ip_cidr_range = "10.1.0.0/24"
+  name                     = "${var.project}-subnet-frontend-001"
+  region                   = var.region
+  network                  = google_compute_network.frontend_vpc_network.name
+  ip_cidr_range            = "10.1.0.0/24"
+  private_ip_google_access = true
 }
+
+# Subnet frontend layer
+resource "google_compute_subnetwork" "frontend_subnet_bck" {
+  name                     = "${var.project}-subnet-frontend-002"
+  region                   = var.region
+  network                  = google_compute_network.frontend_vpc_network.name
+  ip_cidr_range            = "10.2.0.0/24"
+  private_ip_google_access = true
+}
+
+
 
 # Network peering
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network_peering
@@ -60,16 +73,17 @@ resource "google_compute_network_peering" "frontend_backend_peering" {
 
 # Create a backend VPC network...
 resource "google_compute_network" "backend_vpc_network" {
-  name = "${var.project}-vpc-backend-001"
+  name                    = "${var.project}-vpc-backend-001"
   auto_create_subnetworks = false
 }
 
 # Subnet backend layer
 resource "google_compute_subnetwork" "backend_subnet" {
-  name          = "${var.project}-subnet-backend-001"
-  region        = var.region
-  network       = google_compute_network.backend_vpc_network.name
-  ip_cidr_range = "10.2.0.0/24"
+  name                     = "${var.project}-subnet-backend-001"
+  region                   = var.region
+  network                  = google_compute_network.backend_vpc_network.name
+  ip_cidr_range            = "10.4.0.0/24"
+  private_ip_google_access = true
 }
 
 # Network peering
@@ -91,16 +105,17 @@ resource "google_compute_network_peering" "backendend_databaseend_peering" {
 
 # Create a database VPC network...
 resource "google_compute_network" "database_vpc_network" {
-  name = "${var.project}-vpc-dbase-001"
+  name                    = "${var.project}-vpc-dbase-001"
   auto_create_subnetworks = false
 }
 
 # Subnet database layer
 resource "google_compute_subnetwork" "database_subnet" {
-  name          = "${var.project}-subnet-dbase-001"
-  region        = var.region
-  network       = google_compute_network.database_vpc_network.name
-  ip_cidr_range = "10.3.0.0/24"
+  name                     = "${var.project}-subnet-dbase-001"
+  region                   = var.region
+  network                  = google_compute_network.database_vpc_network.name
+  ip_cidr_range            = "10.6.0.0/24"
+  private_ip_google_access = true
 }
 
 # Network peering
@@ -111,10 +126,10 @@ resource "google_compute_network_peering" "databaseend_backendend_peering" {
 }
 
 resource "google_compute_global_address" "db_ip_block" {
-  name         = "private-db-ip-block"
-  purpose      = "VPC_PEERING"
-  address_type = "INTERNAL"
-  ip_version   = "IPV4"
+  name          = "private-db-ip-block"
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  ip_version    = "IPV4"
   prefix_length = 20
   network       = google_compute_network.database_vpc_network.self_link
 }
@@ -126,9 +141,9 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 }
 
 resource "google_compute_firewall" "allow_ssh" {
-  name        = "allow-ssh"
-  network     = google_compute_network.database_vpc_network.name
-  direction   = "INGRESS"
+  name      = "allow-ssh"
+  network   = google_compute_network.database_vpc_network.name
+  direction = "INGRESS"
   allow {
     protocol = "tcp"
     ports    = ["22"]
@@ -146,25 +161,26 @@ resource "google_compute_firewall" "allow_ssh" {
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/sql_database_instance
 
 resource "google_sql_database_instance" "instance" {
-  name              = "private-instance-${random_id.random_suffix.hex}"
-  region            = var.region
-  database_version  = "POSTGRES_13"
-  depends_on       = [google_service_networking_connection.private_vpc_connection]
+  name                = "private-instance-${random_id.random_suffix.hex}"
+  region              = var.region
+  database_version    = "POSTGRES_13"
+  depends_on          = [google_service_networking_connection.private_vpc_connection]
+  deletion_protection = "false"
 
   settings {
-    tier = "db-f1-micro"
+    tier              = "db-f1-micro"
     disk_type         = "PD_HDD"
     availability_type = "ZONAL"
     ip_configuration {
-      ipv4_enabled = false
+      ipv4_enabled    = false
       private_network = google_compute_network.database_vpc_network.self_link
     }
   }
 }
 
 resource "google_sql_database" "database" {
-  name     = "dbase-001"
-  instance = google_sql_database_instance.instance.name
+  name                = "dbase-001"
+  instance            = google_sql_database_instance.instance.name
 }
 
 # Proxy access...
@@ -185,11 +201,11 @@ resource "google_service_account_key" "dbkey" {
 # https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance
 
 resource "google_compute_instance" "db_proxy" {
-  name                      = "db-proxy"
-  machine_type              = var.machine_types.dev
-  zone                      = var.zone
+  name         = "db-proxy"
+  machine_type = var.machine_types.dev
+  zone         = var.zone1
 
-  desired_status            = "RUNNING"
+  desired_status = "RUNNING"
 
   allow_stopping_for_update = true
 
@@ -197,9 +213,9 @@ resource "google_compute_instance" "db_proxy" {
 
   boot_disk {
     initialize_params {
-      image = var.images.cos 
-      size  = 10                
-      type  = "pd-standard"             
+      image = var.images.cos
+      size  = 10
+      type  = "pd-standard"
     }
   }
 
@@ -208,20 +224,20 @@ resource "google_compute_instance" "db_proxy" {
   }
 
   metadata_startup_script = templatefile("${path.module}/run_cloud_sql_proxy.tpl", {
-                                      "db_instance_name"    = "db-proxy",
-                                      "service_account_key" = base64decode(google_service_account_key.dbkey.private_key),
-                            })
+    "db_instance_name"    = "db-proxy",
+    "service_account_key" = base64decode(google_service_account_key.dbkey.private_key),
+  })
 
   network_interface {
     network    = google_compute_network.database_vpc_network.self_link
-    subnetwork = google_compute_subnetwork.database_subnet.self_link 
+    subnetwork = google_compute_subnetwork.database_subnet.self_link
     access_config {}
   }
   scheduling {
     on_host_maintenance = "MIGRATE"
   }
   service_account {
-    email = google_service_account.dbproxy_account.email
+    email  = google_service_account.dbproxy_account.email
     scopes = ["cloud-platform"]
   }
 }
