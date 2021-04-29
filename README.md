@@ -13,7 +13,7 @@ Install Terraform using appropriate instructions for your OS [Getting started](h
 
 Build Status
 ------------
-[![CI](https://github.com/tpayne/terraform-examples/actions/workflows/blank.yml/badge.svg)](https://github.com/tpayne/terraform-examples/actions/workflows/blank.yml)
+[![CI](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml/badge.svg)](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml)
 
 Running Docker Samples
 ----------------------
@@ -83,6 +83,10 @@ Then, run the following...
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
 
+Issues
+------
+- The GCP `samples/templates` do not currently work as I need time to finish them off
+-
 Notes
 -----
 * Only run "terraform init" after you have created the TF files (.tf) as it needs to install the needed plugins
