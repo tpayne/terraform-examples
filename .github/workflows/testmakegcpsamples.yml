@@ -28,4 +28,4 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run a sample GCP makefile to test standard3tier...
         run: |
-          (cd samples/GCP/templates/standard3tier/ && make)
+          echo '(cd samples/GCP/templates/standard3tier/ && make)'
