@@ -18,14 +18,14 @@ Usage
 -----
 The following instructions show how to deploy it.
 
-  % cd standard3tier
-  % terraform init
-  % terraform plan
-  % terraform apply -auto-approve
+    % cd standard3tier
+    % terraform init
+    % terraform plan
+    % terraform apply -auto-approve
 
 To clean up do...
 
-  % terraform destroy -auto-approve
+    % terraform destroy -auto-approve
   
 Issues
 ------
