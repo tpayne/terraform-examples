@@ -11,6 +11,10 @@ How to Install
 --------------
 Install Terraform using appropriate instructions for your OS [Getting started](https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started)
 
+Build Status
+------------
+[![CI](https://github.com/tpayne/terraform-examples/actions/workflows/blank.yml/badge.svg)](https://github.com/tpayne/terraform-examples/actions/workflows/blank.yml)
+
 Running Docker Samples
 ----------------------
 The first set of examples are for Docker and are based on the Terraform starting examples
