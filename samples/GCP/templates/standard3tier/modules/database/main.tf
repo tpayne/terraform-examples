@@ -25,7 +25,7 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   reserved_peering_ranges = [google_compute_global_address.db_ip_block.name]
 }
 
-resource "google_compute_firewall" "allow_ingress" {
+resource "google_compute_firewall" "allowdb_ingress" {
   name      = "${var.name}-allow-ssh"
   network   = var.network
   direction = "INGRESS"
@@ -33,7 +33,7 @@ resource "google_compute_firewall" "allow_ingress" {
     protocol = "tcp"
     ports    = var.ports
   }
-  target_tags = ["ssh-enabled"]
+  target_tags = ["allowdb-ingress"]
 }
 
 #------------------------------
@@ -90,7 +90,7 @@ resource "google_compute_instance" "db_proxy" {
 
   allow_stopping_for_update = true
 
-  tags = ["ssh-enabled"]
+  tags = ["allowdb-ingress"]
 
   boot_disk {
     initialize_params {
