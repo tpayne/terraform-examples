@@ -37,9 +37,9 @@ variable "tier" {
 }
 
 variable "ports" {
-    description = "Allowed ports"
-    type        = list
-    default     = []
+  description = "Allowed ports"
+  type        = list(any)
+  default     = []
 }
 
 variable "disk_type" {

@@ -36,25 +36,24 @@ provider "google-beta" {
 #------------------------------
 #@file:frontend_network.tf
 
-# Network peering
-# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network_peering
-resource "google_compute_network_peering" "frontend_backend_peering" {
-  name         = "${var.project}-frontendpeering-001"
-  network      = google_compute_network.frontend_vpc_network.id
-  peer_network = google_compute_network.backend_vpc_network.id
-}
-
 #------------------------------
 # Backend network resources...
 #------------------------------
 #@file:backend_network.tf
-
 
 #------------------------------
 # Peering network resources...
 #------------------------------
 
 # Network peering
+# https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_network_peering
+
+resource "google_compute_network_peering" "frontend_backend_peering" {
+  name         = "${var.project}-frontendpeering-001"
+  network      = google_compute_network.frontend_vpc_network.id
+  peer_network = google_compute_network.backend_vpc_network.id
+}
+
 resource "google_compute_network_peering" "backend_frontend_peering" {
   name         = "${var.project}-backendpeering-001"
   network      = google_compute_network.backend_vpc_network.id

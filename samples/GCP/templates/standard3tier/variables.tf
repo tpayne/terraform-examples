@@ -47,3 +47,12 @@ variable "images" {
     ubunto = "ubuntu-os-cloud/ubuntu-1804-lts"
   }
 }
+
+variable "database_type" {
+  type = map(any)
+  default = {
+    postgres = "POSTGRES_13"
+    mysql    = "MYSQL_8_0"
+    mssql    = "SQLSERVER_2017_STANDARD"
+  }
+}

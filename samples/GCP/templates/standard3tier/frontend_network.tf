@@ -37,9 +37,9 @@ resource "google_compute_subnetwork" "frontend_subnet_bck" {
 
 # Frontend router
 resource "google_compute_router" "frontend_router" {
-  name      = "${var.project}-http-router-frontend-001"
-  network   = google_compute_network.frontend_vpc_network.self_link
-  region    = var.region
+  name    = "${var.project}-http-router-frontend-001"
+  network = google_compute_network.frontend_vpc_network.self_link
+  region  = var.region
 }
 
 # NAT router
@@ -52,14 +52,13 @@ module "cloud-nat" {
   region     = var.region
 }
 
-
 # Load Balancer
 module "gce-lb-http" {
-  source            = "GoogleCloudPlatform/lb-http/google"
-  version           = "~> 4.4"
+  source  = "GoogleCloudPlatform/lb-http/google"
+  version = "~> 4.4"
 
-  name              = "${var.project}-frontend-group-http-lb"
-  project           = var.project
+  name    = "${var.project}-frontend-group-http-lb"
+  project = var.project
 
   target_tags       = [google_compute_network.frontend_vpc_network.name]
   firewall_networks = [google_compute_network.frontend_vpc_network.name]

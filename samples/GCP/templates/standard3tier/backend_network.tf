@@ -38,15 +38,17 @@ module "gce-lb-fr" {
   target_tags  = [google_compute_network.backend_vpc_network.name]
 }
 
+# This module is a modified form of a published GCP GCE module for internal lb that did not work
+# This local modeul fixes those issues.
 module "interal-lb" {
-  source       = "./modules/interal-lb"
+  source = "./modules/interal-lb"
 
-  region       = var.region
-  name         = "${var.project}-backend-lb"
-  ports        = ["5432"]
+  region = var.region
+  name   = "${var.project}-backend-lb"
+  ports  = ["5432"]
 
-  network      = google_compute_network.backend_vpc_network.self_link
-  subnetwork   = google_compute_subnetwork.backend_subnet.self_link
+  network    = google_compute_network.backend_vpc_network.self_link
+  subnetwork = google_compute_subnetwork.backend_subnet.self_link
 
   health_check = {
     type                = "tcp"
@@ -60,13 +62,13 @@ module "interal-lb" {
     port_name           = null
     request             = null
     request_path        = null
-    host                = null  
+    host                = null
   }
 
-  source_tags  = [google_compute_network.backend_vpc_network.name]
-  target_tags  = [google_compute_network.backend_vpc_network.name]
+  source_tags = [google_compute_network.backend_vpc_network.name]
+  target_tags = [google_compute_network.backend_vpc_network.name]
 
-  backends     = [
+  backends = [
     { group = module.backend-mig-001.instance_group, description = "" }
   ]
 }

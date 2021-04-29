@@ -14,7 +14,7 @@
 #------------------------------
 
 data "template_file" "pg-group-startup-script" {
-  template = file("${format("%s/startup-pgclient.sh.tpl", path.module)}")
+  template = file("${format("%s/templates/startup-pgclient.sh.tpl", path.module)}")
 }
 
 #------------------------------
@@ -63,8 +63,8 @@ module "backend-mig-001" {
   hostname          = "bemig001"
   target_size       = var.size
 
-  network           = google_compute_network.backend_vpc_network.self_link
-  subnetwork        = google_compute_subnetwork.backend_subnet.self_link
+  network    = google_compute_network.backend_vpc_network.self_link
+  subnetwork = google_compute_subnetwork.backend_subnet.self_link
 
   named_ports = [{
     name = "tcp",

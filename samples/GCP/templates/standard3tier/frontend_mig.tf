@@ -14,7 +14,7 @@
 #------------------------------
 
 data "template_file" "group-startup-script" {
-  template = file("${format("%s/startup.sh.tpl", path.module)}")
+  template = file("${format("%s/templates/startup.sh.tpl", path.module)}")
 }
 
 #------------------------------
@@ -89,8 +89,8 @@ module "frontend-mig-001" {
   hostname          = "femig001"
   target_size       = var.size
 
-  network           = google_compute_network.frontend_vpc_network.self_link
-  subnetwork        = google_compute_subnetwork.frontend_subnet.self_link
+  network    = google_compute_network.frontend_vpc_network.self_link
+  subnetwork = google_compute_subnetwork.frontend_subnet.self_link
 
   named_ports = [{
     name = "http",
@@ -107,8 +107,8 @@ module "frontend-mig-002" {
   hostname          = "femig002"
   target_size       = var.size
 
-  network           = google_compute_network.frontend_vpc_network.self_link
-  subnetwork        = google_compute_subnetwork.frontend_subnet_bck.self_link
+  network    = google_compute_network.frontend_vpc_network.self_link
+  subnetwork = google_compute_subnetwork.frontend_subnet_bck.self_link
 
   named_ports = [{
     name = "http",

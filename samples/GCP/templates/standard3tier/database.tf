@@ -25,14 +25,18 @@ resource "google_compute_subnetwork" "database_subnet" {
   private_ip_google_access = true
 }
 
+#------------------------------
+# Database compute resources...
+#------------------------------
+
 module "database" {
-  source            = "./modules/database"
-  name              = "postgres001"
-  dbtype            = "POSTGRES_13"
-  region            = var.region
-  zone              = var.zone1
-  machine_type      = var.machine_types.dev
-  ports             = ["22","5432"]
-  network           = google_compute_network.database_vpc_network.self_link
-  subnetwork        = google_compute_subnetwork.database_subnet.self_link
+  source       = "./modules/database"
+  name         = "dbinstance001"
+  dbtype       = var.database_type.postgres
+  region       = var.region
+  zone         = var.zone1
+  machine_type = var.machine_types.dev
+  ports        = ["22", "5432"]
+  network      = google_compute_network.database_vpc_network.self_link
+  subnetwork   = google_compute_subnetwork.database_subnet.self_link
 }

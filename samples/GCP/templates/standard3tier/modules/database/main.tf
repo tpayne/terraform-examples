@@ -60,8 +60,8 @@ resource "google_sql_database_instance" "instance" {
 }
 
 resource "google_sql_database" "database" {
-  name                = "${var.name}"
-  instance            = google_sql_database_instance.instance.name
+  name     = var.name
+  instance = google_sql_database_instance.instance.name
 }
 
 # Proxy access...
@@ -104,7 +104,7 @@ resource "google_compute_instance" "db_proxy" {
     enable-oslogin = "TRUE"
   }
 
-  metadata_startup_script = templatefile("${path.module}/run_cloud_sql_proxy.tpl", {
+  metadata_startup_script = templatefile("${path.module}/templates/run_cloud_sql_proxy.tpl", {
     "db_instance_name"    = "${var.name}-db-proxy",
     "service_account_key" = base64decode(google_service_account_key.dbkey.private_key),
   })
