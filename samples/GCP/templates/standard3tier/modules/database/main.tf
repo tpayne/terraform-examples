@@ -26,7 +26,7 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 }
 
 resource "google_compute_firewall" "allowdb_ingress" {
-  name      = "${var.name}-allow-ssh"
+  name      = "${var.name}-allow-db"
   network   = var.network
   direction = "INGRESS"
   allow {
