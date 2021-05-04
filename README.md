@@ -98,3 +98,4 @@ Notes
 * Use `terraform fmt` to change your .tf files to Terraform standard
 * Use `terraform validate` to validate your configuration definition is valid
 * https://docs.microsoft.com/en-us/azure/developer/terraform/
+* https://codelabs.developers.google.com/codelabs/cft-onboarding#0
