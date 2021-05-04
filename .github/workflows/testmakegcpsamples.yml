@@ -29,3 +29,4 @@ jobs:
       - name: Run a sample GCP makefile to test standard3tier...
         run: |
           echo '(cd samples/GCP/templates/standard3tier/ && make)'
+          cd samples/GCP/templates/standard3tier/ && make docker_test_lint docker_generate_docs
