@@ -74,7 +74,7 @@ module "backend-mig-001" {
     {
       name = "ssh",
       port = 22
-    }   
+    }
   ]
 }
 

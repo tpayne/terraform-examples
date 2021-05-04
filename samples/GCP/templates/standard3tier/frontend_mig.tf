@@ -114,7 +114,7 @@ module "frontend-mig-001" {
     {
       name = "ssh",
       port = 22
-    }    
+    }
   ]
 }
 
@@ -138,7 +138,7 @@ module "frontend-mig-002" {
     {
       name = "ssh",
       port = 22
-    }    
+    }
   ]
 }
 

@@ -33,7 +33,7 @@ module "interal-lb" {
 
   region = var.region
   name   = "${var.project}-backend-lb"
-  ports  = ["5432","22"]
+  ports  = ["5432", "22"]
 
   network    = google_compute_network.backend_vpc_network.self_link
   subnetwork = google_compute_subnetwork.backend_subnet.self_link

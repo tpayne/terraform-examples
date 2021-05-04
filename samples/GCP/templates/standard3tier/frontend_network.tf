@@ -74,11 +74,11 @@ module "gce-lb-http" {
   name    = "${var.project}-frontend-group-http-lb"
   project = var.project
 
-  target_tags       = [
+  target_tags = [
     google_compute_subnetwork.frontend_subnet.name,
     module.cloud-nat.router_name,
     google_compute_subnetwork.frontend_subnet_bck.name,
-    module.cloud-nat-bck.router_name    
+    module.cloud-nat-bck.router_name
   ]
 
   firewall_networks = [google_compute_network.frontend_vpc_network.name]
