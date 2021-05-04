@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
- 
+
 # This sample is using modules to create a number of backend database resources.
 # https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started
 # Provider syntax: https://registry.terraform.io/providers/hashicorp/google/latest/docs
