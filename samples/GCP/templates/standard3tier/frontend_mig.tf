@@ -35,7 +35,7 @@
 #------------------------------
 
 data "template_file" "group-startup-script" {
-  template = file("${format("%s/templates/startup.sh.tpl", path.module)}")
+  template = file(format("%s/templates/startup.sh.tpl", path.module))
 
   vars = {
     PROXY_PATH = ""
