@@ -56,3 +56,5 @@ variable "database_type" {
     mssql    = "SQLSERVER_2017_STANDARD"
   }
 }
+
+

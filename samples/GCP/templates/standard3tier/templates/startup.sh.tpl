@@ -65,7 +65,7 @@ function metadata_value($value) {
     <tr>
       <td>Tags</td>
       <td><?php printf(metadata_value("instance/tags")) ?></td>
-    </tr>    
+    </tr>
     <tr>
       <td>Machine Type</td>
       <td><?php printf(metadata_value("instance/machine-type")) ?></td>
@@ -130,3 +130,5 @@ chown -R www-data:www-data /var/www/html/
 echo 'Curling local service to test...'
 curl localhost:80
 echo 'Script done'
+
+
