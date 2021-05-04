@@ -26,7 +26,6 @@ resource "google_compute_subnetwork" "frontend_subnet" {
   private_ip_google_access = true
 }
 
-# Subnet frontend layer
 resource "google_compute_subnetwork" "frontend_subnet_bck" {
   name                     = "${var.project}-subnet-frontend-002"
   region                   = var.region_bck
@@ -42,6 +41,12 @@ resource "google_compute_router" "frontend_router" {
   region  = var.region
 }
 
+resource "google_compute_router" "frontend_router_bck" {
+  name    = "${var.project}-http-router-frontend-002"
+  network = google_compute_network.frontend_vpc_network.self_link
+  region  = var.region_bck
+}
+
 # NAT router
 module "cloud-nat" {
   source     = "terraform-google-modules/cloud-nat/google"
@@ -52,6 +57,15 @@ module "cloud-nat" {
   region     = var.region
 }
 
+module "cloud-nat-bck" {
+  source     = "terraform-google-modules/cloud-nat/google"
+  name       = "${var.project}-cloud-nat-lb-http-router-frontend-002"
+  version    = "1.4.0"
+  router     = google_compute_router.frontend_router_bck.name
+  project_id = var.project
+  region     = var.region_bck
+}
+
 # Load Balancer
 module "gce-lb-http" {
   source  = "GoogleCloudPlatform/lb-http/google"
@@ -60,7 +74,13 @@ module "gce-lb-http" {
   name    = "${var.project}-frontend-group-http-lb"
   project = var.project
 
-  target_tags       = [google_compute_network.frontend_vpc_network.name]
+  target_tags       = [
+    google_compute_subnetwork.frontend_subnet.name,
+    module.cloud-nat.router_name,
+    google_compute_subnetwork.frontend_subnet_bck.name,
+    module.cloud-nat-bck.router_name    
+  ]
+
   firewall_networks = [google_compute_network.frontend_vpc_network.name]
 
   backends = {

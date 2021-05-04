@@ -15,6 +15,10 @@
 
 data "template_file" "group-startup-script" {
   template = file("${format("%s/templates/startup.sh.tpl", path.module)}")
+
+  vars = {
+    PROXY_PATH = ""
+  }
 }
 
 #------------------------------
@@ -22,9 +26,9 @@ data "template_file" "group-startup-script" {
 #------------------------------
 
 resource "google_compute_instance_template" "frontend_template" {
-  name           = "frontend-template-001"
   machine_type   = var.machine_types.dev
   can_ip_forward = false
+  name_prefix    = "frontend-template-001-"
 
   scheduling {
     automatic_restart   = true
@@ -40,18 +44,23 @@ resource "google_compute_instance_template" "frontend_template" {
   }
 
   metadata = {
-    startup-script = data.template_file.group-startup-script.template
+    startup-script = data.template_file.group-startup-script.rendered
   }
 
   service_account {
-    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+    scopes = ["userinfo-email", "compute-ro", "storage-ro", "cloud-platform"]
   }
+
+  tags = [
+    google_compute_subnetwork.frontend_subnet.name,
+    module.cloud-nat.router_name
+  ]
 }
 
 resource "google_compute_instance_template" "frontend_template_bck" {
-  name           = "frontend-template-002"
   machine_type   = var.machine_types.dev
   can_ip_forward = false
+  name_prefix    = "frontend-template-002-"
 
   scheduling {
     automatic_restart   = true
@@ -67,12 +76,17 @@ resource "google_compute_instance_template" "frontend_template_bck" {
   }
 
   metadata = {
-    startup-script = data.template_file.group-startup-script.template
+    startup-script = data.template_file.group-startup-script.rendered
   }
 
   service_account {
-    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+    scopes = ["userinfo-email", "compute-ro", "storage-ro", "cloud-platform"]
   }
+
+  tags = [
+    google_compute_subnetwork.frontend_subnet_bck.name,
+    module.cloud-nat-bck.router_name
+  ]
 }
 
 #------------------------------
@@ -92,10 +106,16 @@ module "frontend-mig-001" {
   network    = google_compute_network.frontend_vpc_network.self_link
   subnetwork = google_compute_subnetwork.frontend_subnet.self_link
 
-  named_ports = [{
-    name = "http",
-    port = 80
-  }]
+  named_ports = [
+    {
+      name = "http",
+      port = 80
+    },
+    {
+      name = "ssh",
+      port = 22
+    }    
+  ]
 }
 
 # Secondary mig...
@@ -110,9 +130,15 @@ module "frontend-mig-002" {
   network    = google_compute_network.frontend_vpc_network.self_link
   subnetwork = google_compute_subnetwork.frontend_subnet_bck.self_link
 
-  named_ports = [{
-    name = "http",
-    port = 80
-  }]
+  named_ports = [
+    {
+      name = "http",
+      port = 80
+    },
+    {
+      name = "ssh",
+      port = 22
+    }    
+  ]
 }
 

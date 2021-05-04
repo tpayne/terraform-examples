@@ -22,9 +22,9 @@ data "template_file" "pg-group-startup-script" {
 #------------------------------
 
 resource "google_compute_instance_template" "backend_template" {
-  name           = "backend-template-001"
   machine_type   = var.machine_types.dev
   can_ip_forward = false
+  name_prefix    = "backend-template-001-"
 
   scheduling {
     automatic_restart   = true
@@ -40,11 +40,11 @@ resource "google_compute_instance_template" "backend_template" {
   }
 
   metadata = {
-    startup-script = data.template_file.pg-group-startup-script.template
+    startup-script = data.template_file.pg-group-startup-script.rendered
   }
 
   service_account {
-    scopes = ["userinfo-email", "compute-ro", "storage-ro"]
+    scopes = ["userinfo-email", "compute-ro", "storage-ro", "cloud-platform"]
   }
 }
 
@@ -66,10 +66,16 @@ module "backend-mig-001" {
   network    = google_compute_network.backend_vpc_network.self_link
   subnetwork = google_compute_subnetwork.backend_subnet.self_link
 
-  named_ports = [{
-    name = "tcp",
-    port = 5432
-  }]
+  named_ports = [
+    {
+      name = "tcp",
+      port = 5432
+    },
+    {
+      name = "ssh",
+      port = 22
+    }   
+  ]
 }
 
 

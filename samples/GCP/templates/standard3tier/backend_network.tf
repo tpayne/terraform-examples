@@ -26,18 +26,6 @@ resource "google_compute_subnetwork" "backend_subnet" {
   private_ip_google_access = true
 }
 
-# Load Balancer
-module "gce-lb-fr" {
-  source       = "GoogleCloudPlatform/lb/google"
-  version      = "~> 2.3"
-  region       = var.region
-  network      = google_compute_network.backend_vpc_network.name
-  project      = var.project
-  name         = "${var.project}-backend-lb-fr"
-  service_port = "5432"
-  target_tags  = [google_compute_network.backend_vpc_network.name]
-}
-
 # This module is a modified form of a published GCP GCE module for internal lb that did not work
 # This local modeul fixes those issues.
 module "interal-lb" {
@@ -45,7 +33,7 @@ module "interal-lb" {
 
   region = var.region
   name   = "${var.project}-backend-lb"
-  ports  = ["5432"]
+  ports  = ["5432","22"]
 
   network    = google_compute_network.backend_vpc_network.self_link
   subnetwork = google_compute_subnetwork.backend_subnet.self_link
