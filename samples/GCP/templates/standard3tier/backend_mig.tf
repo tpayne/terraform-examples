@@ -35,7 +35,7 @@
 #------------------------------
 
 data "template_file" "pg-group-startup-script" {
-  template = file("${format("%s/templates/startup-pgclient.sh.tpl", path.module)}")
+  template = file(format("%s/templates/startup-pgclient.sh.tpl", path.module))
 }
 
 #------------------------------
