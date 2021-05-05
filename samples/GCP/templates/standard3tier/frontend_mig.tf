@@ -66,6 +66,7 @@ resource "google_compute_instance_template" "frontend_template" {
 
   metadata = {
     startup-script = data.template_file.group-startup-script.rendered
+    enable-oslogin = "TRUE"
   }
 
   service_account {
@@ -98,6 +99,7 @@ resource "google_compute_instance_template" "frontend_template_bck" {
 
   metadata = {
     startup-script = data.template_file.group-startup-script.rendered
+    enable-oslogin = "TRUE"
   }
 
   service_account {

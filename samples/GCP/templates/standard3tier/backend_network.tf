@@ -54,7 +54,7 @@ module "interal-lb" {
 
   region = var.region
   name   = "${var.project}-backend-lb"
-  ports  = ["5432", "22"]
+  ports  = ["22", "80"]
 
   network    = google_compute_network.backend_vpc_network.self_link
   subnetwork = google_compute_subnetwork.backend_subnet.self_link
@@ -67,7 +67,7 @@ module "interal-lb" {
     unhealthy_threshold = null
     response            = null
     proxy_header        = null
-    port                = 5432
+    port                = 22
     port_name           = null
     request             = null
     request_path        = null

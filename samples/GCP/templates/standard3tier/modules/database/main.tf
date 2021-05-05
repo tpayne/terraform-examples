@@ -56,6 +56,10 @@ resource "google_compute_firewall" "allowdb_ingress" {
     ports    = var.ports
   }
   target_tags = ["allowdb-ingress"]
+
+  log_config {
+    metadata = "INCLUDE_ALL_METADATA"
+  }
 }
 
 #------------------------------
@@ -84,6 +88,13 @@ resource "google_sql_database_instance" "instance" {
 resource "google_sql_database" "database" {
   name     = var.name
   instance = google_sql_database_instance.instance.name
+}
+
+resource "google_sql_user" "users" {
+  name     = var.dbuser
+  password = var.dbuserpwd
+  instance = google_sql_database_instance.instance.name
+  host     = google_sql_database_instance.instance.self_link
 }
 
 # Proxy access...
@@ -136,6 +147,7 @@ resource "google_compute_instance" "db_proxy" {
     subnetwork = var.subnetwork
     access_config {}
   }
+  
   scheduling {
     on_host_maintenance = "MIGRATE"
   }
@@ -145,3 +157,5 @@ resource "google_compute_instance" "db_proxy" {
     scopes = ["cloud-platform"]
   }
 }
+
+

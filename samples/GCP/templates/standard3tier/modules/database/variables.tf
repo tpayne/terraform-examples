@@ -32,6 +32,11 @@ variable "network" {
   default     = ""
 }
 
+variable "network_name" {
+  description = "Name of the network to create resources in."
+  default     = ""
+}
+
 variable "subnetwork" {
   description = "Name of the subnetwork to create resources in."
   default     = ""
@@ -63,6 +68,12 @@ variable "ports" {
   default     = []
 }
 
+variable "named_ports" {
+  description = "Allowed ports"
+  type        = list(any)
+  default     = []
+}
+
 variable "disk_type" {
   description = "Database disk type"
   default     = "PD_HDD"
@@ -77,3 +88,25 @@ variable "machine_image" {
   description = "Database machine image"
   default     = "cos-cloud/cos-stable"
 }
+
+variable "mig_image" {
+  description = "Database machine image"
+  default     = "ubuntu-os-cloud/ubuntu-1804-lts"
+}
+
+variable "dbuser" {
+  description = "Database user name"
+  default     = "testme"
+}
+
+variable "dbuserpwd" {
+  description = "Database user pwd"
+  default     = "testme"
+}
+
+variable "size" {
+  type    = number # Type - not needed, but showing it...
+  default = 5
+}
+
+

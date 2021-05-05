@@ -43,10 +43,10 @@ data "template_file" "pg-group-startup-script" {
 #------------------------------
 
 # IMPORTANT - These machines DO NOT have internet access...
-resource "google_compute_instance_template" "backend_template" {
-  machine_type   = var.machine_types.dev
+resource "google_compute_instance_template" "database_template" {
+  machine_type   = var.machine_type
   can_ip_forward = false
-  name_prefix    = "backend-template-001-"
+  name_prefix    = "db-template-001-"
 
   scheduling {
     automatic_restart   = true
@@ -54,25 +54,30 @@ resource "google_compute_instance_template" "backend_template" {
   }
 
   disk {
-    source_image = var.images.ubunto
+    source_image = var.mig_image
   }
 
   network_interface {
-    subnetwork = google_compute_subnetwork.backend_subnet.id
+    network    = var.network
+    subnetwork = var.subnetwork
   }
 
   metadata = {
     startup-script = data.template_file.pg-group-startup-script.rendered
     enable-oslogin = "TRUE"
+    database-type = var.dbtype
   }
 
   service_account {
-    scopes = ["userinfo-email", "compute-ro", "storage-ro", "cloud-platform"]
+    email  = google_service_account.dbproxy_account.email
+    scopes = ["cloud-platform"]
   }
 
   tags = [
-    google_compute_network.backend_vpc_network.name
+    var.network_name,
+    "allowdb-ingress"
   ]
+
 }
 
 
@@ -82,26 +87,52 @@ resource "google_compute_instance_template" "backend_template" {
 # https://github.com/terraform-google-modules/terraform-google-vm/tree/master/modules/mig
 
 # Primary mig...
-module "backend-mig-001" {
+module "db-mig-001" {
   source            = "terraform-google-modules/vm/google//modules/mig"
   version           = "6.2.0"
-  instance_template = google_compute_instance_template.backend_template.self_link
+  instance_template = google_compute_instance_template.database_template.self_link
   region            = var.region
-  hostname          = "bemig001"
+  hostname          = "${var.name}-mig"
   target_size       = var.size
 
-  network    = google_compute_network.backend_vpc_network.self_link
-  subnetwork = google_compute_subnetwork.backend_subnet.self_link
+  network           = var.network
+  subnetwork        = var.subnetwork
 
-  named_ports = [
-    {
-      name = "http",
-      port = 80
-    },
-    {
-      name = "ssh",
-      port = 22
-    }
+  named_ports       = var.named_ports
+}
+
+# This module is a modified form of a published GCP GCE module for internal lb that did not work
+# This local modeul fixes those issues.
+module "interaldb-lb" {
+  source      = "./../interal-lb"
+
+  region      = var.region
+  name        = "${var.name}-db-lb"
+  ports       = var.ports
+
+  network     = var.network
+  subnetwork  = var.subnetwork
+
+  health_check = {
+    type                = "tcp"
+    check_interval_sec  = null
+    healthy_threshold   = null
+    timeout_sec         = null
+    unhealthy_threshold = null
+    response            = null
+    proxy_header        = null
+    port                = 5432
+    port_name           = null
+    request             = null
+    request_path        = null
+    host                = null
+  }
+
+  source_tags = [var.network_name]
+  target_tags = [var.network_name]
+
+  backends = [
+    { group = module.db-mig-001.instance_group, description = "" }
   ]
 }
 

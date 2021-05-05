@@ -94,6 +94,19 @@ resource "google_compute_network_peering" "databaseend_backend_peering" {
   peer_network = google_compute_network.backend_vpc_network.id
 }
 
+resource "google_compute_firewall" "allowbackend_ingress" {
+  name      = "${var.project}-allow-be"
+  network   = google_compute_network.backend_vpc_network.self_link
+  direction = "INGRESS"
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "22"]
+  }
+  log_config {
+    metadata = "INCLUDE_ALL_METADATA"
+  }
+}
+
 ##############################
 # Create compute resources...
 ##############################

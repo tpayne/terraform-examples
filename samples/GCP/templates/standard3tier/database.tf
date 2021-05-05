@@ -57,8 +57,25 @@ module "database" {
   region       = var.region
   zone         = var.zone1
   machine_type = var.machine_types.dev
-  ports        = ["22", "5432"]
+  mig_image    = var.images.ubunto
+  ports        = ["22", "5432", "80"]
+  named_ports = [
+    {
+      name = "tcp",
+      port = 5432
+    },
+    {
+      name = "ssh",
+      port = 22
+    },
+    {
+      name = "http",
+      port = 80
+    }
+  ]
+
   network      = google_compute_network.database_vpc_network.self_link
+  network_name = google_compute_network.database_vpc_network.name
   subnetwork   = google_compute_subnetwork.database_subnet.self_link
 }
 
