@@ -65,7 +65,7 @@ resource "google_compute_instance_template" "database_template" {
   metadata = {
     startup-script = data.template_file.pg-group-startup-script.rendered
     enable-oslogin = "TRUE"
-    database-type = var.dbtype
+    database-type  = var.dbtype
   }
 
   service_account {
@@ -95,23 +95,23 @@ module "db-mig-001" {
   hostname          = "${var.name}-mig"
   target_size       = var.size
 
-  network           = var.network
-  subnetwork        = var.subnetwork
+  network    = var.network
+  subnetwork = var.subnetwork
 
-  named_ports       = var.named_ports
+  named_ports = var.named_ports
 }
 
 # This module is a modified form of a published GCP GCE module for internal lb that did not work
 # This local modeul fixes those issues.
 module "interaldb-lb" {
-  source      = "./../interal-lb"
+  source = "./../interal-lb"
 
-  region      = var.region
-  name        = "${var.name}-db-lb"
-  ports       = var.ports
+  region = var.region
+  name   = "${var.name}-db-lb"
+  ports  = var.ports
 
-  network     = var.network
-  subnetwork  = var.subnetwork
+  network    = var.network
+  subnetwork = var.subnetwork
 
   health_check = {
     type                = "tcp"
