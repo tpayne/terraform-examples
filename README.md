@@ -97,13 +97,25 @@ Notes
 * Use `terraform refresh` to reapply changes and fix drift
 * Use `terraform show` to show what has been deployed
 * To put changes into the files and apply them incrementally use (+) to add/replace DSC and (-) to remove DSC
-* The Terraform tutorials are located [here](https://learn.hashicorp.com/collections/terraform/gcp-get-started)
-* The Terraform tutorials on Terraform Cloud and state saving are [here](https://learn.hashicorp.com/tutorials/terraform/azure-remote?in=terraform/azure-get-started). Essentially, it is about how to save the state files to the cloud, rather than local dirs.
 * Use `terraform fmt` to change your .tf files to Terraform standard
 * Use `terraform validate` to validate your configuration definition is valid
+
+References
+----------
+* The Terraform tutorials are located [here](https://learn.hashicorp.com/collections/terraform/gcp-get-started)
+* The Terraform tutorials on Terraform Cloud and state saving are [here](https://learn.hashicorp.com/tutorials/terraform/azure-remote?in=terraform/azure-get-started). Essentially, it is about how to save the state files to the cloud, rather than local dirs.
 * https://docs.microsoft.com/en-us/azure/developer/terraform/
 * https://github.com/terraform-google-modules/terraform-google-lb-http/blob/master/examples/mig-nat-http-lb/README.md
 * https://github.com/terraform-google-modules/
 * https://codelabs.developers.google.com/codelabs/cft-onboarding#0
+* https://registry.terraform.io/modules/terraform-google-modules/network/google/latest
+* https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall#metadata
+* https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function
+* https://github.com/ryboe/private-ip-cloud-sql-db
+* https://cloud.google.com/community/tutorials/modular-load-balancing-with-terraform
+* https://github.com/terraform-google-modules/terraform-google-vm/tree/master/modules
+* https://github.com/terraform-google-modules/terraform-google-lb-http/tree/master/examples/multi-mig-http-lb
+* https://github.com/GoogleCloudPlatform?q=instance+group&type=&language=&sort=
+* https://github.com/terraform-google-modules/terraform-google-lb-http/tree/master/examples/multi-mig-http-lb
 
 [run_button_standardtier]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/standard3tier&page=shell&tutorial=README.md
