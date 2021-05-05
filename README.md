@@ -102,6 +102,8 @@ Notes
 * Use `terraform fmt` to change your .tf files to Terraform standard
 * Use `terraform validate` to validate your configuration definition is valid
 * https://docs.microsoft.com/en-us/azure/developer/terraform/
+* https://github.com/terraform-google-modules/terraform-google-lb-http/blob/master/examples/mig-nat-http-lb/README.md
+* https://github.com/terraform-google-modules/
 * https://codelabs.developers.google.com/codelabs/cft-onboarding#0
 
 [run_button_standardtier]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/standard3tier&page=shell&tutorial=README.md
