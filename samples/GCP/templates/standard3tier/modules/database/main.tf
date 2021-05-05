@@ -147,7 +147,7 @@ resource "google_compute_instance" "db_proxy" {
     subnetwork = var.subnetwork
     access_config {}
   }
-  
+
   scheduling {
     on_host_maintenance = "MIGRATE"
   }
