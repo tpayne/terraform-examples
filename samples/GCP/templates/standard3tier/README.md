@@ -1,11 +1,11 @@
 Standard 3 Tier Example
 =======================
 
-This example uses terraform on GCP to create a standard 3 tier modle.
+This example uses terraform on GCP to create a standard 3 tier module.
 
 The frontend is contained in a VPC and fronted by a global HTTP/S load balancer which distributes traffic to two regional managed instance groups.
 
-The backend is contained in a VPC which is fronted by an internal load balancer which distributes traffic to a managed instance group.
+The backend is contained in a VPC which is fronted by an internal load balancer which distributes traffic to a managed instance group (MIG).
 
 The database is contained in a VPC which hosts a private Postgres instance and a connection proxy.
 
