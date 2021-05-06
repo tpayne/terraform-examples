@@ -18,7 +18,6 @@ Usage
 -----
 The following instructions show how to deploy it.
 
-    % cd standard3tier
     % terraform init
     % terraform plan
     % terraform apply -auto-approve
@@ -34,30 +33,6 @@ To Test
 To test the frontend service (which essentially is the only thing accessible), please do...
 
     % curl http://$(terraform output frontend-load-balancer-ip | sed 's|"||g')/index.php
-    <!doctype html>
-    <html>
-    <head>
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-    <title>Frontend Web Server</title>
-    </head>
-    <body>
-    <div class="container">
-    <div class="row">
-    <div class="col s2">&nbsp;</div>
-    <div class="col s8">
-    <div class="card blue">
-    <div class="card-content white-text">
-    <div class="card-title">Backend MIG that serviced this request</div>
-    </div>
-    <div class="card-content white">
-    <table class="bordered">
-      <tbody>
-        <tr>
-          <td>Name</td>
-    ...
     % open http://$(terraform output frontend-load-balancer-ip | sed 's|"||g')/index.php
 
 Accessing the Database
@@ -75,8 +50,7 @@ Postgres password use the following...
 
     % gcloud compute instances list | grep dbinstance001-db-proxy
     % gcloud sql instances list | grep dbinstance001
-    % gcloud sql users set-password postgres \
-        --instance=dbinstance001-60590d98 --prompt-for-password
+    % gcloud sql users set-password postgres --instance=dbinstance001-60590d98 --prompt-for-password
 
 Then, connect to the proxy server...
 
@@ -138,32 +112,10 @@ the frontend MIG example.
 You will need to configure this setup to meet your specific application requirements as it is simply
 a SAMPLE, not a complete working system.
 
-    % gcloud compute backend-services list
-    NAME                                                    BACKENDS                                                                      PROTOCOL
-    demoprod-673423-frontend-group-http-lb-backend-default  us-central1/instanceGroups/femig001-mig,us-west1/instanceGroups/femig002-mig  HTTP
-    dbinstance001-db-lb-with-tcp-hc                         us-central1/instanceGroups/dbinstance001-mig-mig                              TCP
-    demoprod-673423-backend-lb-with-tcp-hc                  us-central1/instanceGroups/bemig001-mig                                       TCP
+The following will show some of these additional services.
 
-    % gcloud compute backend-services describe demoprod-673423-backend-lb-with-tcp-hc --region=us-central1
-    backends:
-    - balancingMode: CONNECTION
-      group: https://www.googleapis.com/compute/v1/projects/demoprod-673423/regions/us-central1/instanceGroups/bemig001-mig
-    connectionDraining:
-      drainingTimeoutSec: 0
-    creationTimestamp: '2021-05-05T10:24:58.691-07:00'
-    description: ''
-    fingerprint: 1ZvmWmFjb2M=
-    healthChecks:
-    - https://www.googleapis.com/compute/v1/projects/demoprod-673423/global/healthChecks/demoprod-673423-backend-lb-hc-tcp
-    id: '3380268406220483077'
-    kind: compute#backendService
-    loadBalancingScheme: INTERNAL
-    name: demoprod-673423-backend-lb-with-tcp-hc
-    protocol: TCP
-    region: https://www.googleapis.com/compute/v1/projects/demoprod-673423/regions/us-central1
-    selfLink: https://www.googleapis.com/compute/v1/projects/demoprod-673423/regions/us-central1/backendServices/demoprod-673423-backend-lb-with-tcp-hc
-    sessionAffinity: NONE
-    timeoutSec: 10
+    % gcloud compute backend-services list
+    % gcloud compute backend-services describe <projectId>-backend-lb-with-tcp-hc --region=<region>
 
 Clean Up
 --------
