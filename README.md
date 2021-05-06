@@ -49,6 +49,8 @@ Then, run the following...
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
 
+The following are boiler plate templates for putting together common cloud architectures in GCP.
+
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
 |[GCP/templates/standard3tier/](samples/GCP/templates/standard3tier/) | A standard 3 tier example using routers, load balancers, instance groups and database | [<img src="http://gstatic.com/cloudssh/images/open-btn.png" alt="Run in Google Shell" height="40">][run_button_standardtier] |
