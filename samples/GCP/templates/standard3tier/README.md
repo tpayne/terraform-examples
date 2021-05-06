@@ -26,6 +26,17 @@ To run this tutorial, you must have ensured the following...
 
 For more information on how to generate your JWT token, please see the main project page.
 
+This was tested using Terraform version v0.15.2 and Gcloud versions...
+
+* Google Cloud SDK 339.0.0
+* app-engine-java 1.9.88
+* app-engine-python 1.9.91
+* beta 2021.04.30
+* bq 2.0.67
+* cloud-datastore-emulator 2.1.0
+* core 2021.04.30
+* gsutil 4.61
+
 Usage
 -----
 The following instructions show how to deploy it.
@@ -43,7 +54,7 @@ To Test
 To test the frontend service (which essentially is the only thing accessible), please do...
 
     curl http://$(terraform output frontend-load-balancer-ip | sed 's|"||g')/index.php
-    
+
 Then open the page at...
 
     open http://$(terraform output frontend-load-balancer-ip | sed 's|"||g')/index.php
@@ -62,7 +73,7 @@ Next, get the various IP addresses/regions for the proxy and SQL instance, plus 
 Postgres password use the following...
 
     (gcloud compute instances list | grep dbinstance001-db-proxy && gcloud sql instances list | grep dbinstance001)
-    
+
 Reset the password using...
 
     gcloud sql users set-password postgres --instance=dbinstance001-60590d98 --prompt-for-password
@@ -83,29 +94,15 @@ If you get a permission denied error, you may have to do the following...
 
 Then log out and relogin in and try again.
 
-    % docker images
+    docker images
     REPOSITORY                         TAG       IMAGE ID       CREATED       SIZE
     gcr.io/cloudsql-docker/gce-proxy   latest    4aca9841fe57   13 days ago   34.9MB
-    % docker run --rm --network=host -it postgres:13-alpine psql -U postgres -h 10.87.144.3
-    Password for user postgres:
-    psql (13.2)
-    SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, bits: 256, compression: off)
-    Type "help" for help.
 
-    postgres=> \l
-                                                    List of databases
-     Name         |       Owner       | Encoding |  Collate   |   Ctype    |            Access privileges
-    --------------+-------------------+----------+------------+------------+-----------------------------------------
-    cloudsqladmin | cloudsqladmin     | UTF8     | en_US.UTF8 | en_US.UTF8 |
-    dbinstance001 | cloudsqlsuperuser | UTF8     | en_US.UTF8 | en_US.UTF8 |
-    postgres      | cloudsqlsuperuser | UTF8     | en_US.UTF8 | en_US.UTF8 |
-    template0     | cloudsqladmin     | UTF8     | en_US.UTF8 | en_US.UTF8 | =c/cloudsqladmin                       +
-                  |                   |          |            |            | cloudsqladmin=CTc/cloudsqladmin
-    template1     | cloudsqlsuperuser | UTF8     | en_US.UTF8 | en_US.UTF8 | =c/cloudsqlsuperuser                   +
-                  |                   |          |            |            | cloudsqlsuperuser=CTc/cloudsqlsuperuser
-    (5 rows)
+Then run the following docker image to access the PG server...
 
-    postgres=>
+    docker run --rm --network=host -it postgres:13-alpine psql -U postgres -h 10.87.144.3
+
+You can then use `psql` standard commands
 
 What is everything else then?
 -----------------------------
