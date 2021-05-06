@@ -30,9 +30,7 @@ Usage
 -----
 The following instructions show how to deploy it.
 
-    % terraform init
-    % terraform plan
-    % terraform apply -auto-approve
+    (terraform init && terraform plan && terraform apply -auto-approve)
 
 Running the Sample in Cloud Shell
 ---------------------------------
@@ -44,8 +42,11 @@ To Test
 -------
 To test the frontend service (which essentially is the only thing accessible), please do...
 
-    % curl http://$(terraform output frontend-load-balancer-ip | sed 's|"||g')/index.php
-    % open http://$(terraform output frontend-load-balancer-ip | sed 's|"||g')/index.php
+    curl http://$(terraform output frontend-load-balancer-ip | sed 's|"||g')/index.php
+    
+Then open the page at...
+
+    open http://$(terraform output frontend-load-balancer-ip | sed 's|"||g')/index.php
 
 Accessing the Database
 ----------------------
@@ -53,31 +54,32 @@ To access the database, you can use the proxy server which gets created.
 
 First, generate a public/private key pair and load the public key into `gcloud`
 
-    % ssh-keygen -t rsa -f keyfile -N asimplephrase
-    % gcloud compute os-login ssh-keys add  --key-file=keyfile.pub --ttl=365d
-    % gcloud compute os-login describe-profile | grep username
+    (ssh-keygen -t rsa -f keyfile -N asimplephrase && \
+     gcloud compute os-login ssh-keys add  --key-file=keyfile.pub --ttl=365d && \
+     gcloud compute os-login describe-profile | grep username)
 
 Next, get the various IP addresses/regions for the proxy and SQL instance, plus reset the default
 Postgres password use the following...
 
-    % gcloud compute instances list | grep dbinstance001-db-proxy
-    % gcloud sql instances list | grep dbinstance001
-    % gcloud sql users set-password postgres --instance=dbinstance001-60590d98 --prompt-for-password
+    (gcloud compute instances list | grep dbinstance001-db-proxy && gcloud sql instances list | grep dbinstance001)
+    
+Reset the password using...
+
+    gcloud sql users set-password postgres --instance=dbinstance001-60590d98 --prompt-for-password
 
 Then, connect to the proxy server...
 
-    % gcloud compute ssh <username>@dbinstance001-db-proxy --zone=<zone>
+    gcloud compute ssh <username>@dbinstance001-db-proxy --zone=<zone>
 
 Once logged into the proxy server try running docker...
 
-    % docker images
-    Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.24/images/json: dial unix /var/run/docker.sock: connect: permission denied
+    docker images
 
-If you get an error like the above, you may have to do the following...
+If you get a permission denied error, you may have to do the following...
 
-    % sudo groupadd docker
-    % sudo usermod -aG docker $USER
-    % groups
+    (sudo groupadd docker && \
+     sudo usermod -aG docker $USER && \
+     groups)
 
 Then log out and relogin in and try again.
 
@@ -126,14 +128,14 @@ a SAMPLE, not a complete working system.
 
 The following will show some of these additional services.
 
-    % gcloud compute backend-services list
-    % gcloud compute backend-services describe <projectId>-backend-lb-with-tcp-hc --region=<region>
+    (gcloud compute backend-services list && \
+     gcloud compute backend-services describe <projectId>-backend-lb-with-tcp-hc --region=<region>)
 
 Clean Up
 --------
 To clean up do...
 
-    % terraform destroy -auto-approve
+    terraform destroy -auto-approve
 
 Issues
 ------
