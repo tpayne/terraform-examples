@@ -29,8 +29,10 @@ jobs:
       - name: Testing the lint standards for standard3tier (ignoring errors)...
         run: |
           echo '(cd samples/GCP/templates/standard3tier/ && make)'
+          echo 'Ignore header errors'
           cd samples/GCP/templates/standard3tier/ && make -i docker_test_lint docker_generate_docs
       - name: Testing the lint standards for bastionhost (ignoring errors)...
         run: |
           echo '(cd samples/GCP/templates/bastionhost/ && make)'
+          echo 'Ignore module errors and header errors'
           cd samples/GCP/templates/bastionhost/ && make -i docker_test_lint docker_generate_docs
