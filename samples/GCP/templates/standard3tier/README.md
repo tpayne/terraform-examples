@@ -45,7 +45,7 @@ First, generate a public/private key pair and load the public key into `gcloud`
     % gcloud compute os-login ssh-keys add  --key-file=keyfile.pub --ttl=365d
     % gcloud compute os-login describe-profile | grep username
 
-Next, get the various IP addresses for the proxy and SQL instance, plus set the default
+Next, get the various IP addresses/regions for the proxy and SQL instance, plus reset the default
 Postgres password use the following...
 
     % gcloud compute instances list | grep dbinstance001-db-proxy
