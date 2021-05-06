@@ -32,7 +32,7 @@
 ##############################
 
 #------------------------------
-# Frontend resources...
+# Frontend bastion host...
 #------------------------------
 
 resource "google_compute_instance" "bastionhost" {
@@ -61,11 +61,13 @@ resource "google_compute_instance" "bastionhost" {
   network_interface {
     network    = google_compute_network.frontend_vpc_network.self_link
     subnetwork = google_compute_subnetwork.frontend_subnet.self_link
-    access_config {}
+    # Allow the world to access the bastion - assuming they are SSH os login registered...
+    access_config {} 
   }
 
   scheduling {
     on_host_maintenance = "MIGRATE"
   }
 }
+
 
