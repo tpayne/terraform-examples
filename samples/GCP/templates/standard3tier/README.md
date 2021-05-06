@@ -14,6 +14,18 @@ Status
 ````
 Ready for use
 ````
+
+Prerequisites
+-------------
+To run this tutorial, you must have ensured the following...
+
+* You have access to a GCP project as an admin or owner
+* You have created a GCP service account with the required privileges
+* You have downloaded the JWT key for the service account
+* You have modified the `creds` variable in the file `terraform.tfvars` file to point to the location of the JWT file
+
+For more information on how to generate your JWT token, please see the main project page.
+
 Usage
 -----
 The following instructions show how to deploy it.
@@ -26,7 +38,7 @@ Running the Sample in Cloud Shell
 ---------------------------------
 To run the example in Cloud Shell, press the button below.
 
-[<img src="http://gstatic.com/cloudssh/images/open-btn.png" alt="Run on Google Cloud" height="30">][run_button_auto]
+[<img src="http://gstatic.com/cloudssh/images/open-btn.png" alt="Run on Google Cloud" height="40">][run_button_auto]
 
 To Test
 -------
