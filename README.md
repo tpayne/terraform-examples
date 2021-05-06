@@ -49,7 +49,7 @@ Then, run the following...
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
 
-The following are boiler plate templates for putting together common cloud architectures in GCP.
+#### The following are boiler plate templates for putting together common cloud architectures in GCP.
 
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
