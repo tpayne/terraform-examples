@@ -92,7 +92,7 @@ You can delete all the resources using `terraform destroy -auto-approve -force`
 
 Issues
 ------
-- None obvious
+- If you find any issues with these examples, then please feel free to create a PR or a branch with a pull request and I will be happy to review
 
 Notes
 -----
