@@ -35,9 +35,30 @@ Running GCP Samples
 -------------------
 The second set of examples are for GCP and are based on the Terraform starting examples. To use them you will have to have access to a GCP project in the cloud, then create a JSON service account file (with Project -> Editor role) granted. This creds file will need to be downloaded and available for use.
 
+To run this tutorial, you must have ensured the following...
 
-  * Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project)
-  * Clone the repo
+* You have access to a GCP project as an admin or owner
+* You have created a GCP service account with the required privileges
+* You have downloaded the JWT key for the service account
+* You have modified the `creds` variable in the file `terraform.tfvars` file to point to the location of the JWT file
+
+For more information on how to generate your JWT token, please see the main project page.
+
+This was tested using Terraform version v0.15.2 and Gcloud versions...
+
+* Google Cloud SDK 339.0.0
+* app-engine-java 1.9.88
+* app-engine-python 1.9.91
+* beta 2021.04.30
+* bq 2.0.67
+* cloud-datastore-emulator 2.1.0
+* core 2021.04.30
+* gsutil 4.61
+
+Once you have confirmed the above, then you can...
+
+* Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project)
+* Clone the repo
 
 Then, run the following...
 
