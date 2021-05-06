@@ -62,7 +62,7 @@ resource "google_compute_instance" "bastionhost" {
     network    = google_compute_network.frontend_vpc_network.self_link
     subnetwork = google_compute_subnetwork.frontend_subnet.self_link
     # Allow the world to access the bastion - assuming they are SSH os login registered...
-    access_config {} 
+    access_config {}
   }
 
   scheduling {
