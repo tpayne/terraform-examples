@@ -16,10 +16,10 @@ Usage
 -----
 The following instructions show how to deploy it.
 
-    % cd bastionhost
-    % terraform init
-    % terraform plan
-    % terraform apply -auto-approve
+    (cd bastionhost && \
+    terraform init && \
+    terraform plan && \
+    terraform apply -auto-approve)
 
 Running the Sample in Cloud Shell
 ---------------------------------
@@ -29,30 +29,31 @@ To run the example in Cloud Shell, press the button below.
 
 To Test
 -------
-To test the frontend service (which essentially is the only thing accessible), please do...
+To test the frontend service (which essentially is the only thing accessible), please run the following commands
+at the shell prompt...
 
 First, generate a public/private key pair and load the public key into `gcloud`.
 If you have already done this from other setups, then you can skip it.
 
-    % ssh-keygen -t rsa -f keyfile -N asimplephrase
-    % gcloud compute os-login ssh-keys add  --key-file=keyfile.pub --ttl=365d
-    % gcloud compute os-login describe-profile | grep username
+    (ssh-keygen -t rsa -f keyfile -N asimplephrase && \
+    gcloud compute os-login ssh-keys add  --key-file=keyfile.pub --ttl=365d && \
+    gcloud compute os-login describe-profile | grep username)
 
 Next, get the various IP addresses for the bastion host and load balancer...
 
-    % gcloud compute instances list | grep bastionhost
-    % echo $(terraform output bastionhost-ip | sed 's|"||g')
-    % gcloud compute forwarding-rules list | grep backend-lb
-    % echo $(terraform output loadbalancer-ip | sed 's|"||g')
+    (gcloud compute instances list | grep bastionhost && \
+    echo $(terraform output bastionhost-ip | sed 's|"||g') && \
+    gcloud compute forwarding-rules list | grep backend-lb && \
+    echo $(terraform output loadbalancer-ip | sed 's|"||g'))
 
 Then, connect to the bastion host (obtained from above)...
 
-    % gcloud compute ssh <username>@<projectId>-bastionhost --zone=<zone>
+    gcloud compute ssh <username>@<projectId>-bastionhost --zone=<zone>
 
 Once logged in then do a curl command against the load balancer IP (obtained above).
 Note, you may need to wait 5 mins or so after running `terraform` for the MIG systems to get running.
 
-    % curl <loadbalancerIP>:80/index.php
+    curl <loadbalancerIP>:80/index.php
 
 This will then return customised HTML.
 
@@ -60,7 +61,7 @@ Clean Up
 --------
 To clean up do...
 
-    % terraform destroy -auto-approve
+    terraform destroy -auto-approve
 
 Issues
 ------
