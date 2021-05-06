@@ -17,9 +17,9 @@ Usage
 The following instructions show how to deploy it.
 
     (cd bastionhost && \
-    terraform init && \
-    terraform plan && \
-    terraform apply -auto-approve)
+     terraform init && \
+     terraform plan && \
+     terraform apply -auto-approve)
 
 Running the Sample in Cloud Shell
 ---------------------------------
@@ -36,15 +36,15 @@ First, generate a public/private key pair and load the public key into `gcloud`.
 If you have already done this from other setups, then you can skip it.
 
     (ssh-keygen -t rsa -f keyfile -N asimplephrase && \
-    gcloud compute os-login ssh-keys add  --key-file=keyfile.pub --ttl=365d && \
-    gcloud compute os-login describe-profile | grep username)
+     gcloud compute os-login ssh-keys add  --key-file=keyfile.pub --ttl=365d && \
+     gcloud compute os-login describe-profile | grep username)
 
 Next, get the various IP addresses for the bastion host and load balancer...
 
     (gcloud compute instances list | grep bastionhost && \
-    echo $(terraform output bastionhost-ip | sed 's|"||g') && \
-    gcloud compute forwarding-rules list | grep backend-lb && \
-    echo $(terraform output loadbalancer-ip | sed 's|"||g'))
+     echo $(terraform output bastionhost-ip | sed 's|"||g') && \
+     gcloud compute forwarding-rules list | grep backend-lb && \
+     echo $(terraform output loadbalancer-ip | sed 's|"||g'))
 
 Then, connect to the bastion host (obtained from above)...
 
