@@ -92,7 +92,7 @@ resource "google_compute_firewall" "allowbackend_ingress" {
   direction = "INGRESS"
   allow {
     protocol = "tcp"
-    ports    = ["22","80"]
+    ports    = ["22", "80"]
   }
   log_config {
     metadata = "INCLUDE_ALL_METADATA"
