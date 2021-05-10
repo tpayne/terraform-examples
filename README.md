@@ -78,6 +78,16 @@ You can delete all the resources using `terraform destroy -auto-approve -force`
 |[GCP/templates/bastionhost/](samples/GCP/templates/bastionhost/) | A standard bastion host example using NAT routers, internal load balancers and instance groups | [<img src="http://gstatic.com/cloudssh/images/open-btn.png" alt="Run in Google Shell" height="40">][run_button_bastionhost] |
 |[GCP/templates/vpn-classic/](samples/GCP/templates/vpn-classic/) | A standard VPN peering host example using NAT routers, internal load balancers and instance groups | [<img src="http://gstatic.com/cloudssh/images/open-btn.png" alt="Run in Google Shell" height="40">][run_button_vpn] |
 
+The GCP IDE environment by default has a very old version of Terraform, so you may have to upgrade it by something like...
+
+	wget https://releases.hashicorp.com/terraform/0.15.3/terraform_0.15.3_linux_arm64.zip
+	unzip terraform_0.15.3_linux_arm64.zip
+	sudo cp terraform `which terraform`
+	
+Also remember, to get a Service account setup and modify the `terraform.tfvars` as appropriate for the correct creds file.
+
+Failure to do so will stop the examples from working.
+
 Running Azure Samples
 ---------------------
 The third set of examples are for Azure and are based on the Terraform starting examples. To use them you will have to have access to an Azure project in the cloud, then use `az login` to connect to it.
