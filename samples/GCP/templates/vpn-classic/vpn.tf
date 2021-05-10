@@ -266,6 +266,7 @@ module "frontend_vpn" {
   cr_enabled         = false
   remote_subnet      = [google_compute_subnetwork.backend_subnet.ip_cidr_range]
 }
+  
 
 module "backend_vpn" {
   source             = "terraform-google-modules/vpn/google"
@@ -283,3 +284,4 @@ module "backend_vpn" {
 }
 
 */
+
