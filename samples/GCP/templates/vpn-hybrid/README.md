@@ -23,9 +23,9 @@ To run this tutorial, you must have ensured the following...
 * You have modified the `creds` variable in the file `terraform.tfvars` to point to the location of the JWT file
 * You have access to an on-prem VPN and have modified the file `terraform.tfvars` to point to the IP address of on-prem system
 
-    # Replace these with your on-prem VPN...
-    onprem_peering_ip001 = "111.222.1.0"
-    onprem_peering_ip002 = "111.222.1.1"
+        # Replace these with your on-prem VPN...
+        onprem_peering_ip001 = "111.222.1.0"
+        onprem_peering_ip002 = "111.222.1.1"
 
 For more information on how to generate your JWT token, please see the main project page.
 
