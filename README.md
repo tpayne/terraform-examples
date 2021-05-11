@@ -29,7 +29,7 @@ Then, run the following...
 	cd samples/docker
 	terraform init && terraform plan && terraform apply -auto-approve
 
-You can delete all the resources using `terraform destroy -auto-approve -force`
+You can delete all the resources using `terraform destroy -auto-approve`
 
 Running GCP Samples
 -------------------
