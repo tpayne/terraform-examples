@@ -41,3 +41,8 @@ jobs:
           echo '(cd samples/GCP/templates/vpn-classic/ && make)'
           echo '>>Ignore module errors and header errors<<'
           (cd samples/GCP/templates/vpn-classic/ && make -i docker_test_lint docker_generate_docs)
+      - name: Testing the lint standards for vpn-hybrid (ignoring errors)...
+        run: |
+          echo '(cd samples/GCP/templates/vpn-hybrid/ && make)'
+          echo '>>Ignore module errors and header errors<<'
+          (cd samples/GCP/templates/vpn-hybrid/ && make -i docker_test_lint docker_generate_docs)
