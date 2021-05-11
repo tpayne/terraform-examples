@@ -24,10 +24,10 @@ The first set of examples are for Docker and are based on the Terraform starting
 
 Then, run the following...
 
-	1) cd project/terraform-examples
-	2) ./get-started.sh
-	3) cd samples/docker
-	4) terraform init && terraform plan && terraform apply -auto-approve
+	cd project/terraform-examples
+	./get-started.sh
+	cd samples/docker
+	terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
 
@@ -62,11 +62,11 @@ Once you have confirmed the above, then you can...
 
 Then, run the following...
 
-	1) cd project/terraform-examples
-	2) ./get-started.sh
-	3) cd samples/GCP
-	4) edit the "terraform.tfvars" file to replace the project and creds values with those specific for you
-	5) terraform init && terraform plan && terraform apply -auto-approve
+	cd project/terraform-examples
+	./get-started.sh
+	cd samples/GCP
+	Edit the "terraform.tfvars" file to replace the project and creds values with those specific for you
+	terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
 
@@ -99,10 +99,10 @@ The third set of examples are for Azure and are based on the Terraform starting 
 
 Then, run the following...
 
-	1) cd project/terraform-examples
-	2) ./get-started.sh
-	3) cd samples/Azure
-	4) terraform init && terraform plan && terraform apply -auto-approve
+	cd project/terraform-examples
+	./get-started.sh
+	cd samples/Azure
+	terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
 
@@ -116,10 +116,10 @@ The last set of examples are for AWS and are based on the Terraform starting exa
 
 Then, run the following...
 
-	1) cd project/terraform-examples
-	2) ./get-started.sh
-	3) cd samples/AWS
-	4) terraform init && terraform plan && terraform apply -auto-approve
+	cd project/terraform-examples
+	./get-started.sh
+	cd samples/AWS
+	terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
 
