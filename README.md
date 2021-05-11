@@ -66,11 +66,11 @@ Then, run the following...
 	./get-started.sh
 	cd samples/GCP
 
-Edit the "terraform.tfvars" file to replace the project and creds values with those specific for you, then do...
+Edit the `terraform.tfvars` file to replace the project and creds values with those specific for you, then do...
 
 	terraform init && terraform plan && terraform apply -auto-approve
 
-You can delete all the resources using `terraform destroy -auto-approve -force`
+You can delete all the resources using `terraform destroy -auto-approve`
 
 #### The following are boiler plate templates for putting together common cloud architectures in GCP.
 
@@ -106,7 +106,7 @@ Then, run the following...
 	cd samples/Azure
 	terraform init && terraform plan && terraform apply -auto-approve
 
-You can delete all the resources using `terraform destroy -auto-approve -force`
+You can delete all the resources using `terraform destroy -auto-approve`
 
 Running AWS Samples
 -------------------
@@ -123,7 +123,7 @@ Then, run the following...
 	cd samples/AWS
 	terraform init && terraform plan && terraform apply -auto-approve
 
-You can delete all the resources using `terraform destroy -auto-approve -force`
+You can delete all the resources using `terraform destroy -auto-approve`
 
 Issues
 ------
