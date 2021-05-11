@@ -83,6 +83,7 @@ Notes
 -----
 - https://github.com/varnumd/terraform-gcp-cisco-vpn
 - https://overlaid.net/2020/04/03/terraform-an-ha-vpn-between-gcp-and-cisco/
+- https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_external_vpn_gateway
 
 Liability Warning
 -----------------
