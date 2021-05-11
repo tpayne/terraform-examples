@@ -65,7 +65,9 @@ Then, run the following...
 	cd project/terraform-examples
 	./get-started.sh
 	cd samples/GCP
-	Edit the "terraform.tfvars" file to replace the project and creds values with those specific for you
+
+Edit the "terraform.tfvars" file to replace the project and creds values with those specific for you, then do...
+
 	terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve -force`
