@@ -80,13 +80,14 @@ You can delete all the resources using `terraform destroy -auto-approve`
 |[GCP/templates/bastionhost/](samples/GCP/templates/bastionhost/) | A standard bastion host example using NAT routers, internal load balancers and instance groups | [<img src="http://gstatic.com/cloudssh/images/open-btn.png" alt="Run in Google Shell" height="40">][run_button_bastionhost] |
 |[GCP/templates/vpn-classic/](samples/GCP/templates/vpn-classic/) | A standard VPN peering host example using NAT routers, internal load balancers and instance groups | [<img src="http://gstatic.com/cloudssh/images/open-btn.png" alt="Run in Google Shell" height="40">][run_button_vpn] |
 |[GCP/templates/vpn-hybrid/](samples/GCP/templates/vpn-hybrid/) | A standard VPN hybrid example using NAT routers, internal load balancers and instance groups | [<img src="http://gstatic.com/cloudssh/images/open-btn.png" alt="Run in Google Shell" height="40">][run_button_hybrid] |
+|[GCP/templates/kubernetes/](samples/GCP/templates/kubernetes/) | A standard K8s example | [<img src="http://gstatic.com/cloudssh/images/open-btn.png" alt="Run in Google Shell" height="40">][run_button_kube] |
 
 The GCP IDE environment by default has a very old version of Terraform, so you may have to upgrade it by something like...
 
 	wget https://releases.hashicorp.com/terraform/0.15.3/terraform_0.15.3_linux_arm64.zip
 	unzip terraform_0.15.3_linux_arm64.zip
 	sudo cp terraform `which terraform`
-	
+
 Also remember, to get a Service account setup and modify the `terraform.tfvars` as appropriate for the correct creds file.
 
 Failure to do so will stop the examples from working.
@@ -138,7 +139,7 @@ Notes
 * Use `terraform fmt` to change your .tf files to Terraform standard
 * Use `terraform validate` to validate your configuration definition is valid
 * The Terraform tutorials are located [here](https://learn.hashicorp.com/collections/terraform/gcp-get-started)
-* The Terraform tutorials on Terraform Cloud and state saving are [here](https://learn.hashicorp.com/tutorials/terraform/azure-remote?in=terraform/azure-get-started). 
+* The Terraform tutorials on Terraform Cloud and state saving are [here](https://learn.hashicorp.com/tutorials/terraform/azure-remote?in=terraform/azure-get-started).
 Essentially, it is about how to save the state files to the cloud, rather than local dirs.
 
 Azure References
@@ -164,3 +165,5 @@ GCP References
 [run_button_bastionhost]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/bastionhost&page=shell&tutorial=README.md
 [run_button_vpn]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/vpn-classic&page=shell&tutorial=README.md
 [run_button_hybrid]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/vpn-hybrid&page=shell&tutorial=README.md
+[run_button_kube]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/kubernetes&page=shell&tutorial=README.md
+
