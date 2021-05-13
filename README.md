@@ -115,6 +115,9 @@ You can delete all the resources using `terraform destroy -auto-approve`
 | ------------------------------- | ------------------------ | ------------- |
 |[Azure/templates/kubernetes/](samples/Azure/templates/kubernetes/) | A standard K8s example | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Google Shell" width="80" height="50">][run_button_azkube] |
 
+If you use the `Deploy` button, you will need to manually clone this git repo as Azure does not do it for you.
+
+	git clone https://github.com/tpayne/terraform-examples.git samples/Azure/templates/
 
 Running AWS Samples
 -------------------
