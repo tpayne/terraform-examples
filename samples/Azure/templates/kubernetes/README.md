@@ -36,7 +36,7 @@ To run the example in Cloud Shell, press the button below.
 If you use this method, you will need to manually clone this git repo as Azure does not do it for you.
 
 	git clone https://github.com/tpayne/terraform-examples.git samples/Azure/templates/
-    
+ 
 To Test
 -------
 To check the service exists, do...
