@@ -31,8 +31,12 @@ Running the Sample in Azure Cloud Shell
 ---------------------------------------
 To run the example in Cloud Shell, press the button below.
 
-[<img src="https://azure.microsoft.com/svghandler/cloud-shell/?width=300&height=300" alt="Run on Azure Cloud"][run_button_auto]
+[<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="200" height="100">][run_button_auto]
 
+If you use this method, you will need to manually clone this git repo as Azure does not do it for you.
+
+	git clone https://github.com/tpayne/terraform-examples.git samples/Azure/templates/
+    
 To Test
 -------
 To check the service exists, do...
