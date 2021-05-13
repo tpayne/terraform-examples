@@ -19,7 +19,7 @@ This was tested using Terraform version v0.15.2 and Azure versions...
 
 *  "azure-cli": "2.23.0",
 *  "azure-cli-core": "2.23.0",
-*  "azure-cli-telemetry": "1.0.6",
+*  "azure-cli-telemetry": "1.0.6"
 
 Usage
 -----
