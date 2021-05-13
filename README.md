@@ -35,7 +35,7 @@ Running GCP Samples
 -------------------
 The second set of examples are for GCP and are based on the Terraform starting examples. To use them you will have to have access to a GCP project in the cloud, then create a JSON service account file (with Project -> Editor role) granted. This creds file will need to be downloaded and available for use.
 
-To run this tutorial, you must have ensured the following...
+To run these tutorials, you must have ensured the following...
 
 * You have access to a GCP project as an admin or owner
 * You have created a GCP service account with the required privileges
@@ -44,7 +44,7 @@ To run this tutorial, you must have ensured the following...
 
 For more information on how to generate your JWT token, please see the main project page.
 
-This was tested using Terraform version v0.15.2 and Gcloud versions...
+These were tested using Terraform version v0.15.2 and Gcloud versions...
 
 * Google Cloud SDK 339.0.0
 * app-engine-java 1.9.88
@@ -109,7 +109,17 @@ Then, run the following...
 
 You can delete all the resources using `terraform destroy -auto-approve`
 
-#### The following are boiler plate templates for putting together common cloud architectures in GCP.
+To run these tutorials, you must have ensured the following...
+
+* You have access to a Azure account as an admin or owner
+
+These were tested using Terraform version v0.15.2 and Azure versions...
+
+*  "azure-cli": "2.23.0",
+*  "azure-cli-core": "2.23.0",
+*  "azure-cli-telemetry": "1.0.6",
+
+#### The following are boiler plate templates for putting together common cloud architectures in Azure.
 
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
