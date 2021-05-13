@@ -28,7 +28,7 @@
 # DEBUG - export TF_LOG=DEBUG
 
 ##############################
-# Create computer resources...
+# Create monitor resources...
 ##############################
 
 resource "azurerm_log_analytics_workspace" "be_logworkspace" {
@@ -116,7 +116,7 @@ resource "azurerm_monitor_diagnostic_setting" "be_diagnostics" {
 # Backend K8s resources...
 #------------------------------
 
-# Create a backend k8s services...
+# Create backend k8s services...
 
 # ${random_pet.prefix.id}
 resource "random_pet" "prefix" {}
