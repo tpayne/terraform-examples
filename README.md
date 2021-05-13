@@ -165,6 +165,10 @@ Essentially, it is about how to save the state files to the cloud, rather than l
 Azure References
 --------------
 * https://docs.microsoft.com/en-us/azure/developer/terraform/
+* https://github.com/terraform-providers/terraform-provider-azurerm
+* https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/kubernetes
+* https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
+* https://github.com/terraform-azurerm-modules#:~:text=A%20Terraform%20module%20to%20provision%20a%20container-based%20build,the%20same%20defaults%20object%20as%20the%20VM%20module.
 
 GCP References
 --------------
