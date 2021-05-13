@@ -109,6 +109,13 @@ Then, run the following...
 
 You can delete all the resources using `terraform destroy -auto-approve`
 
+#### The following are boiler plate templates for putting together common cloud architectures in GCP.
+
+|           Sample                |        Description       |     Deploy    |
+| ------------------------------- | ------------------------ | ------------- |
+|[Azure/templates/kubernetes/](samples/Azure/templates/kubernetes/) | A standard K8s example | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Google Shell" width="80" height="50">][run_button_azkube] |
+
+
 Running AWS Samples
 -------------------
 The last set of examples are for AWS and are based on the Terraform starting examples. To use them you will have to have access to an AWS project in the cloud, then use `aws configure` to connect to it. You will need to create a secure key using the IAM console under `Access keys (access key ID and secret access key)`, download the key and then input the values during the configure process.
@@ -166,4 +173,5 @@ GCP References
 [run_button_vpn]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/vpn-classic&page=shell&tutorial=README.md
 [run_button_hybrid]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/vpn-hybrid&page=shell&tutorial=README.md
 [run_button_kube]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/kubernetes&page=shell&tutorial=README.md
+[run_button_azkube]: https://shell.azure.com/
 
