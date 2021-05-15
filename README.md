@@ -124,7 +124,7 @@ These were tested using Terraform version v0.15.2 and Azure versions...
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
 |[Azure/templates/kubernetes/](samples/Azure/templates/kubernetes/) | A standard K8s example | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azkube] |
-
+|[Azure/templates/bastionhost/](samples/Azure/templates/bastionhost/) | A bastion host example | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azbastion] |
 If you use the `Deploy` button, you will need to manually clone this git repo as Azure does not do it for you.
 
 	git clone https://github.com/tpayne/terraform-examples.git samples/Azure/templates/
@@ -191,4 +191,5 @@ GCP References
 [run_button_hybrid]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/vpn-hybrid&page=shell&tutorial=README.md
 [run_button_kube]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/kubernetes&page=shell&tutorial=README.md
 [run_button_azkube]: https://shell.azure.com/
+[run_button_azbastion]: https://shell.azure.com/
 
