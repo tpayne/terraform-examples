@@ -17,7 +17,7 @@ variable "location" {
 
 variable "tags" {
   description = "Azure tags object."
-  type        = map
+  type        = map(any)
   default     = {}
 }
 
