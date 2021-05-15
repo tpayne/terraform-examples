@@ -124,7 +124,8 @@ These were tested using Terraform version v0.15.2 and Azure versions...
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
 |[Azure/templates/kubernetes/](samples/Azure/templates/kubernetes/) | A standard K8s example | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azkube] |
-|[Azure/templates/bastionhost/](samples/Azure/templates/bastionhost/) | A bastion host example | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azbastion] |
+|[Azure/templates/bastionhost/](samples/Azure/templates/bastionhost/) | A standard bastion host example using NAT routers, internal load balancers and instance groups | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azbastion] |
+
 If you use the `Deploy` button, you will need to manually clone this git repo as Azure does not do it for you.
 
 	git clone https://github.com/tpayne/terraform-examples.git samples/Azure/templates/
