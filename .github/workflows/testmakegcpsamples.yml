@@ -51,6 +51,11 @@ jobs:
           echo '(cd samples/GCP/templates/kubernetes/ && make)'
           echo '>>Ignore module errors and header errors<<'
           (cd samples/GCP/templates/kubernetes/ && make -i docker_test_lint docker_generate_docs)
+      - name: Testing the lint standards for AZ bastionhost (ignoring errors)...
+        run: |
+          echo '(cd samples/Azure/templates/bastionhost/ && make)'
+          echo '>>Ignore module errors and header errors<<'
+          (cd samples/Azure/templates/bastionhost/ && make -i docker_test_lint docker_generate_docs)      
       - name: Testing the lint standards for AZ kubernetes (ignoring errors)...
         run: |
           echo '(cd samples/Azure/templates/kubernetes/ && make)'
