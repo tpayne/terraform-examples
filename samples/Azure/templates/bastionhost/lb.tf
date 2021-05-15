@@ -24,17 +24,32 @@
 # terraform init -upgrade
 # DEBUG - export TF_LOG=DEBUG
 
-# NAT router
-resource "azurerm_nat_gateway" "backend_router" {
-  name                    = "${var.project}-backend-nat001"
-  location                = azurerm_resource_group.resourceGroup.location
-  resource_group_name     = azurerm_resource_group.resourceGroup.name
-  sku_name                = "Standard"
-  idle_timeout_in_minutes = 10
-  zones                   = ["1"]
+locals {
+  load_balancer_defaults = {
+    resource_group_name = azurerm_resource_group.resourceGroup.name
+    location            = azurerm_resource_group.resourceGroup.location
+    tags                = azurerm_resource_group.resourceGroup.tags
+    subnet_id           = azurerm_subnet.backend_subnet.id
+  }
 }
 
+module "internal-lb" {
+  source   = "./modules/internal-lb"
+  defaults = local.load_balancer_defaults
+  name     = "${var.project}-backend-lb"
 
+  load_balancer_rules = [{
+    protocol      = "Tcp",
+    frontend_port = 80,
+    backend_port  = 80
+    },
+    {
+      protocol      = "Tcp",
+      frontend_port = 22,
+      backend_port  = 22
+    }
+  ]
+}
 
 
 

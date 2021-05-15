@@ -19,9 +19,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-# This sample has been adapted from the Terraform standard examples for getting started
-# https://learn.hashicorp.com/tutorials/terraform/install-cli?in=terraform/gcp-get-started
-# Provider syntax: https://registry.terraform.io/providers/hashicorp/google/latest/docs
 
 # This section will declare the providers needed...
 # terraform init -upgrade

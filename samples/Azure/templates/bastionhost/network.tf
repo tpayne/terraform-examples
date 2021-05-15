@@ -29,11 +29,64 @@
 ##############################
 
 #------------------------------
+# Frontend network resources...
+#------------------------------
+
+# Create a frontend VPC network...
+resource "azurerm_virtual_network" "fevnet" {
+  name                = "${var.project}-vnet-frontend-001"
+  address_space       = [var.frontend_cidr_range]
+  location            = azurerm_resource_group.resourceGroup.location
+  resource_group_name = azurerm_resource_group.resourceGroup.name
+}
+
+# Subnet frontend layer
+resource "azurerm_subnet" "frontend_subnet" {
+  name                 = "${var.project}-subnet-frontend-001"
+  resource_group_name  = azurerm_resource_group.resourceGroup.name
+  virtual_network_name = azurerm_virtual_network.fevnet.name
+  address_prefixes     = [var.frontendsn_cidr_range]
+  service_endpoints    = ["Microsoft.Sql", "Microsoft.Storage", "Microsoft.KeyVault"]
+}
+
+# Firewall rules
+resource "azurerm_network_security_group" "fnsg" {
+  name                = "${var.project}-nsg-frontend-001"
+  location            = azurerm_resource_group.resourceGroup.location
+  resource_group_name = azurerm_resource_group.resourceGroup.name
+
+  security_rule {
+    name                       = "SSH"
+    priority                   = 1001
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = var.frontend_cidr_range
+  }
+
+  security_rule {
+    name                       = "HTTP"
+    priority                   = 1002
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "80"
+    source_address_prefix      = "*"
+    destination_address_prefix = var.frontend_cidr_range
+  }
+}
+
+
+#------------------------------
 # Backend network resources...
 #------------------------------
 
 # Create a backend virtual network...
-resource "azurerm_virtual_network" "vnet" {
+resource "azurerm_virtual_network" "bevnet" {
   name                = "${var.project}-vnet-backend-001"
   address_space       = [var.backend_cidr_range]
   location            = azurerm_resource_group.resourceGroup.location
@@ -44,13 +97,13 @@ resource "azurerm_virtual_network" "vnet" {
 resource "azurerm_subnet" "backend_subnet" {
   name                 = "${var.project}-subnet-backend-001"
   resource_group_name  = azurerm_resource_group.resourceGroup.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
+  virtual_network_name = azurerm_virtual_network.bevnet.name
   address_prefixes     = [var.backendsn_cidr_range]
   service_endpoints    = ["Microsoft.Sql", "Microsoft.Storage", "Microsoft.KeyVault"]
 }
 
 # Firewall rules
-resource "azurerm_network_security_group" "nsg" {
+resource "azurerm_network_security_group" "bnsg" {
   name                = "${var.project}-nsg-backend-001"
   location            = azurerm_resource_group.resourceGroup.location
   resource_group_name = azurerm_resource_group.resourceGroup.name
@@ -80,5 +133,25 @@ resource "azurerm_network_security_group" "nsg" {
   }
 }
 
+# Peering rules
+resource "azurerm_virtual_network_peering" "frontend_backend_peering" {
+  name                         = "${var.project}-frontendpeering-001"
+  resource_group_name          = azurerm_resource_group.resourceGroup.name
+  virtual_network_name         = azurerm_virtual_network.fevnet.name
+  remote_virtual_network_id    = azurerm_virtual_network.bevnet.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = true
+  use_remote_gateways          = false
+}
+
+resource "azurerm_virtual_network_peering" "backend_frontend_peering" {
+  name                         = "${var.project}-backendpeering-001"
+  resource_group_name          = azurerm_resource_group.resourceGroup.name
+  virtual_network_name         = azurerm_virtual_network.bevnet.name
+  remote_virtual_network_id    = azurerm_virtual_network.fevnet.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = true
+  use_remote_gateways          = false
+}
 
 

@@ -24,14 +24,33 @@
 # terraform init -upgrade
 # DEBUG - export TF_LOG=DEBUG
 
-# NAT router
-resource "azurerm_nat_gateway" "backend_router" {
-  name                    = "${var.project}-backend-nat001"
-  location                = azurerm_resource_group.resourceGroup.location
-  resource_group_name     = azurerm_resource_group.resourceGroup.name
-  sku_name                = "Standard"
-  idle_timeout_in_minutes = 10
-  zones                   = ["1"]
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 2.26"
+    }
+  }
+
+  # This can be used to store state about the Terraform project in the Terraform cloud...
+  #backend "remote" {
+  #  organization = "<YourOrg>"
+  #  workspaces {
+  #    name = "Example-Workspace"
+  #  }
+  #}
+
+}
+
+provider "azurerm" {
+  features {}
+}
+
+# Create a resource group...
+resource "azurerm_resource_group" "resourceGroup" {
+  name     = "rg_001"
+  location = var.region_be
+  tags     = var.tags
 }
 
 

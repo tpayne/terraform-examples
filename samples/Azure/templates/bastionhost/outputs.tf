@@ -19,23 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-# This section will declare the providers needed...
-# terraform init -upgrade
-# DEBUG - export TF_LOG=DEBUG
-
-# NAT router
-resource "azurerm_nat_gateway" "backend_router" {
-  name                    = "${var.project}-backend-nat001"
-  location                = azurerm_resource_group.resourceGroup.location
-  resource_group_name     = azurerm_resource_group.resourceGroup.name
-  sku_name                = "Standard"
-  idle_timeout_in_minutes = 10
-  zones                   = ["1"]
+output "bastionhost-ip" {
+  value = azurerm_public_ip.fepublicip001.ip_address
 }
 
-
-
-
+output "loadbalancer-ip" {
+  value = module.internal-lb.load_balancer_private_ip_address
+}
 
 

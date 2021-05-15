@@ -34,8 +34,3 @@ resource "azurerm_nat_gateway" "backend_router" {
   zones                   = ["1"]
 }
 
-
-
-
-
-
