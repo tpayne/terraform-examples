@@ -93,7 +93,7 @@ function metadata_value($queryStr) {
 <div class="col s8">
 <div class="card blue">
 <div class="card-content white-text">
-<div class="card-title">Backend MIG that serviced this request</div>
+<div class="card-title">Backend VMSS instance that serviced this request</div>
 </div>
 <div class="card-content white">
 <table class="bordered">
