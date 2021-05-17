@@ -28,6 +28,12 @@
 # Create network interfaces...
 ##############################
 
+resource "azurerm_network_ddos_protection_plan" "ddos" {
+  name                = "${var.project}-ddos-001"
+  resource_group_name = azurerm_resource_group.resourceGroup.name
+  location            = azurerm_resource_group.resourceGroup.location
+}
+
 #------------------------------
 # Frontend network resources...
 #------------------------------
@@ -38,6 +44,11 @@ resource "azurerm_virtual_network" "fevnet" {
   address_space       = [var.frontend_cidr_range]
   location            = azurerm_resource_group.resourceGroup.location
   resource_group_name = azurerm_resource_group.resourceGroup.name
+
+  ddos_protection_plan {
+    id     = azurerm_network_ddos_protection_plan.ddos.id
+    enable = true
+  }
 }
 
 # Subnet frontend layer
@@ -80,6 +91,10 @@ resource "azurerm_network_security_group" "fnsg" {
   }
 }
 
+resource "azurerm_subnet_network_security_group_association" "fensgass001" {
+  subnet_id                 = azurerm_subnet.frontend_subnet.id
+  network_security_group_id = azurerm_network_security_group.fnsg.id
+}
 
 #------------------------------
 # Backend network resources...
@@ -91,6 +106,11 @@ resource "azurerm_virtual_network" "bevnet" {
   address_space       = [var.backend_cidr_range]
   location            = azurerm_resource_group.resourceGroup.location
   resource_group_name = azurerm_resource_group.resourceGroup.name
+
+  ddos_protection_plan {
+    id     = azurerm_network_ddos_protection_plan.ddos.id
+    enable = true
+  }
 }
 
 # Subnet backend layer
@@ -131,6 +151,11 @@ resource "azurerm_network_security_group" "bnsg" {
     source_address_prefix      = "*"
     destination_address_prefix = var.backend_cidr_range
   }
+}
+
+resource "azurerm_subnet_network_security_group_association" "bensgass001" {
+  subnet_id                 = azurerm_subnet.backend_subnet.id
+  network_security_group_id = azurerm_network_security_group.bnsg.id
 }
 
 # Peering rules

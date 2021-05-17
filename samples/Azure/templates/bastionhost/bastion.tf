@@ -84,6 +84,11 @@ resource "azurerm_virtual_machine" "bastionhost" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
+
+  boot_diagnostics {
+    enabled     = true
+    storage_uri = azurerm_storage_account.bemigstore.primary_blob_endpoint
+  }
 }
 
 
