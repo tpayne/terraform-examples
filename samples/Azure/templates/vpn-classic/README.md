@@ -72,6 +72,13 @@ Notes
 -----
 - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_gateway_connection
 - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_gateway
+- https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-howto-vnet-vnet-resource-manager-portal
+- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering
+- https://github.com/guillermo-musumeci/azure-terraform-point-to-site-vpn-gateway
+- https://github.com/kumarvna/terraform-azurerm-vpn-gateway
+- https://github.com/avinor/terraform-azurerm-vpn
+- https://www.tinfoilcipher.co.uk/2020/05/28/terraform-and-azure-automated-deployment-of-s2s-vpns/
+- https://documentation.meraki.com/MX/Site-to-site_VPN/Configuring_Site_to_Site_VPN_tunnels_to_Azure_VPN_Gateway
 
 Issues
 ------
