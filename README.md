@@ -23,9 +23,9 @@ There are two main types of examples provided
 * Loose samples
 * Templates
 
-The loose samples are those that are provided in the `loose` directory and are just samples to view. No guarantee is made for them working.
+The loose samples are those that are provided in the `loose` directories and are just samples to view. No guarantee is made for them working.
 
-The template samples are those that are provided in the `template` directory and are documented and validated. The tables below provide links to the code and the READMEs for them.
+The template samples are those that are provided in the `template` directories and are documented and validated. The tables below provide links to the code and the READMEs for them.
 
 Running Docker Samples
 ----------------------
