@@ -1,7 +1,7 @@
 # Terraform-examples
 Some simple educational terraform work for people to use. Examples will be added as I get around to them.
 
-Note: These examples only work for Mac and need Docker installed. There are currently examples for...
+Note: These examples only work for `Mac` and some need `Docker` installed. There are currently examples for...
 * Docker
 * GCP
 * Azure
@@ -17,11 +17,21 @@ The build will only check for HCL syntax and other simple linting errors. It doe
 
 [![CI](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml/badge.svg)](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml)
 
+Types of Samples
+----------------
+There are two main types of examples provided
+* Loose samples
+* Templates
+
+The loose samples are those that are provided in the `loose` directory and are just samples to view. No guarantee is made for them working.
+
+The template samples are those that are provided in the `template` directory and are documented and validated. The tables below provide links to the code and the READMEs for them.
+
 Running Docker Samples
 ----------------------
 The first set of examples are for Docker and are based on the Terraform starting examples
 
-  * Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project)
+  * Goto a temporary directory and create a project directory
   * Clone the repo
 
 Then, run the following...
@@ -59,7 +69,7 @@ These were tested using Terraform version v0.15.2 and Gcloud versions...
 
 Once you have confirmed the above, then you can...
 
-* Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project)
+* Goto a temporary directory and create a project directory
 * Clone the repo
 
 Then, run the following...
@@ -98,8 +108,7 @@ Running Azure Samples
 ---------------------
 The third set of examples are for Azure and are based on the Terraform starting examples. To use them you will have to have access to an Azure project in the cloud, then use `az login` to connect to it.
 
-
-  * Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project)
+  * Goto a temporary directory and create a project directory
   * Clone the repo
 
 Then, run the following...
@@ -139,7 +148,7 @@ Running AWS Samples
 The last set of examples are for AWS and are based on the Terraform starting examples. To use them you will have to have access to an AWS project in the cloud, then use `aws configure` to connect to it. You will need to create a secure key using the IAM console under `Access keys (access key ID and secret access key)`, download the key and then input the values during the configure process.
 
 
-  * Goto a temporary directory and create a project directory, e.g. (cd /tmp/ && mkdir project && cd project)
+  * Goto a temporary directory and create a project directory
   * Clone the repo
 
 Then, run the following...
@@ -157,7 +166,7 @@ Issues
 
 Notes
 -----
-* Only run "terraform init" after you have created the TF files (.tf) as it needs to install the needed plugins
+* Only run `terraform init` after you have created the TF files (.tf) as it needs to install the needed plugins
 * Use `terraform refresh` to reapply changes and fix drift
 * Use `terraform show` to show what has been deployed
 * To put changes into the files and apply them incrementally use (+) to add/replace DSC and (-) to remove DSC
