@@ -180,7 +180,6 @@ Notes
 * Only run `terraform init` after you have created the TF files (.tf) as it needs to install the needed plugins
 * Use `terraform refresh` to reapply changes and fix drift
 * Use `terraform show` to show what has been deployed
-* To put changes into the files and apply them incrementally use (+) to add/replace DSC and (-) to remove DSC
 * Use `terraform fmt` to change your .tf files to Terraform standard
 * Use `terraform validate` to validate your configuration definition is valid
 * The Terraform tutorials are located [here](https://learn.hashicorp.com/collections/terraform/gcp-get-started)
