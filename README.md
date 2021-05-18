@@ -13,6 +13,8 @@ Install Terraform using appropriate instructions for your OS [Getting started](h
 
 Build Status
 ------------
+The build will only check for HCL syntax and other simple linting errors. It does not run the examples against any terraform emulators etc.
+
 [![CI](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml/badge.svg)](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml)
 
 Running Docker Samples
