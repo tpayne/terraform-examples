@@ -27,8 +27,8 @@ The loose samples are those that are provided in the `loose` directories and are
 
 The template samples are those that are provided in the `template` directories and are documented and validated. The tables below provide links to the code and the READMEs for them.
 
-Running Docker Samples
-----------------------
+Running Loose Docker Samples
+----------------------------
 The first set of examples are for Docker and are based on the Terraform starting examples
 
   * Goto a temporary directory and create a project directory
@@ -72,7 +72,8 @@ Once you have confirmed the above, then you can...
 * Goto a temporary directory and create a project directory
 * Clone the repo
 
-Then, run the following...
+#### Running the Loose samples
+To run the loose samples, do the following...
 
 	cd project/terraform-examples
 	./get-started.sh
@@ -84,7 +85,8 @@ Edit the `terraform.tfvars` file to replace the project and creds values with th
 
 You can delete all the resources using `terraform destroy -auto-approve`
 
-#### The following are boiler plate templates for putting together common cloud architectures in GCP.
+#### Running the Template samples
+The following are the provided template examples
 
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
@@ -111,15 +113,6 @@ The third set of examples are for Azure and are based on the Terraform starting 
   * Goto a temporary directory and create a project directory
   * Clone the repo
 
-Then, run the following...
-
-	cd project/terraform-examples
-	./get-started.sh
-	cd samples/Azure/loose
-	terraform init && terraform plan && terraform apply -auto-approve
-
-You can delete all the resources using `terraform destroy -auto-approve`
-
 To run these tutorials, you must have ensured the following...
 
 * You have access to a Azure account as an admin or owner
@@ -130,7 +123,18 @@ These were tested using Terraform version v0.15.2 and Azure versions...
 *  "azure-cli-core": "2.23.0",
 *  "azure-cli-telemetry": "1.0.6"
 
-#### The following are boiler plate templates for putting together common cloud architectures in Azure.
+#### Running the Loose samples
+To run the loose samples, do the following...
+
+	cd project/terraform-examples
+	./get-started.sh
+	cd samples/Azure/loose
+	terraform init && terraform plan && terraform apply -auto-approve
+
+You can delete all the resources using `terraform destroy -auto-approve`
+
+#### Running the Template samples
+The following are the provided template examples
 
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
@@ -143,8 +147,8 @@ If you use the `Deploy` button, you will need to manually clone this git repo as
 
 	git clone https://github.com/tpayne/terraform-examples.git samples/Azure/templates/
 
-Running AWS Samples
--------------------
+Running Loose AWS Samples
+-------------------------
 The last set of examples are for AWS and are based on the Terraform starting examples. To use them you will have to have access to an AWS project in the cloud, then use `aws configure` to connect to it. You will need to create a secure key using the IAM console under `Access keys (access key ID and secret access key)`, download the key and then input the values during the configure process.
 
 
