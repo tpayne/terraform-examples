@@ -27,6 +27,8 @@ The loose samples are those that are provided in the `loose` directories and are
 
 The template samples are those that are provided in the `template` directories and are documented and validated. The tables below provide links to the code and the READMEs for them.
 
+References, inspirations, similar samples, other tutorials are provided in the `notes` and `references` sections as appropriate. The source for some of these samples (which have been then modified) are also given where appropriate.
+
 Running Loose Docker Samples
 ----------------------------
 The first set of examples are for Docker and are based on the Terraform starting examples
@@ -45,7 +47,9 @@ You can delete all the resources using `terraform destroy -auto-approve`
 
 Running GCP Samples
 -------------------
-The second set of examples are for GCP and are based on the Terraform starting examples. To use them you will have to have access to a GCP project in the cloud, then create a JSON service account file (with Project -> Editor role) granted. This creds file will need to be downloaded and available for use.
+The second set of examples are for GCP and are based on the Terraform starting examples (the loose samples). 
+
+To use these samples you will have to have access to a GCP project in the cloud, then create a JSON service account file (with Project -> Editor role) granted. This creds file will need to be downloaded and available for use.
 
 To run these tutorials, you must have ensured the following...
 
@@ -108,7 +112,9 @@ Failure to do so will stop the examples from working.
 
 Running Azure Samples
 ---------------------
-The third set of examples are for Azure and are based on the Terraform starting examples. To use them you will have to have access to an Azure project in the cloud, then use `az login` to connect to it.
+The third set of examples are for Azure and are also based on the Terraform starting examples (for the loose ones). 
+
+To use all these samples you will have to have access to an Azure project in the cloud, then use `az login` to connect to it.
 
 To run these tutorials, you must have ensured the following...
 
