@@ -74,6 +74,7 @@ To clean up do...
 Issues
 ------
 - This example is is only intended as a sample on how to create a system. You will need to configure it as needed
+- You will also need a working on-prem VPN (with valid IPs to get this setup correctly). Currently, the on-prem VPN is faked
 
 Notes
 -----

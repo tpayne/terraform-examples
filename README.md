@@ -126,6 +126,7 @@ These were tested using Terraform version v0.15.2 and Azure versions...
 |[Azure/templates/bastionhost/](samples/Azure/templates/bastionhost/) | A standard bastion host example using NAT routers, internal load balancers and instance groups | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azbastion] |
 |[Azure/templates/kubernetes/](samples/Azure/templates/kubernetes/) | A standard K8s example | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azkube] |
 |[Azure/templates/vpn-classic/](samples/Azure/templates/vpn-classic/) | A standard VPN peering host example using NAT routers, internal load balancers and instance groups | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azvpnclassic] |
+|[Azure/templates/vpn-hybrid/](samples/Azure/templates/vpn-hybrid/) | A standard hybrid VPN example using NAT routers, internal load balancers and instance groups | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azvpnclassic] |
 
 If you use the `Deploy` button, you will need to manually clone this git repo as Azure does not do it for you.
 
@@ -195,3 +196,4 @@ GCP References
 [run_button_azkube]: https://shell.azure.com/
 [run_button_azbastion]: https://shell.azure.com/
 [run_button_azvpnclassic]: https://shell.azure.com/
+[run_button_azvpnhybrid]: https://shell.azure.com/
