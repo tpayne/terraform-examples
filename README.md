@@ -38,7 +38,7 @@ Then, run the following...
 
 	cd project/terraform-examples
 	./get-started.sh
-	cd samples/docker
+	cd samples/docker/loose
 	terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve`
@@ -76,7 +76,7 @@ Then, run the following...
 
 	cd project/terraform-examples
 	./get-started.sh
-	cd samples/GCP
+	cd samples/GCP/loose
 
 Edit the `terraform.tfvars` file to replace the project and creds values with those specific for you, then do...
 
@@ -115,7 +115,7 @@ Then, run the following...
 
 	cd project/terraform-examples
 	./get-started.sh
-	cd samples/Azure
+	cd samples/Azure/loose
 	terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve`
@@ -155,7 +155,7 @@ Then, run the following...
 
 	cd project/terraform-examples
 	./get-started.sh
-	cd samples/AWS
+	cd samples/AWS/loose
 	terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve`
