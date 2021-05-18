@@ -90,7 +90,14 @@ Edit the `terraform.tfvars` file to replace the project and creds values with th
 You can delete all the resources using `terraform destroy -auto-approve`
 
 #### Running the Template samples
-The following are the provided template examples
+The following are the provided template examples.
+
+Note: These samples assume that you have a default project and zone set in your CLI environment. You can do this with
+
+	gcloud config set project <projectId>
+	gcloud config set compute/zone <zone?
+
+Failure to do this will lead to some of the GCP commands giving errors.
 
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
