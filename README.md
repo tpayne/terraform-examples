@@ -99,7 +99,7 @@ Note: These samples assume that you have a default project and zone set in your 
 
 Failure to do this will lead to some of the GCP commands giving errors.
 
-These examples also show you how to use GCP's GCE metadata server in web pages.
+These examples also show you how to use `GCP's GCE metadata server` in web pages.
 
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
@@ -153,7 +153,7 @@ You can delete all the resources using `terraform destroy -auto-approve`
 #### Running the Template samples
 The following are the provided template examples.
 
-These examples also show you how to use Azure's IMDS in web pages.
+These examples also show you how to use `Azure's IMDS` in web pages.
 
 |           Sample                |        Description       |     Deploy    |
 | ------------------------------- | ------------------------ | ------------- |
