@@ -110,9 +110,6 @@ Running Azure Samples
 ---------------------
 The third set of examples are for Azure and are based on the Terraform starting examples. To use them you will have to have access to an Azure project in the cloud, then use `az login` to connect to it.
 
-  * Goto a temporary directory and create a project directory
-  * Clone the repo
-
 To run these tutorials, you must have ensured the following...
 
 * You have access to a Azure account as an admin or owner
@@ -122,6 +119,11 @@ These were tested using Terraform version v0.15.2 and Azure versions...
 *  "azure-cli": "2.23.0",
 *  "azure-cli-core": "2.23.0",
 *  "azure-cli-telemetry": "1.0.6"
+
+Once you have confirmed the above, then you can...
+
+* Goto a temporary directory and create a project directory
+* Clone the repo
 
 #### Running the Loose samples
 To run the loose samples, do the following...
@@ -150,7 +152,6 @@ If you use the `Deploy` button, you will need to manually clone this git repo as
 Running Loose AWS Samples
 -------------------------
 The last set of examples are for AWS and are based on the Terraform starting examples. To use them you will have to have access to an AWS project in the cloud, then use `aws configure` to connect to it. You will need to create a secure key using the IAM console under `Access keys (access key ID and secret access key)`, download the key and then input the values during the configure process.
-
 
   * Goto a temporary directory and create a project directory
   * Clone the repo
