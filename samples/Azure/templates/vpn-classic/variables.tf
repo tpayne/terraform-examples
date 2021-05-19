@@ -50,6 +50,20 @@ variable "backendvpn_cidr_range" {
   default = ""
 }
 
+variable "images" {
+  type = map(any)
+  default = {
+    ubunto16 = "ubuntu1604"
+    ubunto18 = "ubuntu1804"
+    centos   = "centos8"
+    coreos   = "coreos"
+    win2012  = "windows2012r2dc"
+    win2016  = "windows2016dc"
+    win2019  = "windows2019dc"
+    mssql    = "mssql2017exp"
+  }
+}
+
 variable "machine_types" {
   type = map(any)
   default = {

@@ -87,7 +87,7 @@ resource "azurerm_virtual_machine" "bastionhost" {
 
   boot_diagnostics {
     enabled     = true
-    storage_uri = azurerm_storage_account.bemigstore.primary_blob_endpoint
+    storage_uri = module.mig.vmss-storage-endpoint
   }
 }
 

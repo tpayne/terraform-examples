@@ -20,37 +20,18 @@
  * SOFTWARE.
  */
 
-# This section will declare the providers needed...
-# terraform init -upgrade
-# DEBUG - export TF_LOG=DEBUG
-
-locals {
-  load_balancer_defaults = {
-    resource_group_name = azurerm_resource_group.resourceGroup.name
-    location            = azurerm_resource_group.resourceGroup.location
-    tags                = azurerm_resource_group.resourceGroup.tags
-    subnet_id           = azurerm_subnet.backend_subnet.id
-  }
+output "vmss-name" {
+  description = "The name of the Virtual Machine Scale Set."
+  value       = element(concat(azurerm_virtual_machine_scale_set.vmss.*.name, [""]), 0)
 }
 
-module "internal-lb" {
-  source   = "../modules/internal-lb"
-  defaults = local.load_balancer_defaults
-  name     = "${var.project}-backend-lb"
-
-  load_balancer_rules = [{
-    protocol      = "Tcp",
-    frontend_port = 80,
-    backend_port  = 80
-    },
-    {
-      protocol      = "Tcp",
-      frontend_port = 22,
-      backend_port  = 22
-    }
-  ]
+output "vmss-id" {
+  description = "The resource ID of the Virtual Machine Scale Set."
+  value       = element(concat(azurerm_virtual_machine_scale_set.vmss.*.id, [""]), 0)
 }
 
-
-
+output "vmss-storage-endpoint" {
+  description = "The storage endpoint for the VMSS"
+  value       = azurerm_storage_account.migstore.primary_blob_endpoint
+}
 
