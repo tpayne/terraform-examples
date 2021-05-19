@@ -49,7 +49,7 @@ Running GCP Samples
 -------------------
 The second set of examples are for GCP and are based on the Terraform starting examples (the loose samples). 
 
-To use these samples you will have to have access to a GCP project in the cloud, then create a JSON service account file (with Project -> Editor role) granted. This creds file will need to be downloaded and available for use.
+To use these samples you will have to have access to a GCP project in the cloud, then create a JSON service account file (with `Project -> Editor role`) granted. This creds file will need to be downloaded and available for use.
 
 To run these tutorials, you must have ensured the following...
 
@@ -95,7 +95,7 @@ The following are the provided template examples.
 Note: These samples assume that you have a default project and zone set in your CLI environment. You can do this with
 
 	gcloud config set project <projectId>
-	gcloud config set compute/zone <zone?
+	gcloud config set compute/zone <zone>
 
 Failure to do this will lead to some of the GCP commands giving errors.
 
