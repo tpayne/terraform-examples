@@ -15,6 +15,8 @@ Build Status
 ------------
 The build will only check for HCL syntax and other simple linting errors. It does not run the examples against any terraform emulators etc.
 
+The build will also run a "best practices" scanner to highlight security issues/improvements. However, these are not being fixed immediately.
+
 [![CI](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml/badge.svg)](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml)
 
 Types of Samples
@@ -186,6 +188,7 @@ You can delete all the resources using `terraform destroy -auto-approve`
 Issues
 ------
 - If you find any issues with these examples, then please feel free to create a PR or a branch with a pull request and I will be happy to review
+- Security best practice issues are being scanned for and detected, but I am not currently fixing them. If you wish to review the issues being detected, then please review the output from the `Actions`
 
 Notes
 -----
