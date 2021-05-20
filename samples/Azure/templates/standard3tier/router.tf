@@ -24,14 +24,13 @@
 # terraform init -upgrade
 # DEBUG - export TF_LOG=DEBUG
 
-output "load_balancer_private_ip_address" {
-  value = azurerm_lb.lb.frontend_ip_configuration[0].private_ip_address
+# NAT router
+resource "azurerm_nat_gateway" "router" {
+  name                    = "${var.project}-nat001"
+  location                = azurerm_resource_group.resourceGroup.location
+  resource_group_name     = azurerm_resource_group.resourceGroup.name
+  sku_name                = "Standard"
+  idle_timeout_in_minutes = 10
+  zones                   = ["1"]
 }
 
-output "load_balancer_backend_address_pool" {
-  value = {
-    name      = azurerm_lb_backend_address_pool.lb.name
-    id        = azurerm_lb_backend_address_pool.lb.id
-    ip_config = azurerm_lb_backend_address_pool.lb.backend_ip_configurations
-  }
-}

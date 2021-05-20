@@ -24,14 +24,37 @@
 # terraform init -upgrade
 # DEBUG - export TF_LOG=DEBUG
 
-output "load_balancer_private_ip_address" {
-  value = azurerm_lb.lb.frontend_ip_configuration[0].private_ip_address
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">= 2.26"
+    }
+  }
+
+  # This can be used to store state about the Terraform project in the Terraform cloud...
+  #backend "remote" {
+  #  organization = "<YourOrg>"
+  #  workspaces {
+  #    name = "Example-Workspace"
+  #  }
+  #}
+
 }
 
-output "load_balancer_backend_address_pool" {
-  value = {
-    name      = azurerm_lb_backend_address_pool.lb.name
-    id        = azurerm_lb_backend_address_pool.lb.id
-    ip_config = azurerm_lb_backend_address_pool.lb.backend_ip_configurations
-  }
+provider "azurerm" {
+  features {}
 }
+
+# Create a resource group...
+resource "azurerm_resource_group" "resourceGroup" {
+  name     = "rg_001"
+  location = var.region_be
+  tags     = var.tags
+}
+
+
+
+
+
+

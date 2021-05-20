@@ -35,3 +35,10 @@ output "vmss-storage-endpoint" {
   value       = azurerm_storage_account.migstore.primary_blob_endpoint
 }
 
+output "vmss-storage-endpoint-accesskey" {
+  description = "The storage endpoint for the VMSS accesskey"
+  value       = azurerm_storage_account.migstore.primary_access_key
+}
+
+
+

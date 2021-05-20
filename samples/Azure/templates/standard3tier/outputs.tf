@@ -20,18 +20,23 @@
  * SOFTWARE.
  */
 
-# This section will declare the providers needed...
-# terraform init -upgrade
-# DEBUG - export TF_LOG=DEBUG
-
-output "load_balancer_private_ip_address" {
-  value = azurerm_lb.lb.frontend_ip_configuration[0].private_ip_address
+output "frontend-load-balancer-ip" {
+  value = module.external-lb.load_balancer_public_ip_address
 }
 
-output "load_balancer_backend_address_pool" {
-  value = {
-    name      = azurerm_lb_backend_address_pool.lb.name
-    id        = azurerm_lb_backend_address_pool.lb.id
-    ip_config = azurerm_lb_backend_address_pool.lb.backend_ip_configurations
-  }
+output "backend-load-balancer-ip" {
+  value = module.internal-lb.load_balancer_private_ip_address
+}
+
+output "db-load-balancer-ip" {
+  value = module.db-internal-lb.load_balancer_private_ip_address
+}
+
+output "dbserver-ip" {
+  value = module.database.dbserver-ip
+}
+
+output "dbproxy-ip" {
+  description = "The IP of the PostgreSQL proxy"
+  value       = module.database.dbproxy-ip
 }

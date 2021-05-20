@@ -22,16 +22,37 @@
 
 # This section will declare the providers needed...
 # terraform init -upgrade
-# DEBUG - export TF_LOG=DEBUG
 
-output "load_balancer_private_ip_address" {
-  value = azurerm_lb.lb.frontend_ip_configuration[0].private_ip_address
+###################################
+# Create managed instance groups...
+###################################
+
+#------------------------------
+# Startup script resource...
+#------------------------------
+
+data "template_file" "pg-group-startup-script" {
+  template = file(format("%s/templates/startup-pgclient.sh.tpl", path.module))
 }
 
-output "load_balancer_backend_address_pool" {
-  value = {
-    name      = azurerm_lb_backend_address_pool.lb.name
-    id        = azurerm_lb_backend_address_pool.lb.id
-    ip_config = azurerm_lb_backend_address_pool.lb.backend_ip_configurations
-  }
+#------------------------------
+# Managed instance group template...
+#------------------------------
+
+module "dbmig" {
+  source                     = "../../modules/mig/"
+  name                       = var.name
+  resource_group             = var.resource_group
+  location                   = var.location
+  machine_type               = var.machine_type
+  subnet_id                  = var.subnet_id
+  load_balancer_address_pool = var.load_balancer_address_pool
+  size                       = var.size
+  image                      = var.image
+  custom_data                = data.template_file.pg-group-startup-script.rendered
+  admin_user                 = var.admin_user
+  admin_pwd                  = var.admin_pwd
+  tags                       = var.tags
 }
+
+

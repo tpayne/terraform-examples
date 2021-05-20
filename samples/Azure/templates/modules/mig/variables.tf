@@ -112,7 +112,7 @@ variable "profile_image" {
 
 variable "size" {
   type    = number # Type - not needed, but showing it...
-  default = 3
+  default = 2
 }
 
 variable "custom_data" {
