@@ -78,8 +78,8 @@ jobs:
           (cd samples/Azure/templates/standard3tier/ && make -i docker_test_lint docker_generate_docs)
       - name: Security scan...
         run: |
-          echo 'Running terrascan to show security issues...'
-          (cd samples && docker run --rm -v "$(pwd):/iac" -w /iac accurics/terrascan scan)
+          echo 'Running terrascan to show security issues (ignore error codes)...'
+          (cd samples && (docker run --rm -v "$(pwd):/iac" -w /iac accurics/terrascan scan || true))
 
 
 
