@@ -205,6 +205,14 @@ Code Documentation
 ------------------
 You can generate code documentation for the code by using [`terraform-doc`](https://terraform-docs.io/user-guide/installation/)
 
+For example...
+
+	brew install terraform-docs
+	cd samples/Azure/templates
+	terraform-docs markdown standard3tier
+	
+The documentation is just the default at the moment, but feel free to make more relevant contributions.
+
 Github References
 -----------------
 * https://github.com/marketplace/actions/publish-unit-test-results
