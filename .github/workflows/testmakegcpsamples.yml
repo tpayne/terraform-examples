@@ -86,4 +86,13 @@ jobs:
         if: always()
         with:
           files: samples/security-scan.xml
+          compare_to_earlier_commit: false
+          
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+           name: Unit Test Results
+           path: |
+              samples/security-scan.xml
 
