@@ -201,6 +201,10 @@ Notes
 * The Terraform tutorials on Terraform Cloud and state saving are [here](https://learn.hashicorp.com/tutorials/terraform/azure-remote?in=terraform/azure-get-started).
 Essentially, it is about how to save the state files to the cloud, rather than local dirs.
 
+Code Documentation
+------------------
+You can generate code documentation for the code by using [`terraform-doc`](https://terraform-docs.io/user-guide/installation/)
+
 Github References
 -----------------
 * https://github.com/marketplace/actions/publish-unit-test-results
