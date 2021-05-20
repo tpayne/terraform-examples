@@ -188,7 +188,7 @@ You can delete all the resources using `terraform destroy -auto-approve`
 Issues
 ------
 - If you find any issues with these examples, then please feel free to create a PR or a branch with a pull request and I will be happy to review
-- Security best practice issues are being scanned for and detected, but I am not currently fixing them. If you wish to review the issues being detected, then please review the output from the `Actions`
+- Security best practice issues are being scanned for and detected, but I am not currently fixing them. If you wish to review the issues being detected, then please review the output from the `Actions` and download the `Unit Test Results` Artifact.
 
 Notes
 -----
