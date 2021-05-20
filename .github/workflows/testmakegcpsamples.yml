@@ -80,7 +80,10 @@ jobs:
         run: |
           echo 'Running terrascan to show security issues (ignore error codes)...'
           (cd samples && (docker run --rm -v "$(pwd):/iac" -w /iac accurics/terrascan scan || true))
-
-
-
+          (cd samples && (docker run --rm -v "$(pwd):/iac" -w /iac accurics/terrascan scan -o junit-xml > security-scan.xml || true
+      - name: Publish Unit Test Results...
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        if: always()
+        with:
+          files: samples/security-scan.xml
 
