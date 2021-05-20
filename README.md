@@ -47,7 +47,7 @@ You can delete all the resources using `terraform destroy -auto-approve`
 
 Running GCP Samples
 -------------------
-The second set of examples are for GCP and are based on the Terraform starting examples (the loose samples). 
+The second set of examples are for GCP and are based on the Terraform starting examples (the loose samples).
 
 To use these samples you will have to have access to a GCP project in the cloud, then create a JSON service account file (with `Project -> Editor role`) granted. This creds file will need to be downloaded and available for use.
 
@@ -121,7 +121,7 @@ Failure to do so will stop the examples from working.
 
 Running Azure Samples
 ---------------------
-The third set of examples are for Azure and are also based on the Terraform starting examples (for the loose ones). 
+The third set of examples are for Azure and are also based on the Terraform starting examples (for the loose ones).
 
 To use all these samples you will have to have access to an Azure project in the cloud, then use `az login` to connect to it.
 
@@ -159,6 +159,7 @@ These examples also show you how to use `Azure's IMDS` in web pages.
 | ------------------------------- | ------------------------ | ------------- |
 |[Azure/templates/bastionhost/](samples/Azure/templates/bastionhost/) | A standard bastion host example using NAT routers, internal load balancers and instance groups | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azbastion] |
 |[Azure/templates/kubernetes/](samples/Azure/templates/kubernetes/) | A standard K8s example | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azkube] |
+|[Azure/templates/standard3tier/](samples/Azure/templates/standard3tier/) | A standard 3 tier example using NAT routers, load balancers, instance groups and database | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azst] |
 |[Azure/templates/vpn-classic/](samples/Azure/templates/vpn-classic/) | A standard VPN peering host example using NAT routers, internal load balancers and instance groups | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azvpnclassic] |
 |[Azure/templates/vpn-hybrid/](samples/Azure/templates/vpn-hybrid/) | A standard hybrid VPN example using NAT routers, internal load balancers and instance groups | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azvpnclassic] |
 
@@ -229,3 +230,5 @@ GCP References
 [run_button_azbastion]: https://shell.azure.com/
 [run_button_azvpnclassic]: https://shell.azure.com/
 [run_button_azvpnhybrid]: https://shell.azure.com/
+[run_button_azst]: https://shell.azure.com/
+

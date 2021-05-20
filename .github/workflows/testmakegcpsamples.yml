@@ -2,7 +2,7 @@
 
 name: CI
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
@@ -55,7 +55,7 @@ jobs:
         run: |
           echo '(cd samples/Azure/templates/bastionhost/ && make)'
           echo '>>Ignore module errors and header errors<<'
-          (cd samples/Azure/templates/bastionhost/ && make -i docker_test_lint docker_generate_docs)      
+          (cd samples/Azure/templates/bastionhost/ && make -i docker_test_lint docker_generate_docs)
       - name: Testing the lint standards for AZ kubernetes (ignoring errors)...
         run: |
           echo '(cd samples/Azure/templates/kubernetes/ && make)'
@@ -71,3 +71,10 @@ jobs:
           echo '(cd samples/Azure/templates/vpn-hybrid/ && make)'
           echo '>>Ignore module errors and header errors<<'
           (cd samples/Azure/templates/vpn-hybrid/ && make -i docker_test_lint docker_generate_docs)
+      - name: Testing the lint standards for AZ standard3tier (ignoring errors)...
+        run: |
+          echo '(cd samples/Azure/templates/standard3tier/ && make)'
+          echo '>>Ignore module errors and header errors<<'
+          (cd samples/Azure/templates/standard3tier/ && make -i docker_test_lint docker_generate_docs)
+
+
