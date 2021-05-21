@@ -37,5 +37,6 @@ output "dbserver-ip" {
 
 output "dbproxy-ip" {
   description = "The IP of the PostgreSQL proxy"
-  value       = azurerm_public_ip.dbproxy_ip.ip_address
+  value       = module.dbproxy.proxyhost-ip
 }
+

@@ -20,37 +20,7 @@
  * SOFTWARE.
  */
 
-# This section will declare the providers needed...
-# terraform init -upgrade
-# DEBUG - export TF_LOG=DEBUG
-
-##############################
-# Create compute resources...
-##############################
-
-data "template_file" "dbproxy-startup-script" {
-  template = file(format("%s/templates/run_cloud_sql_proxy.tpl", path.module))
+output "proxyhost-ip" {
+  description = "The IP of the proxy/bastion host"
+  value       = azurerm_public_ip.proxyip.ip_address
 }
-
-#------------------------------
-# Frontend bastion host...
-#------------------------------
-module "dbproxy" {
-  source = "../../modules/bastionproxyhost"
-  name   = "${var.name}dbproxy"
-
-  resource_group   = var.resource_group
-  location         = var.location
-  subnet_id        = var.subnet_id
-  machine_type     = var.machine_type
-  tags             = var.tags
-  image            = var.image
-  custom_data      = data.template_file.dbproxy-startup-script.rendered
-  storage_endpoint = var.storage_endpoint
-  admin_user       = var.admin_user
-  admin_pwd        = var.admin_pwd
-}
-
-
-
-

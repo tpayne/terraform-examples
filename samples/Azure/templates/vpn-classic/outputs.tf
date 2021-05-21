@@ -21,8 +21,7 @@
  */
 
 output "bastionhost-ip" {
-  // value = azurerm_network_interface.fe_nic01.*.private_ip_address
-  value = azurerm_public_ip.fepublicip001.ip_address
+  value = module.bastionhost.proxyhost-ip
 }
 
 output "loadbalancer-ip" {

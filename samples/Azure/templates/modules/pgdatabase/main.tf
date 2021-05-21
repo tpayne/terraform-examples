@@ -35,8 +35,8 @@ resource "azurerm_postgresql_server" "dbserver" {
   administrator_login          = var.admin_user
   administrator_login_password = var.admin_pwd
 
-  sku_name         = var.sku
-  version          = var.dbversion
+  sku_name = var.sku
+  version  = var.dbversion
 
   backup_retention_days        = 7
   geo_redundant_backup_enabled = true
@@ -51,8 +51,8 @@ resource "azurerm_postgresql_server" "dbserver" {
   }
 
   threat_detection_policy {
-    enabled = true
-    storage_endpoint = var.storage_endpoint
+    enabled                    = true
+    storage_endpoint           = var.storage_endpoint
     storage_account_access_key = var.storage_accesskey
   }
 

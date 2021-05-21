@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 output "bastionhost-ip" {
-  value = azurerm_public_ip.fepublicip001.ip_address
+  value = module.bastionhost.proxyhost-ip
 }
 
 output "loadbalancer-ip" {

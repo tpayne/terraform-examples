@@ -31,64 +31,23 @@
 #------------------------------
 # Frontend bastion host...
 #------------------------------
-# Create public IP
-resource "azurerm_public_ip" "fepublicip001" {
-  name                = "${var.project}-PubIpAddr001"
-  location            = azurerm_resource_group.resourceGroup.location
-  resource_group_name = azurerm_resource_group.resourceGroup.name
-  allocation_method   = "Static"
+#
+
+module "bastionhost" {
+  source = "../modules/bastionproxyhost"
+  name   = "${var.project}bastionhost"
+
+  resource_group   = azurerm_resource_group.resourceGroup.name
+  location         = azurerm_resource_group.resourceGroup.location
+  subnet_id        = azurerm_subnet.frontend_subnet.id
+  machine_type     = var.machine_types.micro
+  tags             = var.tags
+  image            = var.images.ubunto18
+  custom_data      = null
+  storage_endpoint = module.mig.vmss-storage-endpoint
+  admin_user       = var.admin_user
+  admin_pwd        = var.admin_pwd
 }
 
-# Create network interface
-resource "azurerm_network_interface" "fe_nic01" {
-  name                = "NIC001"
-  location            = azurerm_resource_group.resourceGroup.location
-  resource_group_name = azurerm_resource_group.resourceGroup.name
-
-  ip_configuration {
-    name                          = "nic001"
-    subnet_id                     = azurerm_subnet.frontend_subnet.id
-    private_ip_address_allocation = "dynamic"
-    public_ip_address_id          = azurerm_public_ip.fepublicip001.id
-  }
-}
-
-resource "azurerm_virtual_machine" "bastionhost" {
-  name                  = "${var.project}-bastionhost"
-  location              = azurerm_resource_group.resourceGroup.location
-  resource_group_name   = azurerm_resource_group.resourceGroup.name
-  network_interface_ids = [azurerm_network_interface.fe_nic01.id]
-  vm_size               = var.machine_types.micro
-  tags                  = var.tags
-
-  storage_os_disk {
-    name              = "bastionhost"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = var.sku_storage.localrs
-  }
-
-  storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = lookup(var.sku, azurerm_resource_group.resourceGroup.location)
-    version   = "latest"
-  }
-
-  os_profile {
-    computer_name  = "bastionhost"
-    admin_username = var.admin_user
-    admin_password = var.admin_pwd
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
-
-  boot_diagnostics {
-    enabled     = true
-    storage_uri = module.mig.vmss-storage-endpoint
-  }
-}
 
 
