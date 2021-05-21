@@ -15,7 +15,13 @@ Build Status
 ------------
 The build will only check for HCL syntax and other simple linting errors. It does not run the examples against any terraform emulators etc.
 
-The build will also run a "best practices" scanner to highlight security issues/improvements. However, these are not being fixed immediately.
+The build will also run a "best practices" scanner to highlight security issues/improvements. However, these are not being fixed immediately as they are a mixture of: -
+
+* Usual false positives
+* Dependent architecture configuration
+* Actually cause issues in public cloud provider due to "features" or bugs
+
+If you use a sample configuration, please review the issue list generated and resolve them as best suited to your requirements. You can get a copy of the latest report from the `Actions` tab.
 
 [![CI](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml/badge.svg)](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml)
 
