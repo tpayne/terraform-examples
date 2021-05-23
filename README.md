@@ -206,6 +206,8 @@ Notes
 * The Terraform tutorials are located [here](https://learn.hashicorp.com/collections/terraform/gcp-get-started)
 * The Terraform tutorials on Terraform Cloud and state saving are [here](https://learn.hashicorp.com/tutorials/terraform/azure-remote?in=terraform/azure-get-started).
 Essentially, it is about how to save the state files to the cloud, rather than local dirs.
+* Conditional logic can be done by C style macro logic, e.g. `(test_condition) ? true : false`
+* Resource block statements can be deactivated by specifying `count = 0`
 
 Code Documentation
 ------------------
