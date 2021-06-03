@@ -50,7 +50,7 @@ resource "google_compute_subnetwork" "backend_subnet" {
 # This module is a modified form of a published GCP GCE module for internal lb that did not work
 # This local modeul fixes those issues.
 module "interal-lb" {
-  source = "./modules/interal-lb"
+  source = "../modules/interal-lb"
 
   region = var.region
   name   = "${var.project}-backend-lb"

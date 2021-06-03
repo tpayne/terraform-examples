@@ -51,7 +51,7 @@ resource "google_compute_subnetwork" "database_subnet" {
 #------------------------------
 
 module "database" {
-  source       = "./modules/database"
+  source       = "../modules/database"
   name         = "dbinstance001"
   dbtype       = var.database_type.postgres
   region       = var.region
