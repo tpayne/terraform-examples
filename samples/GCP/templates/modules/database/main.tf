@@ -159,3 +159,30 @@ resource "google_compute_instance" "db_proxy" {
 }
 
 
+resource "google_monitoring_alert_policy" "dba_alert001" {
+  // DBA utilitisation
+  display_name = "DBA CPU utilisation GT 0.9"
+  combiner     = "OR"
+  conditions {
+    display_name = "DBA CPU utilisation GT 0.9"
+    condition_threshold {
+      filter          = "metric.type=\"cloudsql.googleapis.com/database/cpu/utilization\" resource.type=\"cloudsql_database\""
+      duration        = "60s"
+      comparison      = "COMPARISON_GT"
+      threshold_value = 0.9
+      trigger {
+        count = 1
+      }
+      aggregations {
+        alignment_period   = "120s"
+        per_series_aligner = "ALIGN_MEAN"
+      }
+    }
+  }
+  documentation {
+    content = "The DBA CPU rule $${condition.display_name} has generated this alert for the $${metric.display_name}."
+  }
+}
+
+
+

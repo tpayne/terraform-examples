@@ -110,6 +110,7 @@ You will find that there are also a set of other compute resources created like.
 - Managed instance groups (mig) - `femig...`, `bemig...` and `dbinstance001-mig...`
 - Internal load balancers
 - Firewalls etc.
+- Alerts (L7 LB SLIs, CPU usage, DB usage)
 
 These are created for you to help build a 3-tier application infrastructure. The basic setup is: -
 - Frontend public load balancer going to private frontend mig resources (the website from above)
