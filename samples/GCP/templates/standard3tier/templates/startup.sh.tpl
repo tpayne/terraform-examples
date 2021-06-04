@@ -4,6 +4,12 @@ apt-get update
 apt-get install -y apache2 libapache2-mod-php net-tools -y
 apt-get update
 
+echo 'Install Logger...'
+curl -sSO https://dl.google.com/cloudagents/add-logging-agent-repo.sh
+bash ./add-logging-agent-repo.sh --also-install
+service google-fluentd restart
+service google-fluentd status
+
 echo 'Update firewall'
 ufw app list
 ufw allow 'Apache Full'
