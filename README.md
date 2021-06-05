@@ -218,7 +218,7 @@ For example...
 	brew install terraform-docs
 	cd samples/Azure/templates
 	terraform-docs markdown standard3tier
-	
+
 The documentation is just the default at the moment, but feel free to make more relevant contributions.
 
 Github References
@@ -250,11 +250,11 @@ GCP References
 * https://github.com/terraform-google-modules/docs-examples
 * https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/monitoring_slo
 
-[run_button_standardtier]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/standard3tier&page=shell&tutorial=README.md
-[run_button_bastionhost]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/bastionhost&page=shell&tutorial=README.md
-[run_button_vpn]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/vpn-classic&page=shell&tutorial=README.md
-[run_button_hybrid]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/vpn-hybrid&page=shell&tutorial=README.md
-[run_button_kube]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/kubernetes&page=shell&tutorial=README.md
+[run_button_standardtier]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/standard3tier&page=shell&tutorial=README.md&cloudshell_image=gcr.io/graphite-cloud-shell-images/terraform:latest
+[run_button_bastionhost]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/bastionhost&page=shell&tutorial=README.md&cloudshell_image=gcr.io/graphite-cloud-shell-images/terraform:latest
+[run_button_vpn]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/vpn-classic&page=shell&tutorial=README.md&cloudshell_image=gcr.io/graphite-cloud-shell-images/terraform:latest
+[run_button_hybrid]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/vpn-hybrid&page=shell&tutorial=README.md&cloudshell_image=gcr.io/graphite-cloud-shell-images/terraform:latest
+[run_button_kube]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/kubernetes&page=shell&tutorial=README.md&cloudshell_image=gcr.io/graphite-cloud-shell-images/terraform:latest
 [run_button_azkube]: https://shell.azure.com/
 [run_button_azbastion]: https://shell.azure.com/
 [run_button_azvpnclassic]: https://shell.azure.com/
