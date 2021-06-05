@@ -249,6 +249,10 @@ GCP References
 * https://github.com/terraform-google-modules/terraform-google-lb-http/tree/master/examples/multi-mig-http-lb
 * https://github.com/terraform-google-modules/docs-examples
 * https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/monitoring_slo
+* https://cloud.google.com/blog/products/management-tools/observability-using-custom-metrics
+* https://medium.com/google-cloud/stackdriver-monitoring-automation-part-3-uptime-checks-476b8507f59c
+* https://medium.com/google-cloud/stackdriver-monitoring-automation-part-5-alerting-policies-ff77b19b4b97
+* https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/monitoring_alert_policy
 
 [run_button_standardtier]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/standard3tier&page=shell&tutorial=README.md&cloudshell_image=gcr.io/graphite-cloud-shell-images/terraform:latest
 [run_button_bastionhost]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/bastionhost&page=shell&tutorial=README.md&cloudshell_image=gcr.io/graphite-cloud-shell-images/terraform:latest
