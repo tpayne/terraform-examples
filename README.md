@@ -247,6 +247,8 @@ GCP References
 * https://github.com/terraform-google-modules/terraform-google-lb-http/tree/master/examples/multi-mig-http-lb
 * https://github.com/GoogleCloudPlatform?q=instance+group&type=&language=&sort=
 * https://github.com/terraform-google-modules/terraform-google-lb-http/tree/master/examples/multi-mig-http-lb
+* https://github.com/terraform-google-modules/docs-examples
+* https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/monitoring_slo
 
 [run_button_standardtier]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/standard3tier&page=shell&tutorial=README.md
 [run_button_bastionhost]: https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/tpayne/terraform-examples&working_dir=samples/GCP/templates/bastionhost&page=shell&tutorial=README.md
