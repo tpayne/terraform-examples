@@ -31,7 +31,7 @@
 # This local module fixes those issues.
 
 module "interal-lb" {
-  source = "../modules/interal-lb"
+  source = "../modules/internal-lb"
 
   region = var.region
   name   = "${var.project}-backend-lb"

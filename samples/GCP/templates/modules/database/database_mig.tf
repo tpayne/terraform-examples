@@ -104,7 +104,7 @@ module "db-mig-001" {
 # This module is a modified form of a published GCP GCE module for internal lb that did not work
 # This local modeul fixes those issues.
 module "interaldb-lb" {
-  source = "./../interal-lb"
+  source = "./../internal-lb"
 
   region = var.region
   name   = "${var.name}-db-lb"

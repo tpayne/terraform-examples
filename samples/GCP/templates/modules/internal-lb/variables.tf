@@ -104,6 +104,12 @@ variable "source_ip_ranges" {
   default     = null
 }
 
+variable "source_ranges" {
+  description = "List of source ip ranges for traffic between the internal load balancer."
+  type        = list(string)
+  default     = ["130.211.0.0/22", "35.191.0.0/16", "10.0.0.0/8"]
+}
+
 variable "source_service_accounts" {
   description = "List of source service accounts for traffic between the internal load balancer."
   type        = list(string)
