@@ -18,6 +18,16 @@ variable "zone" {
   default = "us-central1-b"
 }
 
+variable "fesubnet_ip_cidr" {
+  type    = string # Type - not needed, but showing it...
+  default = ""
+}
+
+variable "besubnet_ip_cidr" {
+  type    = string # Type - not needed, but showing it...
+  default = ""
+}
+
 variable "machine_types" {
   type = map(any)
   default = {

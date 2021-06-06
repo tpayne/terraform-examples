@@ -42,7 +42,7 @@ resource "google_compute_subnetwork" "database_subnet" {
   name                     = "${var.project}-subnet-dbase-001"
   region                   = var.region
   network                  = google_compute_network.database_vpc_network.name
-  ip_cidr_range            = "10.6.0.0/24"
+  ip_cidr_range            = var.dbsubnet_ip_cidr
   private_ip_google_access = true
 }
 

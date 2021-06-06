@@ -55,6 +55,7 @@ resource "google_compute_instance" "bastionhost" {
   }
 
   metadata = {
+    // Enable OSlogin (for SSH key management by GCP)
     enable-oslogin = "TRUE"
   }
 

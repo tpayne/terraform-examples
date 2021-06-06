@@ -57,4 +57,25 @@ variable "database_type" {
   }
 }
 
+variable "fesubnet_ip_cidr" {
+  type    = string # Type - not needed, but showing it...
+  default = ""
+}
+
+variable "fesubnet_bck_ip_cidr" {
+  type    = string # Type - not needed, but showing it...
+  default = ""
+}
+
+variable "besubnet_ip_cidr" {
+  type    = string # Type - not needed, but showing it...
+  default = ""
+}
+
+variable "dbsubnet_ip_cidr" {
+  type    = string # Type - not needed, but showing it...
+  default = ""
+}
+
+
 

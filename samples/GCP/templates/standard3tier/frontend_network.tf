@@ -43,7 +43,7 @@ resource "google_compute_subnetwork" "frontend_subnet" {
   name                     = "${var.project}-subnet-frontend-001"
   region                   = var.region
   network                  = google_compute_network.frontend_vpc_network.name
-  ip_cidr_range            = "10.1.0.0/24"
+  ip_cidr_range            = var.fesubnet_ip_cidr
   private_ip_google_access = true
 }
 
@@ -51,7 +51,7 @@ resource "google_compute_subnetwork" "frontend_subnet_bck" {
   name                     = "${var.project}-subnet-frontend-002"
   region                   = var.region_bck
   network                  = google_compute_network.frontend_vpc_network.name
-  ip_cidr_range            = "10.2.0.0/24"
+  ip_cidr_range            = var.fesubnet_bck_ip_cidr
   private_ip_google_access = true
 }
 

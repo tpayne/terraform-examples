@@ -43,7 +43,7 @@ resource "google_compute_subnetwork" "backend_subnet" {
   name                     = "${var.project}-subnet-backend-001"
   region                   = var.region
   network                  = google_compute_network.backend_vpc_network.name
-  ip_cidr_range            = "10.3.0.0/24"
+  ip_cidr_range            = var.besubnet_ip_cidr
   private_ip_google_access = true
 }
 
