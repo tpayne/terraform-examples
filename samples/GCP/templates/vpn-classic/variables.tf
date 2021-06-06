@@ -64,4 +64,14 @@ variable "images" {
   }
 }
 
+variable "fesubnet_ip_cidr" {
+  type    = string # Type - not needed, but showing it...
+  default = ""
+}
+
+variable "besubnet_ip_cidr" {
+  type    = string # Type - not needed, but showing it...
+  default = ""
+}
+
 
