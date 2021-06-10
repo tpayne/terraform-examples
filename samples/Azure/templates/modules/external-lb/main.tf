@@ -57,11 +57,11 @@ resource "azurerm_lb" "lbext" {
   location            = local.location
   tags                = local.tags
 
-  sku = "Basic"
+  sku = var.sku
 
   frontend_ip_configuration {
-    name                          = "PublicIPAddress"
-    public_ip_address_id          = azurerm_public_ip.pubip.id
+    name                 = "PublicIPAddress"
+    public_ip_address_id = azurerm_public_ip.pubip.id
   }
 }
 

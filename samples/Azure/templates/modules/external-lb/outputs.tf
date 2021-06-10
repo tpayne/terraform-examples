@@ -34,8 +34,8 @@ output "load_balancer_public_ip_address" {
 
 output "load_balancer_backend_address_pool" {
   value = {
-    name = azurerm_lb_backend_address_pool.lb.name
-    id   = azurerm_lb_backend_address_pool.lb.id
+    name      = azurerm_lb_backend_address_pool.lb.name
+    id        = azurerm_lb_backend_address_pool.lb.id
     ip_config = azurerm_lb_backend_address_pool.lb.backend_ip_configurations
   }
 }

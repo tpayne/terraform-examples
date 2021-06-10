@@ -47,6 +47,12 @@ variable "tags" {
   default     = {}
 }
 
+variable "sku" {
+  description = "Azure SKU."
+  type        = string
+  default     = "Basic"
+}
+
 variable "subnet_id" {
   description = "Resource ID for the subnet to attach the load balancer's front-end."
   type        = string

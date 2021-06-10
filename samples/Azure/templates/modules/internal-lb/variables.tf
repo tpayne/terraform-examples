@@ -41,6 +41,12 @@ variable "location" {
   default     = ""
 }
 
+variable "sku" {
+  description = "Azure SKU."
+  type        = string
+  default     = "Basic"
+}
+
 variable "tags" {
   description = "Azure tags object."
   type        = map(any)

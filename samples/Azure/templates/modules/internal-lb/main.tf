@@ -49,7 +49,7 @@ resource "azurerm_lb" "lb" {
   location            = local.location
   tags                = local.tags
 
-  sku = "Basic"
+  sku = var.sku
 
   frontend_ip_configuration {
     name                          = "InternalIpAddress"
