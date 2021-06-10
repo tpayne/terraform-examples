@@ -10,6 +10,10 @@ ufw allow 'Apache Full'
 ufw allow ssh
 ufw status
 
+echo 'Network config'
+wget -qO- ifconfig.me/ip
+ip addr
+
 echo 'Install HTML'
 cat > /var/www/html/index.php << 'EOF'
 <?php
