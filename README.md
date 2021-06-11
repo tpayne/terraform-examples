@@ -208,6 +208,7 @@ Notes
 Essentially, it is about how to save the state files to the cloud, rather than local dirs.
 * Conditional logic can be done by C style macro logic, e.g. `(test_condition) ? true : false`
 * Resource block statements can be deactivated by specifying `count = 0`
+* The Azure samples do not need a NAT gateway/router present. The load balancer provides SNAT translation automatically. You can remove the NAT gateway as you like, unless you want to use it for other purposes. Currently, it is redundant, but provided for potential future use for subnets not behind a LB. See [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_nat_gateway_association) for more info.
 
 Code Documentation
 ------------------
@@ -232,6 +233,7 @@ Azure References
 * https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/kubernetes
 * https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
 * https://github.com/terraform-azurerm-modules#:~:text=A%20Terraform%20module%20to%20provision%20a%20container-based%20build,the%20same%20defaults%20object%20as%20the%20VM%20module.
+* https://github.com/terraform-providers/terraform-provider-azurerm/tree/dc970e55b490c7b7d0522fe0e3b242b5ae00f321/examples
 
 GCP References
 --------------
