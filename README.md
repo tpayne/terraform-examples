@@ -233,6 +233,7 @@ Azure References
 * https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/kubernetes
 * https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
 * https://github.com/terraform-azurerm-modules#:~:text=A%20Terraform%20module%20to%20provision%20a%20container-based%20build,the%20same%20defaults%20object%20as%20the%20VM%20module.
+* https://github.com/terraform-providers/terraform-provider-azurerm/tree/dc970e55b490c7b7d0522fe0e3b242b5ae00f321/examples
 
 GCP References
 --------------
