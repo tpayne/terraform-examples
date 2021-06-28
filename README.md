@@ -226,6 +226,11 @@ Github References
 -----------------
 * https://github.com/marketplace/actions/publish-unit-test-results
 
+AWS References
+--------------
+* https://github.com/hashicorp/terraform-provider-aws/tree/main/examples
+* https://github.com/hashicorp/terraform-provider-aws/
+
 Azure References
 --------------
 * https://docs.microsoft.com/en-us/azure/developer/terraform/
