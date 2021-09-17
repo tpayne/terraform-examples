@@ -132,7 +132,8 @@ The following will show some of these additional services.
 Clean Up
 --------
 To clean up do...
-
+    
+    gcloud asset search-all-resources --scope=projects/<projectId>
     terraform destroy -auto-approve
 
 Issues
