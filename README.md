@@ -91,6 +91,11 @@ To run the loose samples, do the following...
 	./get-started.sh
 	cd samples/GCP/loose
 
+You may need to enable various services as well...
+
+	gcloud services enable compute.googleapis.com
+	gcloud services list
+	
 Edit the `terraform.tfvars` file to replace the project and creds values with those specific for you, then do...
 
 	terraform init && terraform plan && terraform apply -auto-approve
