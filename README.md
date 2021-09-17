@@ -96,6 +96,7 @@ You may need to enable various services as well...
 	gcloud services enable compute.googleapis.com
 	gcloud services enable cloudresourcemanager.googleapis.com
 	gcloud services enable servicenetworking.googleapis.com
+	gcloud services enable iam.googleapis.com
 	gcloud services list
 	
 Edit the `terraform.tfvars` file to replace the project and creds values with those specific for you, then do...
