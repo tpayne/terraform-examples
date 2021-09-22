@@ -14,16 +14,16 @@ gcloud services list
 disable()
 {
 echo "Disable..."
-gcloud services disable compute.googleapis.com
-gcloud services disable cloudresourcemanager.googleapis.com
-gcloud services disable servicenetworking.googleapis.com
-gcloud services disable iam.googleapis.com sqladmin.googleapis.com
-gcloud services disable storage-component.googleapis.com storage.googleapis.com
+gcloud services disable --force compute.googleapis.com
+gcloud services disable --force cloudresourcemanager.googleapis.com
+gcloud services disable --force servicenetworking.googleapis.com
+gcloud services disable --force iam.googleapis.com sqladmin.googleapis.com
+gcloud services disable --force storage-component.googleapis.com storage.googleapis.com
 gcloud services list
 }
 
 if [ "x$1" = "xenable" ]; then
-        enable
+	enable
 else
-        disable
+	disable
 fi
