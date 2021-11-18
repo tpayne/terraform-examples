@@ -39,7 +39,17 @@ terraform {
   #    name = "Example-Workspace"
   #  }
   #}
-
+  # 
+  # Or you can use Azure to store the state in like the following...
+  # - List key - az storage account keys list -g <rgName>  --account-name <accName> --query '[0].value' -o tsv)
+  # - Create secret into vault or into ENV - export ARM_ACCESS_KEY=$(az storage account keys list -g <rgName> --account-name <accName> --query '[0].value' -o tsv)
+  # - List into value - export ARM_ACCESS_KEY=$(az keyvault secret show --name <kName> --vault-name <vName> --query value -o tsv)
+  #backend "azurerm" {
+  # resource_group_name  = "<rgName>"
+  # storage_account_name = "<accName>"
+  # container_name       = "<containerName>"
+  # key                  = "terraform.tfstate"
+  #}
 }
 
 provider "azurerm" {
