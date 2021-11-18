@@ -17,7 +17,7 @@ variable "size" {
 
 variable "region_be" {
   type    = string # Type - not needed, but showing it...
-  default = "uksouth"
+  default = "westus2"
 }
 
 variable "frontend_cidr_range" {
@@ -110,5 +110,8 @@ variable "admin_pwd" {
   default = "ThisIsNotAStrongPassword-123"
 }
 
-
+variable "emailaddr" {
+  type    = string
+  default = "testemail@noreply.com"
+}
 
