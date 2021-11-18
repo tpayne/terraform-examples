@@ -25,6 +25,7 @@
 # DEBUG - export TF_LOG=DEBUG
 
 resource "azurerm_storage_account" "monitor" {
+  count                    = var.alerts ? 1 : 0
   name                     = "${var.project}acc001"
   location                 = azurerm_resource_group.resourceGroup.location
   resource_group_name      = azurerm_resource_group.resourceGroup.name
@@ -33,6 +34,7 @@ resource "azurerm_storage_account" "monitor" {
 }
 
 resource "azurerm_monitor_action_group" "main" {
+  count               = var.alerts ? 1 : 0
   name                = "${var.project}-ag001"
   resource_group_name = azurerm_resource_group.resourceGroup.name
   short_name          = "actiongroup"
@@ -44,9 +46,10 @@ resource "azurerm_monitor_action_group" "main" {
 }
 
 resource "azurerm_monitor_metric_alert" "example" {
+  count               = var.alerts ? 1 : 0
   name                = "example-metricalert"
   resource_group_name = azurerm_resource_group.resourceGroup.name
-  scopes              = [azurerm_storage_account.monitor.id]
+  scopes              = [azurerm_storage_account.monitor[0].id]
   description         = "Action will be triggered when Transactions count is greater than 50."
 
   criteria {
@@ -64,6 +67,6 @@ resource "azurerm_monitor_metric_alert" "example" {
   }
 
   action {
-    action_group_id = azurerm_monitor_action_group.main.id
+    action_group_id = azurerm_monitor_action_group.main[0].id
   }
 }

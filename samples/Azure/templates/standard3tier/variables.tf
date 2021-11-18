@@ -115,3 +115,8 @@ variable "emailaddr" {
   default = "testemail@noreply.com"
 }
 
+# Do we want alerts?
+variable "alerts" {
+  type    = bool
+  default = true # or false
+}
