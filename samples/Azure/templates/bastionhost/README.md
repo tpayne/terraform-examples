@@ -73,6 +73,7 @@ Notes
 - https://github.com/terraform-azurerm-modules/terraform-azurerm-linux-vmss
 - https://github.com/terraform-azurerm-modules/terraform-azurerm-load-balancer
 - https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_scale_set#os_profile
+- Create a picture using `terraform graph | dot -Tsvg > graph.svg`
 
 Issues
 ------
