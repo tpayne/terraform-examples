@@ -89,6 +89,19 @@ resource "azurerm_network_interface" "nic01" {
   }
 }
 
+resource "azurerm_network_interface" "nics" {
+  count               = 4
+  name                = "NIC${count.index}"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.resourceGroup.name
+
+  ip_configuration {
+    name                          = "myNICConfg001"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "dynamic"
+  }
+}
+
 # Create a Linux virtual machine
 resource "azurerm_virtual_machine" "vm01" {
   name                  = "LinuxVm001"
@@ -128,5 +141,38 @@ data "azurerm_public_ip" "ip" {
   depends_on          = [azurerm_virtual_machine.vm01]
 }
 
+# Create a Linux virtual machine
+resource "azurerm_virtual_machine" "vmservers" {
+  count                 = 4
+  name                  = "LinuxVm001-${count.index}"
+  location              = var.location
+  resource_group_name   = azurerm_resource_group.resourceGroup.name
+  network_interface_ids = [azurerm_network_interface.nics[count.index].id]
+  vm_size               = "Standard_DS1_v2"
+
+  storage_os_disk {
+    name              = "myOsDisk${count.index}"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Premium_LRS"
+  }
+
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04.0-LTS"
+    version   = "latest"
+  }
+
+  os_profile {
+    computer_name  = "LinuxVm001-${count.index}"
+    admin_username = var.admin_username
+    admin_password = var.admin_password
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+}
 
 
