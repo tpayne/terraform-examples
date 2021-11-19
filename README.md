@@ -217,6 +217,7 @@ Essentially, it is about how to save the state files to the cloud, rather than l
 * Conditional logic can be done by C style macro logic, e.g. `(test_condition) ? true : false`
 * Resource block statements can be deactivated by specifying `count = 0`
 * The Azure samples do not need a NAT gateway/router present. The load balancer provides SNAT translation automatically. You can remove the NAT gateway as you like, unless you want to use it for other purposes. Currently, it is redundant, but provided for potential future use for subnets not behind a LB. See [here](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_nat_gateway_association) for more info.
+* Create a picture using `terraform graph | dot -Tsvg > graph.svg`
 
 Code Documentation
 ------------------
