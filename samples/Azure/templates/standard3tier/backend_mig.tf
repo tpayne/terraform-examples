@@ -53,7 +53,7 @@ module "bemig" {
   load_balancer_address_pool = module.internal-lb.load_balancer_backend_address_pool.id
   size                       = var.size
   image                      = var.images.ubunto18
-  custom_data                = data.template_file.group-startup-script.rendered
+  custom_data                = data.template_file.pg-group-startup-script.rendered
   admin_user                 = var.admin_user
   admin_pwd                  = var.admin_pwd
   tags                       = var.tags
