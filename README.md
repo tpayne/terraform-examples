@@ -30,6 +30,8 @@ Types of Samples
 There are two main types of examples provided
 * Loose samples
 * Templates
+* Metadata samples (see loose AWS)
+* Modules (see templates)
 
 The loose samples are those that are provided in the `loose` directories and are just samples to view. No guarantee is made for them working.
 
