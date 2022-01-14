@@ -1,4 +1,5 @@
 # Run these first...
+/*
 #aws s3 rm s3://abucket/v1.0.0/example.zip
 #aws s3api delete-bucket --bucket=abucket
 #aws s3api create-bucket --bucket=abucket --region=us-west-2
@@ -42,3 +43,4 @@ resource "aws_iam_role" "lambda_exec" {
 EOF
 
 }
+*/

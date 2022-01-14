@@ -11,3 +11,13 @@ output "InstanceID" {
 output "WebPublicIp" {
   value = aws_instance.web.public_ip
 }
+
+output "UserIds" {
+  value = {
+    for k, v in aws_iam_user.my_users1 :
+    k => {
+      id   = v.id
+      name = v.name
+    }
+  }
+}
