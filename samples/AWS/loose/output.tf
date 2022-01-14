@@ -16,8 +16,9 @@ output "UserIds" {
   value = {
     for k, v in aws_iam_user.my_users1 :
     k => {
-      id   = v.id
-      name = v.name
+      id        = v.id
+      name      = v.name
+      upperName = upper(v.name)
     }
   }
 }

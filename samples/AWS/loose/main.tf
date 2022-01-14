@@ -6,7 +6,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 2.70"
+      version = ">= 2.70"
     }
   }
   /*
@@ -16,7 +16,7 @@ terraform {
     key    = "path/to/my/statefile"
     region = var.region
   } 
-  */ 
+  */
 }
 
 provider "aws" {

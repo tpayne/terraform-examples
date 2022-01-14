@@ -13,43 +13,6 @@ resource "aws_subnet" "subnet_public" {
   cidr_block = var.cidr_subnet
 }
 
-// Example for count processing...
-resource "aws_subnet" "subnet_subnets" {
-  count      = length(var.cidr_lists)
-  vpc_id     = aws_vpc.vpc.id
-  cidr_block = var.cidr_lists[count.index]
-}
-
-locals {
-  userIds = toset([
-    "usera1",
-    "usera2",
-    "usera3"
-  ])
-}
-
-// Example for for_each processing...
-resource "aws_iam_user" "my_users2" {
-  for_each = local.userIds
-  name     = each.key
-}
-
-resource "aws_iam_user" "my_users1" {
-  for_each = toset(["user1", "user2", "user3", "user4"])
-  name     = each.key
-}
-
-
-resource "aws_subnet" "subnet_lsubnets" {
-  vpc_id = aws_vpc.vpc.id
-
-  for_each   = { for i, v in var.subnet_list : i => v }
-  cidr_block = each.value.cidr
-  tags = {
-    Name = each.value.name
-  }
-}
-
 resource "aws_route_table" "rtb_public" {
   vpc_id = aws_vpc.vpc.id
 
