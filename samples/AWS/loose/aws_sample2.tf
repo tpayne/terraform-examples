@@ -93,7 +93,7 @@ data "template_file" "user_data" {
 # ssh terraform@$(echo "aws_instance.web.public_ip" | terraform console) 
 resource "aws_instance" "web" {
   ami                         = data.aws_ami.ubuntu.id
-  instance_type               = "t2.micro"
+  instance_type               = var.machine_types.dev
   subnet_id                   = aws_subnet.subnet_public.id
   vpc_security_group_ids      = [aws_security_group.sg_22_80.id]
   associate_public_ip_address = true

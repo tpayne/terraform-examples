@@ -4,15 +4,15 @@
 
 locals {
   userIds = toset([
-    "usera1",
-    "usera2",
-    "usera3"
+    "useraa1",
+    "useraa2",
+    "useraa3"
   ])
 
   orderedList = {
-    key1 = "value1"
-    key3 = "value3"
-    key2 = "value2"
+    key1 = "valuea1"
+    key3 = "valuea3"
+    key2 = "valuea2"
   }
 }
 
@@ -24,13 +24,13 @@ resource "aws_subnet" "subnet_subnets" {
 }
 
 // Example for for_each processing...
-resource "aws_iam_user" "my_users2" {
-  for_each = local.userIds
+resource "aws_iam_user" "my_users1" {
+  for_each = toset(["user1", "user2", "user3", "user4"])
   name     = each.key
 }
 
-resource "aws_iam_user" "my_users1" {
-  for_each = toset(["user1", "user2", "user3", "user4"])
+resource "aws_iam_user" "my_users2" {
+  for_each = local.userIds
   name     = each.key
 }
 
