@@ -28,6 +28,8 @@ To run the samples, do the following...
 	
 You can delete all the resources using `terragrunt destroy -auto-approve`
 
+The sample works by customising the name of the resources created to reflect the environment being used - either dev or prod.
+
 References
 ----------
 * https://terragrunt.gruntwork.io/docs/getting-started/install/
