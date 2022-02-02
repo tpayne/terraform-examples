@@ -1,6 +1,13 @@
 # TerraGrunt Examples
 Some simple educational terragrunt work for people to use. Examples will be added as I get around to them.
 
+Dependencies
+------------
+To run these samples, you will need...
+
+* Access to an Azure environment able to run Terraform (admin access)
+* Installed Terragrunt and Terraform
+
 How to Install
 --------------
 Install Terragrunt using appropriate instructions for your OS [Getting started](https://terragrunt.gruntwork.io/docs/getting-started/install/)
