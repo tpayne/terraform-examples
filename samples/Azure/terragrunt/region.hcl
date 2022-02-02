@@ -20,6 +20,7 @@
  * SOFTWARE.
  */
 
+// This region is a common variable used for all deployments
 locals {
     region_be = "uksouth"
 }
