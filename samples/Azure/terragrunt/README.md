@@ -6,7 +6,7 @@ Dependencies
 To run these samples, you will need...
 
 * Access to an Azure environment able to run Terraform (admin access)
-* Installed Terragrunt and Terraform
+* Installed `Terragrunt` and `Terraform`
 
 How to Install
 --------------
