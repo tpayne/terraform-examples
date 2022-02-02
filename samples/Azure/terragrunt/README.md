@@ -1,6 +1,12 @@
 # TerraGrunt Examples
 Some simple educational terragrunt work for people to use. Examples will be added as I get around to them.
 
+Terragrunt is a tool for managing many different types of configurations which share common definitions and variables.
+You can reuse definitions using crude inheritance and then customise variables using a hierarchy of directories. It is similar
+in concept to `kustomize` in `kubectl`.
+
+For more information, refer to the references below.
+
 Dependencies
 ------------
 To run these samples, you will need...
