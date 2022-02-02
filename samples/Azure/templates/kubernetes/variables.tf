@@ -1,6 +1,9 @@
 # Declare variables that can be used. They do not need to be populated...
 
-variable "project" {}
+variable "project" {
+  type    = string # Type - not needed, but showing it...
+  default = "testdemo"
+}
 
 variable "tags" {
   type = map(any)
@@ -8,6 +11,12 @@ variable "tags" {
     env  = "development"
     team = "dev"
   }
+}
+
+
+variable "name" {
+  type    = string # Type - not needed, but showing it...
+  default = "rg_001"
 }
 
 variable "region_be" {
