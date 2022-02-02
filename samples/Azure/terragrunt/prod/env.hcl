@@ -20,6 +20,7 @@
  * SOFTWARE.
  */
 
+// The env is deployment specific and affects the resource naming
 locals {
     env = "prod"
 }
