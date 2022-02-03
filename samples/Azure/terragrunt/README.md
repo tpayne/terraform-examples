@@ -20,9 +20,9 @@ Install Terragrunt using appropriate instructions for your OS [Getting started](
 
 Running the samples
 -------------------
-To run the samples, do the following...
+To run the simple sample(s), do the following...
 
-	cd samples/Azure/terragrunt/
+	cd samples/Azure/terragrunt/single
 	(cd dev/k8s && terragrunt plan && terragrunt destroy -auto-approve && terragrunt apply -auto-approve && terragrunt destroy -auto-approve)
 	(cd prod/k8s && terragrunt plan && terragrunt destroy -auto-approve && terragrunt apply -auto-approve && terragrunt destroy -auto-approve)
 	

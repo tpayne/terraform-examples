@@ -21,7 +21,7 @@
  */
 
 terraform {
-    source = "../../../templates/kubernetes"
+    source = "../../../../templates/kubernetes"
 }
 
 locals {
