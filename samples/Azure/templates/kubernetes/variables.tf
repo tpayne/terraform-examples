@@ -54,12 +54,12 @@ variable "access_cidr_range" {
 
 variable "backend_cidr_range" {
   type    = string # Type - not needed, but showing it...
-  default = ""
+  default = "10.2.0.0/16"
 }
 
 variable "backendsn_cidr_range" {
   type    = string # Type - not needed, but showing it...
-  default = ""
+  default = "10.2.1.0/24"
 }
 
 variable "machine_types" {
