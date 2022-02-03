@@ -34,7 +34,7 @@
 #
 
 module "bastionhost" {
-  source = "../modules/bastionproxyhost"
+  source = "github.com/tpayne/terraform-examples/samples/Azure/templates/modules/bastionproxyhost"
   name   = "${var.project}bastionhost"
 
   resource_group   = azurerm_resource_group.resourceGroup.name

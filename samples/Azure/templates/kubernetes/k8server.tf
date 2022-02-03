@@ -31,6 +31,9 @@
 # Create monitor resources...
 ##############################
 
+# ${random_pet.prefix.id}
+resource "random_pet" "prefix" {}
+
 resource "azurerm_log_analytics_workspace" "be_logworkspace" {
   name                = "${var.project}-law"
   resource_group_name = azurerm_resource_group.resourceGroup.name
@@ -51,8 +54,11 @@ resource "azurerm_log_analytics_solution" "be_logsolution" {
   }
 }
 
+/*
+ * Edited this out as it seems to cause terragrunt issues - but not running standalone
+ *
 resource "azurerm_monitor_diagnostic_setting" "be_diagnostics" {
-  name                       = "${azurerm_kubernetes_cluster.k8s_server.name}-audit"
+  name                       = "${azurerm_kubernetes_cluster.k8s_server.name}-${random_pet.prefix.id}-audit"
   target_resource_id         = azurerm_kubernetes_cluster.k8s_server.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.be_logworkspace.id
 
@@ -103,13 +109,14 @@ resource "azurerm_monitor_diagnostic_setting" "be_diagnostics" {
 
   metric {
     category = "AllMetrics"
-    enabled  = false
+    enabled  = true
 
     retention_policy {
       enabled = false
     }
   }
 }
+*/
 
 
 #------------------------------
@@ -117,9 +124,6 @@ resource "azurerm_monitor_diagnostic_setting" "be_diagnostics" {
 #------------------------------
 
 # Create backend k8s services...
-
-# ${random_pet.prefix.id}
-resource "random_pet" "prefix" {}
 
 resource "azurerm_kubernetes_cluster" "k8s_server" {
   name                = "${var.project}-aks-001"
@@ -174,10 +178,12 @@ resource "azurerm_kubernetes_cluster" "k8s_server" {
       enabled = false
     }
 
+    /* dited this out as it seems to cause terragrunt issues - but not running standalone
     oms_agent {
       enabled                    = true
       log_analytics_workspace_id = azurerm_log_analytics_workspace.be_logworkspace.id
     }
+    */
   }
 
   tags = var.tags

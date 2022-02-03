@@ -1,6 +1,14 @@
 # Declare variables that can be used. They do not need to be populated...
 
-variable "project" {}
+variable "project" {  
+  type    = string # Type - not needed, but showing it...
+  default = "testdemo"
+}
+
+variable "name" {  
+  type    = string # Type - not needed, but showing it...
+  default = "rg_001"
+}
 
 variable "tags" {
   type = map(any)
@@ -22,22 +30,22 @@ variable "region_be" {
 
 variable "backend_cidr_range" {
   type    = string # Type - not needed, but showing it...
-  default = ""
+  default = "10.2.0.0/16"
 }
 
 variable "backendsn_cidr_range" {
   type    = string # Type - not needed, but showing it...
-  default = ""
+  default = "10.2.1.0/24"
 }
 
 variable "frontend_cidr_range" {
   type    = string # Type - not needed, but showing it...
-  default = ""
+  default = "10.1.0.0/16"
 }
 
 variable "frontendsn_cidr_range" {
   type    = string # Type - not needed, but showing it...
-  default = ""
+  default = "10.1.1.0/24"
 }
 
 variable "images" {

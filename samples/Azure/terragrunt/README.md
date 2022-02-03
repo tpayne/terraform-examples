@@ -30,6 +30,32 @@ You can delete all the resources using `terragrunt destroy -auto-approve`
 
 The sample works by customising the name of the resources created to reflect the environment being used - either dev or prod.
 
+To run the more complex sample(s), do the following...
+
+	cd samples/Azure/terragrunt/multiple
+	(cd dev && terragrunt run-all plan)
+	(cd dev && echo y | terragrunt run-all apply)
+	(cd dev && echo y | terragrunt run-all destroy)
+	(az group delete -n dev_rg_001 -y ; az group delete -n dev_rg_002 -y)
+	(cd prod && terragrunt run-all plan)
+	(cd prod && echo y | terragrunt run-all apply)
+	(cd prod && echo y | terragrunt run-all destroy)
+	(az group delete -n prod_rg_001 -y ; az group delete -n prod_rg_002 -y)
+	
+If the destroy does not work - as it seems to be a little bit flakey - then do the following...
+
+	(az group delete -n dev_rg_001 -y ; az group delete -n dev_rg_002 -y)
+	(az group delete -n prod_rg_001 -y ; az group delete -n prod_rg_002 -y)
+
+The sample works by customising the name of the resources created to reflect the environment being used - either dev or prod. It also deploys
+multiple modules.
+
+Notes
+-----
+* Terragrunt is a solution looking for a problem to solve. It is supposed to be aimed at keeping your code DRY, but you end up copying lots of config files around instead, so review your use-cases before using it as there might be better approaches
+* Terragrunt does cause some perfectly good Terraform modules to fail for some odd reasons
+* Terragrunt run-all does not work very well
+
 References
 ----------
 * https://terragrunt.gruntwork.io/docs/getting-started/install/

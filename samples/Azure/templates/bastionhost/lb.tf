@@ -34,7 +34,7 @@ locals {
 }
 
 module "internal-lb" {
-  source   = "../modules/internal-lb"
+  source   = "github.com/tpayne/terraform-examples/samples/Azure/templates/modules/internal-lb"
   defaults = local.load_balancer_defaults
   name     = "${var.project}-backend-lb"
 
