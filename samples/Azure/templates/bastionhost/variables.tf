@@ -1,11 +1,11 @@
 # Declare variables that can be used. They do not need to be populated...
 
-variable "project" {  
+variable "project" {
   type    = string # Type - not needed, but showing it...
   default = "testdemo"
 }
 
-variable "name" {  
+variable "name" {
   type    = string # Type - not needed, but showing it...
   default = "rg_001"
 }
