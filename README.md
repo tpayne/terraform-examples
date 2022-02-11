@@ -25,6 +25,13 @@ If you use a sample configuration, please review the issue list generated and re
 
 [![CI](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml/badge.svg)](https://github.com/tpayne/terraform-examples/actions/workflows/testmakegcpsamples.yml)
 
+Introduction to Terraform & IaC
+-------------------------------
+The following is a training video I put together for Terraform and IaC...
+
+[![Intro into IaC](https://img.youtube.com/vi/opCSWBZNiRg/0.jpg)](https://www.youtube.com/watch?v=opCSWBZNiRg)
+
+
 Types of Samples
 ----------------
 There are two main types of examples provided
