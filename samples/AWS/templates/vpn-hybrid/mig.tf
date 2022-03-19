@@ -35,7 +35,7 @@ module "mig" {
   source                     = "../modules/mig/"
   name                       = var.project
   location                   = var.region_be
-  machine_type               = "t2.micro"
+  machine_type               = var.machine_types.micro
   subnet_id                  = aws_subnet.backend_subnet.id
   load_balancer_address_pool = module.internal-lb.target_arns
   size                       = var.size

@@ -5,7 +5,7 @@ This example uses terraform on AWS to create a standard VPN on-prem/cloud hybrid
 
 An on-prem VPN gateway is created to represent the on-prem system.
 
-The backend is contained in a Vnet which is fronted by a VPN and an internal load balancer which distributes traffic to an autoscaling group. The group has access to the internet, but not the other way around.
+The backend is contained in a VPC which is fronted by a VPN and an internal load balancer which distributes traffic to an autoscaling group. The group has access to the internet, but not the other way around.
 
 Status
 ------
@@ -52,17 +52,15 @@ To clean up do...
 
     terraform destroy -auto-approve
 
-You can also use AZ directly as well...
-
-    az group delete --resource-group rg_001 -y
-
 Notes
 -----
-- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_gateway_connection
-- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_gateway
-- https://github.com/terraform-providers/terraform-provider-azurerm/tree/master/examples/virtual-networks
-- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/local_network_gateway
-- https://www.tinfoilcipher.co.uk/2020/05/28/terraform-and-azure-automated-deployment-of-s2s-vpns/
+- https://aws.amazon.com/ec2/instance-types/
+- https://www.terraform.io/language/functions/templatefile?_ga=2.113429762.408791352.1647612847-797352187.1647139614
+- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group#target_group_arns
+- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpn_connection#vgw_telemetry
+- https://runebook.dev/en/docs/terraform/providers/aws/r/lb_target_group
+- https://github.com/terraform-aws-modules/terraform-aws-vpn-gateway
+- https://registry.terraform.io/modules/terraform-aws-modules/customer-gateway/aws/latest
 
 Issues
 ------
@@ -77,4 +75,3 @@ or otherwise about the accuracy or functionality of the examples.
 You use them at your own risk. If anything results to your machine or environment or anything else as a
 result of ignoring this warning, then the fault is yours only and has nothing to do with me.
 
-[run_button_auto]: https://shell.azure.com/

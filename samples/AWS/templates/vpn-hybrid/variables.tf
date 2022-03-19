@@ -61,4 +61,15 @@ variable "vpn_shared_key" {
   sensitive = true
 }
 
+# https://aws.amazon.com/ec2/instance-types/
+variable "machine_types" {
+  type = map(any)
+  default = {
+    micro = "t2.micro"
+    dev   = "t2.medium"
+    test  = "t2.medium"
+    prod  = "t2.xlarge"
+  }
+}
+
 

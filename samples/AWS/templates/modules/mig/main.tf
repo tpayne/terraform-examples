@@ -46,20 +46,6 @@ data "aws_ami" "image" {
   owners = ["099720109477"] # Canonical
 }
 
-/*
-dynamic "storage_profile_image_reference" {
-
-    for_each = [1]
-
-    content {
-      publisher = var.profile_image[lower(var.image)]["publisher"]
-      offer     = var.profile_image[lower(var.image)]["offer"]
-      sku       = var.profile_image[lower(var.image)]["sku"]
-      version   = var.profile_image[lower(var.image)]["version"]
-    }
-  }
-*/
-
 #------------------------------
 # Backend resources...
 #------------------------------
