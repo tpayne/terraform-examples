@@ -60,7 +60,7 @@ resource "aws_network_acl" "fnsg" {
     protocol   = "tcp"
     from_port  = 22
     to_port    = 22
-    cidr_block = var.frontend_cidr_range
+    cidr_block = "0.0.0.0/0"
   }
 
   ingress {
@@ -69,7 +69,7 @@ resource "aws_network_acl" "fnsg" {
     protocol   = "tcp"
     from_port  = 80
     to_port    = 80
-    cidr_block = var.frontend_cidr_range
+    cidr_block = "0.0.0.0/0"
   }
 }
 
@@ -107,7 +107,7 @@ resource "aws_network_acl" "bnsg" {
     protocol   = "tcp"
     from_port  = 22
     to_port    = 22
-    cidr_block = var.backend_cidr_range
+    cidr_block = "0.0.0.0/0"
   }
 
   ingress {
@@ -116,7 +116,7 @@ resource "aws_network_acl" "bnsg" {
     protocol   = "tcp"
     from_port  = 80
     to_port    = 80
-    cidr_block = var.backend_cidr_range
+    cidr_block = "0.0.0.0/0"
   }
 }
 
