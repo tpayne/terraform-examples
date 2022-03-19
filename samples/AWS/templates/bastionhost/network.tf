@@ -27,6 +27,11 @@
 ##############################
 # Create network interfaces...
 ##############################
+resource "aws_internet_gateway" "fgw" {
+  vpc_id = aws_vpc.fevnet.id
+  tags   = var.tags
+}
+
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.bevnet.id
   tags   = var.tags
@@ -43,14 +48,54 @@ resource "aws_vpc" "fevnet" {
   enable_dns_hostnames = true
 }
 
+resource "aws_route_table" "rtb_frontend" {
+  vpc_id = aws_vpc.fevnet.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.fgw.id
+  }
+}
+
 resource "aws_subnet" "frontend_subnet" {
   vpc_id            = aws_vpc.fevnet.id
   cidr_block        = var.frontendsn_cidr_range
   availability_zone = "${var.region_fe}a"
 }
 
+resource "aws_route_table_association" "rta_subnet_frontend" {
+  subnet_id      = aws_subnet.frontend_subnet.id
+  route_table_id = aws_route_table.rtb_frontend.id
+}
 
 # Firewall rules
+resource "aws_security_group" "fsg" {
+  name   = "fesg001"
+  vpc_id = aws_vpc.fevnet.id
+
+  # SSH access from the VPC
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_network_acl" "fnsg" {
   vpc_id = aws_vpc.fevnet.id
 

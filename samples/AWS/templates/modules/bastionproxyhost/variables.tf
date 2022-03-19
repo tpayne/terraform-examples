@@ -51,6 +51,12 @@ variable "subnet_id" {
   default = ""
 }
 
+variable "sgs" {
+  type    = set(string) # Type - not needed, but showing it...
+  default = [
+  ]
+}
+
 variable "tags" {
   type = map(any)
   default = {

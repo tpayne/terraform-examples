@@ -65,8 +65,9 @@ resource "aws_instance" "proxyvm" {
   associate_public_ip_address = true
   availability_zone           = "${var.location}a"
 
-  subnet_id = var.subnet_id
+  vpc_security_group_ids      = var.sgs
 
+  subnet_id = var.subnet_id
   user_data = filebase64(var.custom_data)
   tags      = var.tags
 

@@ -43,6 +43,7 @@ module "bastionhost" {
   image        = var.images.ubunto16
   custom_data  = format("%s/templates/startup.sh.tpl", path.module)
   tags         = var.tags
+  sgs          = [aws_security_group.fsg.id]
 }
 
 

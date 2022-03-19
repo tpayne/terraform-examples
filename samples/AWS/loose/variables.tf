@@ -1,7 +1,7 @@
 # Declare variables that can be used. They do not need to be populated...
 
 variable "region" {
-  default = "us-west-2"
+  default = "eu-west-2"
 }
 
 variable "machine_types" {
