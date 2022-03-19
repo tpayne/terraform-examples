@@ -20,26 +20,17 @@
  * SOFTWARE.
  */
 
-# This section will declare the providers needed...
-# terraform init -upgrade
-# DEBUG - export TF_LOG=DEBUG
+output "asg-name" {
+  description = "The name of the Autoscaling group."
+  value       = aws_autoscaling_group.bemig.name
+}
 
-##############################
-# Create compute resources...
-##############################
+output "asg-arn" {
+  description = "The resource ARN of the Autoscaling group."
+  value       = aws_autoscaling_group.bemig.arn
+}
 
-#------------------------------
-# Backend resources...
-#------------------------------
-module "mig" {
-  source                     = "../modules/mig/"
-  name                       = var.project
-  location                   = var.region_be
-  machine_type               = "t2.micro"
-  subnet_id                  = aws_subnet.backend_subnet.id
-  load_balancer_address_pool = module.internal-lb.target_arns
-  size                       = var.size
-  image                      = "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
-  custom_data                = format("%s/templates/startup.sh.tpl", path.module)
-  tags                       = var.tags
+output "asg-id" {
+  description = "The resource ID of the Autoscaling group."
+  value       = aws_autoscaling_group.bemig.id
 }
