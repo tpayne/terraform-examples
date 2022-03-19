@@ -28,17 +28,52 @@
 # Create compute resources...
 ##############################
 
-#------------------------------
-# Backend resources...
-#------------------------------
-module "mig" {
-  source                     = "../modules/mig/"
-  name                       = var.project
-  machine_type               = var.machine_types.micro
-  subnet_id                  = aws_subnet.backend_subnet.id
-  load_balancer_address_pool = module.internal-lb.target_arns
-  size                       = var.size
-  image                      = "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
-  custom_data                = format("%s/templates/startup.sh.tpl", path.module)
-  tags                       = var.tags
+# Select image of use...
+data "aws_ami" "pxyimage" {
+  most_recent = true
+
+  filter {
+    name   = "name"
+    values = [var.image]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
+
+#------------------------------
+# Frontend bastion host...
+#------------------------------
+resource "aws_launch_template" "proxytemplate" {
+  name_prefix   = "pxy${var.name}"
+  image_id      = data.aws_ami.pxyimage.id
+  instance_type = var.machine_type
+
+  monitoring {
+    enabled = true
+  }
+
+  user_data = filebase64(var.custom_data)
+  tags      = var.tags
+}
+
+resource "aws_instance" "proxyvm" {
+  associate_public_ip_address = true
+  availability_zone           = "${var.location}a"
+
+  subnet_id = var.subnet_id
+
+  user_data = filebase64(var.custom_data)
+  tags      = var.tags
+
+  launch_template {
+    id      = aws_launch_template.proxytemplate.id
+    version = "$Latest"
+  }
+}
+
+

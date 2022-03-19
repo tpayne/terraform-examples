@@ -24,21 +24,13 @@
 # terraform init -upgrade
 # DEBUG - export TF_LOG=DEBUG
 
-##############################
-# Create compute resources...
-##############################
-
-#------------------------------
-# Backend resources...
-#------------------------------
-module "mig" {
-  source                     = "../modules/mig/"
-  name                       = var.project
-  machine_type               = var.machine_types.micro
-  subnet_id                  = aws_subnet.backend_subnet.id
-  load_balancer_address_pool = module.internal-lb.target_arns
-  size                       = var.size
-  image                      = "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
-  custom_data                = format("%s/templates/startup.sh.tpl", path.module)
-  tags                       = var.tags
+# NAT router
+resource "aws_nat_gateway" "backend_router" {
+  subnet_id         = aws_subnet.backend_subnet.id
+  connectivity_type = "private"
+  tags = {
+    Name = "${var.project}-backend-nat001"
+  }
+  depends_on = [aws_internet_gateway.gw]
 }
+

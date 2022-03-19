@@ -54,7 +54,7 @@ resource "aws_lb_listener" "lb-listener" {
   protocol          = each.value.protocol
 
   default_action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = aws_lb_target_group.lb-target[each.key].arn
   }
 }

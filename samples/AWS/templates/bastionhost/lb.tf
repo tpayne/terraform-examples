@@ -24,21 +24,27 @@
 # terraform init -upgrade
 # DEBUG - export TF_LOG=DEBUG
 
-##############################
-# Create compute resources...
-##############################
 
-#------------------------------
-# Backend resources...
-#------------------------------
-module "mig" {
-  source                     = "../modules/mig/"
-  name                       = var.project
-  machine_type               = var.machine_types.micro
-  subnet_id                  = aws_subnet.backend_subnet.id
-  load_balancer_address_pool = module.internal-lb.target_arns
-  size                       = var.size
-  image                      = "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
-  custom_data                = format("%s/templates/startup.sh.tpl", path.module)
-  tags                       = var.tags
+module "internal-lb" {
+  source    = "../modules/internal-lb"
+  vpc_id    = aws_vpc.bevnet.id
+  name      = "${var.project}-backend-lb"
+  type      = "network"
+  tags      = var.tags
+  subnet_id = aws_subnet.backend_subnet.id
+  subnet_ip = var.backendsn_lb_ip
+
+  load_balancer_rules = [{
+    protocol = "TCP",
+    port     = 80
+    },
+    {
+      protocol = "TCP",
+      port     = 22
+    }
+  ]
 }
+
+
+
+

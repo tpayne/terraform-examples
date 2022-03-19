@@ -54,20 +54,17 @@ resource "aws_launch_template" "migtemplate" {
   name_prefix   = var.name
   image_id      = data.aws_ami.image.id
   instance_type = var.machine_type
-  network_interfaces {
-    subnet_id = var.subnet_id
-  }
-  user_data = filebase64(var.custom_data)
-  tags      = var.tags
+  user_data     = filebase64(var.custom_data)
+  tags          = var.tags
 }
 
 resource "aws_autoscaling_group" "bemig" {
-  name               = var.name
-  availability_zones = ["${var.location}a"]
-  desired_capacity   = var.size
-  max_size           = var.size
-  min_size           = var.size
-  target_group_arns  = var.load_balancer_address_pool
+  name                = var.name
+  vpc_zone_identifier = [var.subnet_id]
+  desired_capacity    = var.size
+  max_size            = var.size
+  min_size            = var.size
+  target_group_arns   = var.load_balancer_address_pool
   launch_template {
     id      = aws_launch_template.migtemplate.id
     version = "$Latest"
