@@ -1,11 +1,13 @@
 Bastion Host Example
 ====================
 
-This example uses terraform on Azure to create a standard bastion host sample.
+This example uses terraform on AWS to create a standard bastion host sample.
 
-The frontend is contained in a Vnet and fronted by a bastion host which is open to the internet.
+The frontend is contained in a VPC and fronted by a bastion host which is open to the internet.
 
-The backend is contained in a Vnet which is fronted by an internal load balancer which distributes traffic to a virtual scale set (VMSS). The VMSS has access to the internet, but not the other way around.
+The backend is contained in a VPC which is fronted by a VPC peer and an internal load balancer which 
+distributes traffic to an autoscaling group. The group has access to the internet, but not the other 
+way around.
 
 Status
 ------
@@ -17,29 +19,17 @@ Prerequisites
 -------------
 To run this tutorial, you must have ensured the following...
 
-* You have access to a Azure account as an admin or owner
+* You have access to a AWS account as an admin or owner
 
-This was tested using Terraform version v0.15.2 and Azure versions...
+This was tested using Terraform version v0.15.2 and AWS versions...
 
-*  "azure-cli": "2.23.0",
-*  "azure-cli-core": "2.23.0",
-*  "azure-cli-telemetry": "1.0.6"
+*  aws-cli/2.2.31 Python/3.8.8 Darwin/19.6.0 exe/x86_64 prompt/off
 
 Usage
 -----
 The following instructions show how to deploy it.
 
     (terraform init && terraform plan && terraform apply -auto-approve)
-
-Running the Sample in Azure Cloud Shell
----------------------------------------
-To run the example in Cloud Shell, press the button below.
-
-[<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="200" height="100">][run_button_auto]
-
-If you use this method, you will need to manually clone this git repo as Azure does not do it for you.
-
-    git clone https://github.com/tpayne/terraform-examples.git samples/Azure/templates/
 
 To Test
 -------
@@ -56,7 +46,7 @@ Then, connect to the bastion host (obtained from above)...
     ssh <username>@<bastionhost-ip>
 
 Once logged in then do a curl command against the load balancer IP (obtained above).
-Note, you may need to wait 5 mins or so after running `terraform` for the VMSS systems to get running.
+Note, you may need to wait 5 mins or so after running `terraform` for the ASG systems to get running.
 
     curl <loadbalancerIP>:80/index.php
 
@@ -70,9 +60,11 @@ To clean up do...
 
 Notes
 -----
-- https://github.com/terraform-azurerm-modules/terraform-azurerm-linux-vmss
-- https://github.com/terraform-azurerm-modules/terraform-azurerm-load-balancer
-- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_scale_set#os_profile
+- https://aws.amazon.com/ec2/instance-types/
+- https://www.terraform.io/language/functions/templatefile?_ga=2.113429762.408791352.1647612847-797352187.1647139614
+- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_group#target_group_arns
+- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpn_connection#vgw_telemetry
+- https://runebook.dev/en/docs/terraform/providers/aws/r/lb_target_group
 - Create a picture using `terraform graph | dot -Tsvg > graph.svg`
 
 Issues
@@ -86,5 +78,3 @@ or otherwise about the accuracy or functionality of the examples.
 
 You use them at your own risk. If anything results to your machine or environment or anything else as a
 result of ignoring this warning, then the fault is yours only and has nothing to do with me.
-
-[run_button_auto]: https://shell.azure.com/

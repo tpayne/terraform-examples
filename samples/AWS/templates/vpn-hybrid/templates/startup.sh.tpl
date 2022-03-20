@@ -2,7 +2,12 @@
 echo 'Install Packages'
 apt-get update
 apt-get install -y apache2 libapache2-mod-php net-tools -y
-apt-get update
+apt-get upgrade
+apt-get install -y ec2-instance-connect xinetd telnetd
+
+addgroup ec2usrs
+useradd -m -p thisisapasswd -s /bin/bash ec2-user
+adduser ec2-user -G ec2usrs
 
 echo 'Update firewall'
 ufw app list

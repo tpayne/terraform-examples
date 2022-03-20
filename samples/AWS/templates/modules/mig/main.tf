@@ -51,11 +51,12 @@ data "aws_ami" "image" {
 #------------------------------
 # https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instancedata-data-categories.html
 resource "aws_launch_template" "migtemplate" {
-  name_prefix   = var.name
-  image_id      = data.aws_ami.image.id
-  instance_type = var.machine_type
-  user_data     = filebase64(var.custom_data)
-  tags          = var.tags
+  name_prefix            = var.name
+  image_id               = data.aws_ami.image.id
+  instance_type          = var.machine_type
+  user_data              = filebase64(var.custom_data)
+  tags                   = var.tags
+  vpc_security_group_ids = var.sgs
 }
 
 resource "aws_autoscaling_group" "bemig" {

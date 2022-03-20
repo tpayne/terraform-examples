@@ -36,6 +36,12 @@ variable "load_balancer_address_pool" {
   ]
 }
 
+variable "sgs" {
+  type    = set(string) # Type - not needed, but showing it...
+  default = [
+  ]
+}
+
 variable "tags" {
   type = map(any)
   default = {

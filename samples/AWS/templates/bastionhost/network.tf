@@ -96,33 +96,6 @@ resource "aws_security_group" "fsg" {
   }
 }
 
-resource "aws_network_acl" "fnsg" {
-  vpc_id = aws_vpc.fevnet.id
-
-  ingress {
-    rule_no    = 1001
-    action     = "allow"
-    protocol   = "tcp"
-    from_port  = 22
-    to_port    = 22
-    cidr_block = "0.0.0.0/0"
-  }
-
-  ingress {
-    rule_no    = 1002
-    action     = "allow"
-    protocol   = "tcp"
-    from_port  = 80
-    to_port    = 80
-    cidr_block = "0.0.0.0/0"
-  }
-}
-
-resource "aws_network_acl_association" "fensgass001" {
-  network_acl_id = aws_network_acl.fnsg.id
-  subnet_id      = aws_subnet.frontend_subnet.id
-}
-
 
 #------------------------------
 # Backend network resources...
@@ -141,34 +114,49 @@ resource "aws_subnet" "backend_subnet" {
   availability_zone = "${var.region_be}a"
 }
 
-
 # Firewall rules
-resource "aws_network_acl" "bnsg" {
+resource "aws_route_table" "rtb_backend" {
   vpc_id = aws_vpc.bevnet.id
 
-  ingress {
-    rule_no    = 1001
-    action     = "allow"
-    protocol   = "tcp"
-    from_port  = 22
-    to_port    = 22
+  route {
     cidr_block = "0.0.0.0/0"
-  }
-
-  ingress {
-    rule_no    = 1002
-    action     = "allow"
-    protocol   = "tcp"
-    from_port  = 80
-    to_port    = 80
-    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
   }
 }
 
-resource "aws_network_acl_association" "bensgass001" {
-  network_acl_id = aws_network_acl.bnsg.id
+resource "aws_route_table_association" "rta_subnet_backend" {
   subnet_id      = aws_subnet.backend_subnet.id
+  route_table_id = aws_route_table.rtb_backend.id
 }
+
+# Firewall rules
+resource "aws_security_group" "bsg" {
+  name   = "besg001"
+  vpc_id = aws_vpc.bevnet.id
+
+  # SSH access from the VPC
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.backendsn_cidr_range]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [var.backendsn_cidr_range]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 
 # Peering rules
 resource "aws_vpc_peering_connection" "frontend_backend_peering" {
@@ -185,19 +173,4 @@ resource "aws_vpc_peering_connection" "frontend_backend_peering" {
   }
 }
 
-/* Should not be needed...
 
-resource "aws_vpc_peering_connection" "backend_frontend_peering" {
-  peer_vpc_id = aws_vpc.bevnet.id
-  vpc_id      = aws_vpc.fevnet.id
-  auto_accept = true
-
-  accepter {
-    allow_remote_vpc_dns_resolution = true
-  }
-
-  requester {
-    allow_remote_vpc_dns_resolution = true
-  }
-}
-*/

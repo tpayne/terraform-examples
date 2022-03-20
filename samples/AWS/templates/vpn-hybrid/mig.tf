@@ -41,4 +41,5 @@ module "mig" {
   image                      = "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*"
   custom_data                = format("%s/templates/startup.sh.tpl", path.module)
   tags                       = var.tags
+  sgs                        = [aws_security_group.bsg.id]
 }
