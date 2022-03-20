@@ -52,7 +52,7 @@ variable "subnet_id" {
 }
 
 variable "sgs" {
-  type    = set(string) # Type - not needed, but showing it...
+  type = set(string) # Type - not needed, but showing it...
   default = [
   ]
 }
