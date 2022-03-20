@@ -186,8 +186,10 @@ If you use the `Deploy` button, you will need to manually clone this git repo as
 
 	git clone https://github.com/tpayne/terraform-examples.git samples/Azure/templates/
 
-Running Loose AWS Samples
--------------------------
+Running AWS Samples
+-------------------
+
+#### Running the Loose samples
 The last set of examples are for AWS and are based on the Terraform starting examples. To use them you will have to have access to an AWS project in the cloud, then use `aws configure` to connect to it. You will need to create a secure key using the IAM console under `Access keys (access key ID and secret access key)`, download the key and then input the values during the configure process.
 
   * Goto a temporary directory and create a project directory
@@ -201,6 +203,10 @@ Then, run the following...
 	terraform init && terraform plan && terraform apply -auto-approve
 
 You can delete all the resources using `terraform destroy -auto-approve`
+
+#### Running the Template samples
+These are still being created and verified. The ones present have not been verified as working as they will be changed
+based on getting all the samples created.
 
 Issues
 ------
