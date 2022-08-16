@@ -66,7 +66,7 @@ To clean up do...
 
 You can also use AZ directly as well...
 
-    az group delete --resource-group rg_001 -y
+    az group delete --resource-group rg_001_vpnh -y
 
 Notes
 -----
