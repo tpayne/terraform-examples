@@ -49,7 +49,7 @@ resource "azurerm_network_interface" "proxynic01" {
   ip_configuration {
     name                          = var.name
     subnet_id                     = var.subnet_id
-    private_ip_address_allocation = "dynamic"
+    private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.proxyip.id
   }
 }

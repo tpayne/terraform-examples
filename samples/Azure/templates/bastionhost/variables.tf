@@ -7,7 +7,7 @@ variable "project" {
 
 variable "name" {
   type    = string # Type - not needed, but showing it...
-  default = "rg_001"
+  default = "rg_001_bastion"
 }
 
 variable "tags" {

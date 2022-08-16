@@ -73,21 +73,20 @@ resource "azurerm_lb_backend_address_pool" "lb" {
 resource "azurerm_lb_probe" "lb" {
   for_each            = local.load_balancer_rules_map
   name                = "probe-port-${each.value.backend_port}"
-  resource_group_name = local.resource_group_name
   loadbalancer_id     = azurerm_lb.lbext.id
   port                = each.value.backend_port // local.probe_port
 }
 
 resource "azurerm_lb_rule" "lb" {
+  depends_on                     = [azurerm_lb_backend_address_pool.lb]
   for_each                       = local.load_balancer_rules_map
   name                           = each.value.name
-  resource_group_name            = local.resource_group_name
   loadbalancer_id                = azurerm_lb.lbext.id
   protocol                       = each.value.protocol
   frontend_port                  = each.value.frontend_port
   backend_port                   = each.value.backend_port
   frontend_ip_configuration_name = "PublicIPAddress"
-  backend_address_pool_id        = azurerm_lb_backend_address_pool.lb.id
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.lb.id]
   probe_id                       = azurerm_lb_probe.lb[each.value.name].id
 
   // Resource defaults as per https://www.terraform.io/docs/providers/azurerm/r/lb_rule.html
