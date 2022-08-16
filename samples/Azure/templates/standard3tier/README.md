@@ -93,8 +93,8 @@ a SAMPLE, not a complete working system.
 
 The following will show some of these additional services.
 
-    ((az vmss list -g rg_001 --query [].name && az network lb list -g rg_001 --query [].name) &&
-     (az network vnet list -g rg_001 --query [].name && az network nsg list -g rg_001 --query [].name))
+    ((az vmss list -g rg_001_3t --query [].name && az network lb list -g rg_001_3t --query [].name) &&
+     (az network vnet list -g rg_001_3t --query [].name && az network nsg list -g rg_001_3t --query [].name))
 
 Clean Up
 --------
@@ -104,7 +104,7 @@ To clean up do...
 
 Or, you can remove the resource group directly
 
-    az group delete --resource-group rg_001 -y
+    az group delete --resource-group rg_001_3t -y
 
 Notes
 -----

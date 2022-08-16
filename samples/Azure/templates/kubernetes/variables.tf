@@ -28,7 +28,7 @@ variable "region_be" {
 # az aks get-versions -l uksouth
 variable "aks_version" {
   type    = string
-  default = "1.22.2"
+  default = "1.24.0"
 }
 
 variable "os_disk_size" {

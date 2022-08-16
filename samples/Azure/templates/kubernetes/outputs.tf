@@ -71,11 +71,8 @@ output "kubernetes-cluster-ca-cert" {
 }
 
 output "kubernetes-host" {
+  sensitive   = true
   description = "K8s hostname"
   value       = azurerm_kubernetes_cluster.k8s_server.kube_config.0.host
 }
 
-output "nat-gateway-ip" {
-  description = "NAT gateway ip address(es)"
-  value       = azurerm_nat_gateway.backend_router.public_ip_address_ids
-}

@@ -138,7 +138,6 @@ resource "azurerm_kubernetes_cluster" "k8s_server" {
     os_disk_size_gb     = var.os_disk_size
     vnet_subnet_id      = azurerm_subnet.backend_subnet.id
     type                = "VirtualMachineScaleSets"
-    availability_zones  = ["1", "2", "3"]
     enable_auto_scaling = true
     min_count           = var.aks_nodes_pool_size
     max_count           = var.aks_nodes_pool_maxsize
@@ -154,37 +153,12 @@ resource "azurerm_kubernetes_cluster" "k8s_server" {
     type = "SystemAssigned"
   }
 
-  role_based_access_control {
-    enabled = true
-  }
-
   network_profile {
     network_plugin    = "azure"
     load_balancer_sku = "standard"
   }
 
   sku_tier = var.sku.free
-
-  addon_profile {
-    aci_connector_linux {
-      enabled = false
-    }
-
-    azure_policy {
-      enabled = true
-    }
-
-    http_application_routing {
-      enabled = false
-    }
-
-    /* dited this out as it seems to cause terragrunt issues - but not running standalone
-    oms_agent {
-      enabled                    = true
-      log_analytics_workspace_id = azurerm_log_analytics_workspace.be_logworkspace.id
-    }
-    */
-  }
 
   tags = var.tags
 }
@@ -201,7 +175,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "k8s_server_nodes" {
   orchestrator_version  = var.aks_version
   priority              = "Regular"
   os_type               = "Linux"
-  availability_zones    = ["1", "2", "3"]
 }
 
 

@@ -70,7 +70,7 @@ SOFTWARE.
 | <a name="input_frontendsn_cidr_range"></a> [frontendsn\_cidr\_range](#input\_frontendsn\_cidr\_range) | n/a | `string` | `"10.1.1.0/24"` | no |
 | <a name="input_images"></a> [images](#input\_images) | n/a | `map(any)` | <pre>{<br>  "centos": "centos8",<br>  "coreos": "coreos",<br>  "mssql": "mssql2017exp",<br>  "ubunto16": "ubuntu1604",<br>  "ubunto18": "ubuntu1804",<br>  "win2012": "windows2012r2dc",<br>  "win2016": "windows2016dc",<br>  "win2019": "windows2019dc"<br>}</pre> | no |
 | <a name="input_machine_types"></a> [machine\_types](#input\_machine\_types) | n/a | `map(any)` | <pre>{<br>  "dev": "Standard_D2_v2",<br>  "micro": "Standard_B1ls",<br>  "prod": "Standard_D8s_v3",<br>  "test": "Standard_D2as_v4"<br>}</pre> | no |
-| <a name="input_name"></a> [name](#input\_name) | n/a | `string` | `"rg_001"` | no |
+| <a name="input_name"></a> [name](#input\_name) | n/a | `string` | `"rg_001_bastion"` | no |
 | <a name="input_project"></a> [project](#input\_project) | n/a | `string` | `"testdemo"` | no |
 | <a name="input_region_be"></a> [region\_be](#input\_region\_be) | n/a | `string` | `"uksouth"` | no |
 | <a name="input_size"></a> [size](#input\_size) | n/a | `number` | `3` | no |
