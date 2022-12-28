@@ -68,14 +68,14 @@
     },
     "dnsLabelPrefix": {
       "type": "string",
-      "defaultValue": "[toLower(concat('vmss-cluster-', uniqueString(resourceGroup().id)))]",
+      "defaultValue": "[toLower(concat('dnsvm-cluster-', uniqueString(resourceGroup().id)))]",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       }
     },
     "vmssDnsLabelPrefix": {
       "type": "string",
-      "defaultValue": "[toLower(concat('vmss-cluster-', uniqueString(resourceGroup().id)))]",
+      "defaultValue": "[toLower(concat('dnsvmss-cluster-', uniqueString(resourceGroup().id)))]",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the VMSS."
       }

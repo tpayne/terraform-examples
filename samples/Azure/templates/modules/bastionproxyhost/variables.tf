@@ -151,7 +151,3 @@ variable "admin_pwd" {
   type    = string # Type - not needed, but showing it...
   default = ""
 }
-
-
-
-

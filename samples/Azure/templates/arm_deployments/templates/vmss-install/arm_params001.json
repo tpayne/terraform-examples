@@ -1,9 +1,9 @@
 {
   "vmName": {
-    "value": "testvm"
+    "value": "testvm001"
   },
   "vmssName": {
-    "value": "testvmss"
+    "value": "testvmms001"
   },
   "adminUsername": {
     "value": "rootadmin"

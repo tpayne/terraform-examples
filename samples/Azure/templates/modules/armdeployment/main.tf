@@ -26,11 +26,11 @@
 
 resource "azurerm_resource_group_template_deployment" "armDeployment" {
   name                = "${var.name}-deploy"
-  resource_group_name = "${var.resource_group}"
+  resource_group_name = var.resource_group
   deployment_mode     = "Incremental"
   tags                = var.tags
 
   parameters_content = file("${var.arm_params}")
-  template_content = file("${var.arm_file}")
+  template_content   = file("${var.arm_file}")
 }
 
