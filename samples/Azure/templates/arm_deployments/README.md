@@ -1,11 +1,7 @@
-Bastion Host Example
-====================
+ARM Deployment Example
+======================
 
-This example uses terraform on Azure to create a standard bastion host sample.
-
-The frontend is contained in a Vnet and fronted by a bastion host which is open to the internet.
-
-The backend is contained in a Vnet which is fronted by an internal load balancer which distributes traffic to a virtual scale set (VMSS). The VMSS has access to the internet, but not the other way around.
+This example uses terraform on Azure to perform a couple of deployments using ARM templaytes.
 
 Status
 ------
@@ -41,39 +37,11 @@ If you use this method, you will need to manually clone this git repo as Azure d
 
     git clone https://github.com/tpayne/terraform-examples.git samples/Azure/templates/
 
-To Test
--------
-To test the frontend service (which essentially is the only thing accessible), please run the following commands
-at the shell prompt...
-
-First, get the IP address of the bastion host and the load-balancer...
-
-    (echo $(terraform output bastionhost-ip | sed 's|"||g') && \
-     echo $(terraform output loadbalancer-ip | sed 's|"||g'))
-
-Then, connect to the bastion host (obtained from above)...
-
-    ssh <username>@<bastionhost-ip>
-
-Once logged in then do a curl command against the load balancer IP (obtained above).
-Note, you may need to wait 5 mins or so after running `terraform` for the VMSS systems to get running.
-
-    curl <loadbalancerIP>:80/index.php
-
-This will then return customised HTML.
-
 Clean Up
 --------
 To clean up do...
 
     terraform destroy -auto-approve
-
-Notes
------
-- https://github.com/terraform-azurerm-modules/terraform-azurerm-linux-vmss
-- https://github.com/terraform-azurerm-modules/terraform-azurerm-load-balancer
-- https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_machine_scale_set#os_profile
-- Create a picture using `terraform graph | dot -Tsvg > graph.svg`
 
 Issues
 ------
