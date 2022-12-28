@@ -43,6 +43,10 @@ To clean up do...
 
     terraform destroy -auto-approve
 
+Notes
+-----
+- https://github.com/Azure/azure-quickstart-templates
+
 Issues
 ------
 - This example is is only intended as a sample on how to create a system. You will need to configure it as needed
