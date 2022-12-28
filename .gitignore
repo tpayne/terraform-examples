@@ -9,8 +9,8 @@
 # Crash log files
 crash.log
 
-# JSON files
-*.json
+# Directories
+.DS_Store
 
 # Lock files
 .terraform.lock.hcl
