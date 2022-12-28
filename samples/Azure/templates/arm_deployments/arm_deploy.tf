@@ -45,14 +45,14 @@ module "arm_deployment001" {
   tags = var.tags
 }
 
-module "arm_deploymentk8s" {
+module "arm_deploymentvmss001" {
   source = "../modules/armdeployment"
 
-  name           = "${var.name}-k8s"
+  name           = "${var.name}-vmss001"
   resource_group = azurerm_resource_group.resourceGroup.name
 
-  arm_params = "${path.module}/templates/kubernetes/arm_params001.json"
-  arm_file   = "${path.module}/templates/kubernetes/arm_deploy001.json"
+  arm_params = "${path.module}/templates/vmss-install/arm_params001.json"
+  arm_file   = "${path.module}/templates/vmss-install/arm_deploy001.json"
 
   tags = var.tags
 }
