@@ -1,0 +1,14 @@
+{
+  "actionGroupName": {
+    "value": "serviceHealthActionGroup"
+  },
+  "actionGroupShortName": {
+    "value": "serviceAG"
+  },
+  "emailAddress": {
+    "value": "someemail@contoso.com"
+  },
+  "activityLogAlertName": {
+    "value": "serviceHealthAlert"
+  }
+}

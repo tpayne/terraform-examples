@@ -1,0 +1,20 @@
+{
+  "vmName": {
+    "value": "testvm"
+  },
+  "vmssName": {
+    "value": "testvmss"
+  },
+  "adminUsername": {
+    "value": "rootadmin"
+  },
+  "adminKey": {
+    "value": "PassWord1234-1"
+  },
+  "spClientId": {
+    "value": "GEN-UNIQUE-13"
+  },
+  "spClientSecret": {
+    "value": "GEN-UNIQUE-13"
+  }
+}
