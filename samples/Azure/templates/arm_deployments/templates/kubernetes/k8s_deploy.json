@@ -1,0 +1,382 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "clusterName": {
+            "type": "String"
+        },
+        "vnetName": {
+            "type": "String"
+        },
+        "adminUserName": {
+            "type": "string",
+            "defaultValue": "azureuser",
+            "metadata": {
+                "description": "Admin login."
+            }
+        },
+        "adminKey": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Password for the Virtual Machine."
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "vmSize": {
+            "type": "string",
+            "defaultValue": "Standard_D2s_v3",
+            "metadata": {
+                "description": "The size of the VM"
+            }
+        },
+        "maxPods": {
+            "type": "int",
+            "defaultValue": 150,
+            "metadata": {
+                "description": "The max pod count in your cluster."
+            }
+        },
+        "minCount": {
+            "type": "int",
+            "defaultValue": 1,
+            "metadata": {
+                "description": "The min node size of your cluster."
+            }
+        },
+        "maxCount": {
+            "type": "int",
+            "defaultValue": 5,
+            "metadata": {
+                "description": "The max node size of your cluster."
+            }
+        },
+        "nodeCount": {
+            "type": "int",
+            "defaultValue": 3,
+            "metadata": {
+                "description": "The node size of your cluster."
+            }
+        },
+        "osDiskSizeGB": {
+            "type": "int",
+            "defaultValue": 128,
+            "metadata": {
+                "description": "The disk size."
+            }
+        },
+        "osType": {
+            "type": "string",
+            "defaultValue": "Linux"
+        },
+        "osVersion": {
+            "type": "string",
+            "defaultValue": "Ubuntu"
+        },
+        "vnetNameCidr": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/8"
+        },
+        "vnetNameAciSubNetCidr": {
+            "type": "string",
+            "defaultValue": "10.1.0.0/16"
+        },
+        "vnetNamek8sSubNetCidr": {
+            "type": "string",
+            "defaultValue": "10.2.0.0/16"
+        },
+        "serviceCidr": {
+            "type": "string",
+            "defaultValue": "10.3.0.0/24"
+        },
+        "dnsServiceIP": {
+            "type": "string",
+            "defaultValue": "10.3.0.15"
+        },
+        "dockerBridgeCidr": {
+            "type": "string",
+            "defaultValue": "172.17.0.1/16"
+        },
+        "kubernetesVersion": {
+            "type": "string",
+            "defaultValue": "1.24.6"
+        },
+        "dnsLabelPrefix": {
+            "type": "string",
+            "defaultValue": "[toLower(concat('dnsk8s-cluster-', uniqueString(resourceGroup().id)))]",
+            "metadata": {
+                "description": "Unique DNS Name"
+            }
+        }
+    },
+    "variables": {
+        "publicIpAddressName": "[concat(parameters('clusterName'), 'PublicIP' )]",
+        "osDiskType": "Managed"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.OperationalInsights/workspaces",
+            "apiVersion": "2020-08-01",
+            "name": "[parameters('clusterName')]",
+            "location": "[parameters('location')]"
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2020-08-01",
+            "name": "[parameters('vnetName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('vnetNameCidr')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "virtual-node-aci",
+                        "properties": {
+                            "addressPrefix": "[parameters('vnetNameAciSubNetCidr')]"
+                        }
+                    },
+                    {
+                        "name": "vmsubnetk8s",
+                        "properties": {
+                            "addressPrefix": "[parameters('vnetNamek8sSubNetCidr')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2020-08-01",
+            "name": "[variables('publicIpAddressName')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "publicIPAddressVersion": "IPv4",
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('dnsLabelPrefix')]"
+                },
+                "idleTimeoutInMinutes": 10
+            }
+        },
+        {
+            "type": "Microsoft.ContainerService/managedClusters",
+            "apiVersion": "2022-08-03-preview",
+            "name": "[parameters('clusterName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('clusterName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName'))]",
+                "[resourceId('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]"
+            ],
+            "tags": {
+                "test": "test"
+            },
+            "sku": {
+                "name": "Basic",
+                "tier": "Paid"
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "kubernetesVersion": "[parameters('kubernetesVersion')]",
+                "dnsPrefix": "[parameters('dnsLabelPrefix')]",
+                "agentPoolProfiles": [
+                    {
+                        "name": "agentpool",
+                        "count": "[parameters('nodeCount')]",
+                        "vmSize": "[parameters('vmSize')]",
+                        "osDiskSizeGB": "[parameters('osDiskSizeGB')]",
+                        "osDiskType": "[variables('osDiskType')]",
+                        "kubeletDiskType": "OS",
+                        "vnetSubnetID": "[concat(resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName')), '/subnets/vmsubnetk8s')]",
+                        "maxPods": "[parameters('maxPods')]",
+                        "type": "VirtualMachineScaleSets",
+                        "availabilityZones": [
+                            "1",
+                            "2",
+                            "3"
+                        ],
+                        "maxCount": "[parameters('maxCount')]",
+                        "minCount": "[parameters('minCount')]",
+                        "enableAutoScaling": true,
+                        "powerState": {
+                            "code": "Running"
+                        },
+                        "orchestratorVersion": "[parameters('kubernetesVersion')]",
+                        "enableNodePublicIP": false,
+                        "mode": "System",
+                        "osType": "[parameters('osType')]",
+                        "osSKU": "[parameters('osVersion')]",
+                        "enableFIPS": false
+                    }
+                ],
+                "windowsProfile": {
+                    "adminUsername": "[parameters('adminUserName')]",
+                    "adminPassword": "[parameters('adminKey')]",
+                    "enableCSIProxy": true
+                },
+                "servicePrincipalProfile": {
+                    "clientId": "msi"
+                },
+                "addonProfiles": {
+                    "aciConnectorLinux": {
+                        "enabled": true,
+                        "config": {
+                            "SubnetName": "virtual-node-aci"
+                        }
+                    },
+                    "azureKeyvaultSecretsProvider": {
+                        "enabled": false
+                    },
+                    "azurepolicy": {
+                        "enabled": false
+                    },
+                    "httpApplicationRouting": {
+                        "enabled": false
+                    },
+                    "omsAgent": {
+                        "enabled": true,
+                        "config": {
+                            "logAnalyticsWorkspaceResourceID": "[resourceId('Microsoft.OperationalInsights/workspaces/', parameters('clusterName'))]"
+                        }
+                    }
+                },
+                "nodeResourceGroup": "[concat('MC_nodegroup_', parameters('clusterName'), '_', parameters('location'))]",
+                "enableRBAC": true,
+                "networkProfile": {
+                    "networkPlugin": "azure",
+                    "loadBalancerSku": "Standard",
+                    "loadBalancerProfile": {
+                        "managedOutboundIPs": {
+                            "count": 1
+                        },
+                        "effectiveOutboundIPs": [
+                            {
+                                "id": "[variables('publicIpAddressName')]"
+                            }
+                        ],
+                        "backendPoolType": "nodeIPConfiguration"
+                    },
+                    "serviceCidr": "[parameters('serviceCidr')]",
+                    "dnsServiceIP": "[parameters('dnsServiceIP')]",
+                    "dockerBridgeCidr": "[parameters('dockerBridgeCidr')]",
+                    "outboundType": "loadBalancer",
+                    "serviceCidrs": [
+                        "[parameters('serviceCidr')]"
+                    ],
+                    "ipFamilies": [
+                        "IPv4"
+                    ]
+                },
+                "identityProfile": {
+                },
+                "autoScalerProfile": {
+                    "balance-similar-node-groups": "false",
+                    "expander": "random",
+                    "max-empty-bulk-delete": "10",
+                    "max-graceful-termination-sec": "600",
+                    "max-node-provision-time": "15m",
+                    "max-total-unready-percentage": "45",
+                    "new-pod-scale-up-delay": "0s",
+                    "ok-total-unready-count": "3",
+                    "scale-down-delay-after-add": "10m",
+                    "scale-down-delay-after-delete": "10s",
+                    "scale-down-delay-after-failure": "3m",
+                    "scale-down-unneeded-time": "10m",
+                    "scale-down-unready-time": "20m",
+                    "scale-down-utilization-threshold": "0.5",
+                    "scan-interval": "10s",
+                    "skip-nodes-with-local-storage": "false",
+                    "skip-nodes-with-system-pods": "true"
+                },
+                "autoUpgradeProfile": {
+                    "upgradeChannel": "patch"
+                },
+                "disableLocalAccounts": false,
+                "securityProfile": {},
+                "storageProfile": {
+                    "diskCSIDriver": {
+                        "enabled": true,
+                        "version": "v1"
+                    },
+                    "fileCSIDriver": {
+                        "enabled": true
+                    },
+                    "snapshotController": {
+                        "enabled": true
+                    }
+                },
+                "oidcIssuerProfile": {
+                    "enabled": false
+                },
+                "workloadAutoScalerProfile": {}
+            }
+        },
+        {
+            "type": "Microsoft.ContainerService/managedClusters/agentPools",
+            "apiVersion": "2022-08-03-preview",
+            "name": "[concat(parameters('clusterName'), '/agentpool')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.ContainerService/managedClusters', parameters('clusterName'))]"
+            ],
+            "properties": {
+                "count": "[parameters('nodeCount')]",
+                "vmSize": "[parameters('vmSize')]",
+                "osDiskSizeGB": "[parameters('osDiskSizeGB')]",
+                "osDiskType": "[variables('osDiskType')]",
+                "kubeletDiskType": "OS",
+                "vnetSubnetID": "[concat(resourceId('Microsoft.Network/virtualNetworks/', parameters('vnetName')), '/subnets/vmsubnetk8s')]",
+                "maxPods": "[parameters('maxPods')]",
+                "type": "VirtualMachineScaleSets",
+                "availabilityZones": [
+                    "1",
+                    "2",
+                    "3"
+                ],
+                "maxCount": "[parameters('maxCount')]",
+                "minCount": "[parameters('minCount')]",
+                "enableAutoScaling": true,
+                "powerState": {
+                    "code": "Running"
+                },
+                "orchestratorVersion": "[parameters('kubernetesVersion')]",
+                "enableNodePublicIP": false,
+                "mode": "System",
+                "osType": "[parameters('osType')]",
+                "osSKU": "[parameters('osVersion')]",
+                "enableFIPS": false
+            }
+        }
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        },
+        "dnsServiceIP": {
+            "type": "string",
+            "value": "[parameters('dnsServiceIP')]"
+        },
+        "dockerBridgeCidr": {
+            "type": "string",
+            "value": "[parameters('dockerBridgeCidr')]"
+        },
+        "kubernetesVersion": {
+            "type": "string",
+            "value": "[parameters('kubernetesVersion')]"
+        },
+        "nodeName": {
+            "type": "string",
+            "value": "[reference(variables('publicIPAddressName')).dnsSettings.fqdn]"
+        }
+    }
+}

@@ -35,4 +35,12 @@ output "arm_deploymentvmss001-id" {
   value = module.arm_deploymentvmss001.armop_id
 }
 
+output "arm_deploymentk8s-output" {
+  value = module.arm_deploymentk8s.armop_output
+}
+
+output "arm_deploymentk8s-id" {
+  value = module.arm_deploymentk8s.armop_id
+}
+
 

@@ -57,5 +57,16 @@ module "arm_deploymentvmss001" {
   tags = var.tags
 }
 
+module "arm_deploymentk8s" {
+  source = "../modules/armdeployment"
+
+  name           = "${var.name}-k8s001"
+  resource_group = azurerm_resource_group.resourceGroup.name
+
+  arm_params = "${path.module}/templates/kubernetes/k8s_params.json"
+  arm_file   = "${path.module}/templates/kubernetes/k8s_deploy.json"
+
+  tags = var.tags
+}
 
 

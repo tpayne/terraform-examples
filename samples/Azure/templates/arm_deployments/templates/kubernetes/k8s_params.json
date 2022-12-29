@@ -1,0 +1,14 @@
+{
+    "clusterName": {
+        "value": "testk8s"
+    },
+    "vnetName": {
+        "value": "testk8svnet"
+    },
+    "adminUsername": {
+        "value": "rootadmin"
+    },
+    "adminKey": {
+        "value": "PassWord1234-1"
+    }
+}
