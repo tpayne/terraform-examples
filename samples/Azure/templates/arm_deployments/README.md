@@ -46,6 +46,8 @@ To clean up do...
 Notes
 -----
 - https://github.com/Azure/azure-quickstart-templates
+- https://learn.microsoft.com/en-us/azure/templates/microsoft.containerservice/managedclusters?pivots=deployment-language-arm-template
+- https://learn.microsoft.com/en-us/azure/templates/microsoft.operationalinsights/workspaces?pivots=deployment-language-arm-template
 
 Issues
 ------
