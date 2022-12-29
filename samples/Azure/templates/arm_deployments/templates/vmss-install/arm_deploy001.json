@@ -115,9 +115,7 @@
     "networkInterfaceName": "[concat(parameters('vmName'),'NetInt')]",
     "subnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('subnetName'))]",
     "vmssSubnetRef": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('vmssSubnetName'))]",
-    "osDiskType": "StandardSSD_LRS",
-    "subscriptionId": "[subscription().subscriptionId]",
-    "tenantId": "[subscription().tenantId]"
+    "osDiskType": "StandardSSD_LRS"
   },
   "resources": [
     {
