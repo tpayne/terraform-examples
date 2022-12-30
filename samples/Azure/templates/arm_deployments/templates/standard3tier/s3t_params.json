@@ -1,0 +1,65 @@
+{
+    "natGatewayName": {
+        "value": "nat001"
+    },
+    "actionGroupName": {
+        "value": "ag001"
+    },
+    "loadBalancerDbName": {
+        "value": "db-lb"
+    },
+    "dbServerName": {
+        "value": "pgdb30122023"
+    },
+    "metricAlertName": {
+        "value": "alert001"
+    },
+    "storageAccountName": {
+        "value": "stacc30122023"
+    },
+    "loadBalancerBeName": {
+        "value": "be-lb"
+    },
+    "privateEndpointDbName": {
+        "value": "pep001"
+    },
+    "virtualMachineDbProxyName": {
+        "value": "dbproxy001"
+    },
+    "storageAccountBeMigName": {
+        "value": "bestacc30122023"
+    },
+    "storageAccountDbMigName": {
+        "value": "dbstacc30122023"
+    },
+    "storageAccountFeMigName": {
+        "value": "festacc30122023"
+    },
+    "loadBalancerFeName": {
+        "value": "fe-lb"
+    },
+    "virtualNetworkBeName": {
+        "value": "bevnet"
+    },
+    "virtualNetworkDbName": {
+        "value": "dbvnet"
+    },
+    "virtualNetworkFeName": {
+        "value": "fevnet"
+    },
+    "virtualMachineScaleSetsBeName": {
+        "value": "bevmss"
+    },
+    "virtualMachineScaleSetsDbName": {
+        "value": "dbvmss"
+    },
+    "virtualMachineScaleSetsFeName": {
+        "value": "fevmss"
+    },
+    "networkSecurityGroupBeName": {
+        "value": "bensg"
+    },
+    "networkSecurityGroupFeName": {
+        "value": "fensg"
+    }
+}

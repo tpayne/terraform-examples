@@ -19,6 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 output "arm_deployment001-output" {
   value = module.arm_deployment001.armop_output
 }
@@ -43,4 +44,10 @@ output "arm_deploymentk8s-id" {
   value = module.arm_deploymentk8s.armop_id
 }
 
+output "arm_deployments3t-output" {
+  value = module.arm_deployments3t.armop_output
+}
 
+output "arm_deployments3t-id" {
+  value = module.arm_deployments3t.armop_id
+}

@@ -33,6 +33,19 @@
 #------------------------------
 #
 
+module "arm_deployments3t" {
+  source = "../modules/armdeployment"
+
+  name           = "${var.name}-s3t001"
+  resource_group = azurerm_resource_group.resourceGroup.name
+
+  arm_params = "${path.module}/templates/standard3tier/s3t_params.json"
+  arm_file   = "${path.module}/templates/standard3tier/s3t_deploy.json"
+
+  tags = var.tags
+}
+
+
 module "arm_deployment001" {
   source = "../modules/armdeployment"
 
@@ -68,5 +81,3 @@ module "arm_deploymentk8s" {
 
   tags = var.tags
 }
-
-
