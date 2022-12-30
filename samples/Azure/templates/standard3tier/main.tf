@@ -48,7 +48,7 @@ provider "azurerm" {
 
 # Create a resource group...
 resource "azurerm_resource_group" "resourceGroup" {
-  name     = "rg_001_3t"
+  name     = "rg_001_3tx"
   location = var.region_be
   tags     = var.tags
 }

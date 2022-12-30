@@ -1,5 +1,5 @@
 # Replace these with your versions...
-project = "testdemo"
+project = "test30122022"
 
 # Replace these with your values...
 frontend_cidr_range   = "10.1.0.0/16"

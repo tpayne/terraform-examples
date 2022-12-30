@@ -111,7 +111,7 @@ module "db-internal-lb" {
 
 module "database" {
   source                     = "../modules/pgdatabase"
-  name                       = "dbinstance001"
+  name                       = "${var.project}db001"
   sku                        = "GP_Gen5_4"
   dbversion                  = "11"
   admin_user                 = var.admin_user
