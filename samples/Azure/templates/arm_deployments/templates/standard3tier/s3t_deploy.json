@@ -66,8 +66,33 @@
             "defaultValue": "db001dbproxy",
             "type": "String"
         },
+        "privateIPAddressDb": {
+            "type": "String"
+        },
         "publicIPAddressFeLbName": {
             "defaultValue": "frontend-lb",
+            "type": "String"
+        },
+        "virtualNetworkFeNameIpCidr": {
+            "type": "String"
+        },
+        "virtualNetworkBeNameIpCidr": {
+            "type": "String"
+        },
+        "virtualNetworkDbNameIpCidr": {
+            "type": "String"
+        },
+        "virtualSubNetworkFeNameIpCidr": {
+            "type": "String"
+        },
+        "virtualSubNetworkBeNameIpCidr": {
+            "type": "String"
+        },
+        "virtualSubNetworkDbNameIpCidr": {
+            "type": "String"
+        },
+        "virtualNetworkFeName": {
+            "defaultValue": "vnet-frontend-001",
             "type": "String"
         },
         "virtualNetworkBeName": {
@@ -76,10 +101,6 @@
         },
         "virtualNetworkDbName": {
             "defaultValue": "vnet-database-001",
-            "type": "String"
-        },
-        "virtualNetworkFeName": {
-            "defaultValue": "vnet-frontend-001",
             "type": "String"
         },
         "virtualMachineScaleSetsBeName": {
@@ -2867,7 +2888,7 @@
                         "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
                         "properties": {
                             "provisioningState": "Succeeded",
-                            "privateIPAddress": "10.3.1.7",
+                            "privateIPAddress": "[parameters('privateIPAddressDb')]",
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
                                 "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
@@ -2905,7 +2926,7 @@
                 "sourcePortRange": "*",
                 "destinationPortRange": "80",
                 "sourceAddressPrefix": "*",
-                "destinationAddressPrefix": "10.2.0.0/16",
+                "destinationAddressPrefix": "[parameters('virtualNetworkBeNameIpCidr')]",
                 "access": "Allow",
                 "priority": 1002,
                 "direction": "Inbound",
@@ -2927,7 +2948,7 @@
                 "sourcePortRange": "*",
                 "destinationPortRange": "80",
                 "sourceAddressPrefix": "*",
-                "destinationAddressPrefix": "10.1.0.0/16",
+                "destinationAddressPrefix": "[parameters('virtualNetworkFeNameIpCidr')]",
                 "access": "Allow",
                 "priority": 1002,
                 "direction": "Inbound",
@@ -2949,7 +2970,7 @@
                 "sourcePortRange": "*",
                 "destinationPortRange": "5432",
                 "sourceAddressPrefix": "*",
-                "destinationAddressPrefix": "10.2.0.0/16",
+                "destinationAddressPrefix": "[parameters('virtualNetworkBeNameIpCidr')]",
                 "access": "Allow",
                 "priority": 1003,
                 "direction": "Inbound",
@@ -2971,7 +2992,7 @@
                 "sourcePortRange": "*",
                 "destinationPortRange": "22",
                 "sourceAddressPrefix": "*",
-                "destinationAddressPrefix": "10.2.0.0/16",
+                "destinationAddressPrefix": "[parameters('virtualNetworkBeNameIpCidr')]",
                 "access": "Allow",
                 "priority": 1001,
                 "direction": "Inbound",
@@ -2993,7 +3014,7 @@
                 "sourcePortRange": "*",
                 "destinationPortRange": "22",
                 "sourceAddressPrefix": "*",
-                "destinationAddressPrefix": "10.1.0.0/16",
+                "destinationAddressPrefix": "[parameters('virtualNetworkFeNameIpCidr')]",
                 "access": "Allow",
                 "priority": 1001,
                 "direction": "Inbound",
@@ -3011,7 +3032,7 @@
                 "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkDbName'))]"
             ],
             "properties": {
-                "addressPrefix": "10.3.1.0/24",
+                "addressPrefix": "[parameters('virtualSubNetworkDbNameIpCidr')]",
                 "serviceEndpoints": [],
                 "delegations": [],
                 "privateEndpointNetworkPolicies": "Disabled",
@@ -3663,7 +3684,7 @@
                             "sourcePortRange": "*",
                             "destinationPortRange": "22",
                             "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "10.1.0.0/16",
+                            "destinationAddressPrefix": "[parameters('virtualNetworkFeNameIpCidr')]",
                             "access": "Allow",
                             "priority": 1001,
                             "direction": "Inbound",
@@ -3682,7 +3703,7 @@
                             "sourcePortRange": "*",
                             "destinationPortRange": "80",
                             "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "10.1.0.0/16",
+                            "destinationAddressPrefix": "[parameters('virtualNetworkFeNameIpCidr')]",
                             "access": "Allow",
                             "priority": 1002,
                             "direction": "Inbound",
@@ -3749,7 +3770,7 @@
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupFeName'))]"
             ],
             "properties": {
-                "addressPrefix": "10.2.1.0/24",
+                "addressPrefix": "[parameters('virtualSubNetworkBeNameIpCidr')]",
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupFeName'))]"
                 },
@@ -3788,7 +3809,7 @@
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupFeName'))]"
             ],
             "properties": {
-                "addressPrefix": "10.1.1.0/24",
+                "addressPrefix": "[parameters('virtualSubNetworkFeNameIpCidr')]",
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupFeName'))]"
                 },
@@ -3839,12 +3860,12 @@
                 "doNotVerifyRemoteGateways": false,
                 "remoteAddressSpace": {
                     "addressPrefixes": [
-                        "10.1.0.0/16"
+                        "[parameters('virtualNetworkFeNameIpCidr')]"
                     ]
                 },
                 "remoteVirtualNetworkAddressSpace": {
                     "addressPrefixes": [
-                        "10.1.0.0/16"
+                        "[parameters('virtualNetworkFeNameIpCidr')]"
                     ]
                 }
             }
@@ -3870,12 +3891,12 @@
                 "doNotVerifyRemoteGateways": false,
                 "remoteAddressSpace": {
                     "addressPrefixes": [
-                        "10.2.0.0/16"
+                        "[parameters('virtualNetworkBeNameIpCidr')]"
                     ]
                 },
                 "remoteVirtualNetworkAddressSpace": {
                     "addressPrefixes": [
-                        "10.2.0.0/16"
+                        "[parameters('virtualNetworkBeNameIpCidr')]"
                     ]
                 }
             }
@@ -3901,12 +3922,12 @@
                 "doNotVerifyRemoteGateways": false,
                 "remoteAddressSpace": {
                     "addressPrefixes": [
-                        "10.3.0.0/16"
+                        "[parameters('virtualNetworkDbNameIpCidr')]"
                     ]
                 },
                 "remoteVirtualNetworkAddressSpace": {
                     "addressPrefixes": [
-                        "10.3.0.0/16"
+                        "[parameters('virtualNetworkDbNameIpCidr')]"
                     ]
                 }
             }
@@ -3932,12 +3953,12 @@
                 "doNotVerifyRemoteGateways": false,
                 "remoteAddressSpace": {
                     "addressPrefixes": [
-                        "10.2.0.0/16"
+                        "[parameters('virtualNetworkBeNameIpCidr')]"
                     ]
                 },
                 "remoteVirtualNetworkAddressSpace": {
                     "addressPrefixes": [
-                        "10.2.0.0/16"
+                        "[parameters('virtualNetworkBeNameIpCidr')]"
                     ]
                 }
             }
@@ -4352,7 +4373,7 @@
                             "sourcePortRange": "*",
                             "destinationPortRange": "22",
                             "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "10.2.0.0/16",
+                            "destinationAddressPrefix": "[parameters('virtualNetworkBeNameIpCidr')]",
                             "access": "Allow",
                             "priority": 1001,
                             "direction": "Inbound",
@@ -4371,7 +4392,7 @@
                             "sourcePortRange": "*",
                             "destinationPortRange": "80",
                             "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "10.2.0.0/16",
+                            "destinationAddressPrefix": "[parameters('virtualNetworkBeNameIpCidr')]",
                             "access": "Allow",
                             "priority": 1002,
                             "direction": "Inbound",
@@ -4390,7 +4411,7 @@
                             "sourcePortRange": "*",
                             "destinationPortRange": "5432",
                             "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "10.2.0.0/16",
+                            "destinationAddressPrefix": "[parameters('virtualNetworkBeNameIpCidr')]",
                             "access": "Allow",
                             "priority": 1003,
                             "direction": "Inbound",
@@ -4418,7 +4439,7 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.3.0.0/16"
+                        "[parameters('virtualNetworkDbNameIpCidr')]"
                     ]
                 },
                 "dhcpOptions": {
@@ -4429,7 +4450,7 @@
                         "name": "subnet-database-001",
                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]",
                         "properties": {
-                            "addressPrefix": "10.3.1.0/24",
+                            "addressPrefix": "[parameters('virtualSubNetworkDbNameIpCidr')]",
                             "serviceEndpoints": [],
                             "delegations": [],
                             "privateEndpointNetworkPolicies": "Disabled",
@@ -4455,12 +4476,12 @@
                             "doNotVerifyRemoteGateways": false,
                             "remoteAddressSpace": {
                                 "addressPrefixes": [
-                                    "10.2.0.0/16"
+                                    "[parameters('virtualNetworkBeNameIpCidr')]"
                                 ]
                             },
                             "remoteVirtualNetworkAddressSpace": {
                                 "addressPrefixes": [
-                                    "10.2.0.0/16"
+                                    "[parameters('virtualNetworkBeNameIpCidr')]"
                                 ]
                             }
                         },
@@ -4488,7 +4509,7 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.1.0.0/16"
+                        "[parameters('virtualNetworkFeNameIpCidr')]"
                     ]
                 },
                 "dhcpOptions": {
@@ -4499,7 +4520,7 @@
                         "name": "subnet-frontend-001",
                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkFeName'), 'subnet-frontend-001')]",
                         "properties": {
-                            "addressPrefix": "10.1.1.0/24",
+                            "addressPrefix": "[parameters('virtualSubNetworkFeNameIpCidr')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupFeName'))]"
                             },
@@ -4548,12 +4569,12 @@
                             "doNotVerifyRemoteGateways": false,
                             "remoteAddressSpace": {
                                 "addressPrefixes": [
-                                    "10.2.0.0/16"
+                                    "[parameters('virtualNetworkBeNameIpCidr')]"
                                 ]
                             },
                             "remoteVirtualNetworkAddressSpace": {
                                 "addressPrefixes": [
-                                    "10.2.0.0/16"
+                                    "[parameters('virtualNetworkBeNameIpCidr')]"
                                 ]
                             }
                         },
@@ -4582,7 +4603,7 @@
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": [
-                        "10.2.0.0/16"
+                        "[parameters('virtualNetworkBeNameIpCidr')]"
                     ]
                 },
                 "dhcpOptions": {
@@ -4593,7 +4614,7 @@
                         "name": "subnet-backend-001",
                         "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkBeName'), 'subnet-backend-001')]",
                         "properties": {
-                            "addressPrefix": "10.2.1.0/24",
+                            "addressPrefix": "[parameters('virtualSubNetworkBeNameIpCidr')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupFeName'))]"
                             },
@@ -4642,12 +4663,12 @@
                             "doNotVerifyRemoteGateways": false,
                             "remoteAddressSpace": {
                                 "addressPrefixes": [
-                                    "10.3.0.0/16"
+                                    "[parameters('virtualNetworkDbNameIpCidr')]"
                                 ]
                             },
                             "remoteVirtualNetworkAddressSpace": {
                                 "addressPrefixes": [
-                                    "10.3.0.0/16"
+                                    "[parameters('virtualNetworkDbNameIpCidr')]"
                                 ]
                             }
                         },
@@ -4669,12 +4690,12 @@
                             "doNotVerifyRemoteGateways": false,
                             "remoteAddressSpace": {
                                 "addressPrefixes": [
-                                    "10.1.0.0/16"
+                                    "[parameters('virtualNetworkFeNameIpCidr')]"
                                 ]
                             },
                             "remoteVirtualNetworkAddressSpace": {
                                 "addressPrefixes": [
-                                    "10.1.0.0/16"
+                                    "[parameters('virtualNetworkFeNameIpCidr')]"
                                 ]
                             }
                         },
