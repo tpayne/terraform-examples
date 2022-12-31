@@ -5,6 +5,9 @@
     "actionGroupName": {
         "value": "ag001"
     },
+    "email": {
+        "value": "testemail@noreply.com"
+    },
     "loadBalancerDbName": {
         "value": "db-lb"
     },
@@ -49,6 +52,12 @@
     },
     "privateIPAddressDb": {
         "value": "10.3.1.7"
+    },
+    "publicIPAddressFeLbIpAddr": {
+        "value": "20.3.220.72"
+    },
+    "publicIPAddressDbProxyIpAddr": {
+        "value": "4.154.232.50"
     },
     "virtualNetworkFeNameIpCidr": {
         "value": "10.1.0.0/16"
