@@ -1,0 +1,95 @@
+{
+    "natGatewayName": {
+        "value": "nat001"
+    },
+    "actionGroupName": {
+        "value": "ag001"
+    },
+    "email": {
+        "value": "testemail@noreply.com"
+    },
+    "loadBalancerDbName": {
+        "value": "db-lb"
+    },
+    "dbServerName": {
+        "value": "pgdb30122023"
+    },
+    "metricAlertName": {
+        "value": "alert001"
+    },
+    "storageAccountName": {
+        "value": "stacc30122023"
+    },
+    "loadBalancerBeName": {
+        "value": "be-lb"
+    },
+    "privateEndpointDbName": {
+        "value": "pep001"
+    },
+    "virtualMachineDbProxyName": {
+        "value": "dbproxy001"
+    },
+    "storageAccountBeMigName": {
+        "value": "bestacc30122023"
+    },
+    "storageAccountDbMigName": {
+        "value": "dbstacc30122023"
+    },
+    "storageAccountFeMigName": {
+        "value": "festacc30122023"
+    },
+    "loadBalancerFeName": {
+        "value": "fe-lb"
+    },
+    "virtualNetworkBeName": {
+        "value": "bevnet"
+    },
+    "virtualNetworkDbName": {
+        "value": "dbvnet"
+    },
+    "virtualNetworkFeName": {
+        "value": "fevnet"
+    },
+    "privateIPAddressDb": {
+        "value": "10.3.1.7"
+    },
+    "publicIPAddressFeLbIpAddr": {
+        "value": "20.3.220.72"
+    },
+    "publicIPAddressDbProxyIpAddr": {
+        "value": "4.154.232.50"
+    },
+    "virtualNetworkFeNameIpCidr": {
+        "value": "10.1.0.0/16"
+    },
+    "virtualNetworkBeNameIpCidr": {
+        "value": "10.2.0.0/16"
+    },
+    "virtualNetworkDbNameIpCidr": {
+        "value": "10.3.0.0/16"
+    },
+    "virtualSubNetworkFeNameIpCidr": {
+        "value": "10.1.1.0/24"
+    },
+    "virtualSubNetworkBeNameIpCidr": {
+        "value": "10.2.1.0/24"
+    },
+    "virtualSubNetworkDbNameIpCidr": {
+        "value": "10.3.1.0/24"
+    },
+    "virtualMachineScaleSetsBeName": {
+        "value": "bevmss"
+    },
+    "virtualMachineScaleSetsDbName": {
+        "value": "dbvmss"
+    },
+    "virtualMachineScaleSetsFeName": {
+        "value": "fevmss"
+    },
+    "networkSecurityGroupBeName": {
+        "value": "bensg"
+    },
+    "networkSecurityGroupFeName": {
+        "value": "fensg"
+    }
+}
