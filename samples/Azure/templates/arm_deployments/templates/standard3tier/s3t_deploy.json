@@ -190,7 +190,8 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "relativePath": "templates/standard3tier/db/db_deploy.json"
+                    "uri": "https://raw.githubusercontent.com/tpayne/terraform-examples/main/samples/Azure/templates/arm_deployments/templates/standard3tier/db/db_deploy.json",
+                    "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "loadBalancerDbName": {
