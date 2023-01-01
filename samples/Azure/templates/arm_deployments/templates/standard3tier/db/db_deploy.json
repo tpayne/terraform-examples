@@ -2943,7 +2943,7 @@
             "name": "[parameters('virtualNetworkDbName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeId'))]"
+                "[parameters('virtualNetworkBeId')]"
             ],
             "tags": {
                 "test": "test"
