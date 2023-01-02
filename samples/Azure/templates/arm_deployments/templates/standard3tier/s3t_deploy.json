@@ -210,7 +210,7 @@
                         "value": "[parameters('storageAccountDbMigName')]"
                     },
                     "ddosProtectionPlanName": {
-                        "value": "[reference(resourceId('Microsoft.Network/ddosProtectionPlans', parameters('ddosProtectionPlanName')))]"
+                        "value": "[parameters('ddosProtectionPlanName')]"
                     },
                     "networkInterfaceDbProxyName": {
                         "value": "[parameters('networkInterfaceDbProxyName')]"
@@ -235,9 +235,6 @@
                     },
                     "virtualNetworkDbName": {
                         "value": "[parameters('virtualNetworkDbName')]"
-                    },
-                    "virtualNetworkBeId": {
-                        "value": "[reference(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName')))]"
                     },
                     "virtualNetworkBeName": {
                         "value": "[parameters('virtualNetworkDbName')]"

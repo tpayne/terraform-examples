@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "ddosProtectionPlanName": {
-            "type": "Object"
+            "type": "String"
         },
         "loadBalancerDbName": {
             "type": "String"
@@ -40,9 +40,6 @@
         },
         "virtualSubNetworkDbNameIpCidr": {
             "type": "String"
-        },
-        "virtualNetworkBeId": {
-            "type": "Object"
         },
         "virtualNetworkBeName": {
             "type": "String"
@@ -2759,7 +2756,7 @@
                 "peeringState": "Connected",
                 "peeringSyncLevel": "FullyInSync",
                 "remoteVirtualNetwork": {
-                    "id": "[parameters('virtualNetworkBeId')]"
+                    "id": "[reference(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName')))]"
                 },
                 "allowVirtualNetworkAccess": true,
                 "allowForwardedTraffic": true,
@@ -2940,7 +2937,7 @@
             "name": "[parameters('virtualNetworkDbName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[parameters('virtualNetworkBeId')]"
+                "[reference(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName')))]"
             ],
             "tags": {
                 "test": "test"
@@ -2976,7 +2973,7 @@
                             "peeringState": "Connected",
                             "peeringSyncLevel": "FullyInSync",
                             "remoteVirtualNetwork": {
-                                "id": "[parameters('virtualNetworkBeId')]"
+                                "id": "[reference(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName')))]"
                             },
                             "allowVirtualNetworkAccess": true,
                             "allowForwardedTraffic": true,
@@ -2999,7 +2996,7 @@
                 ],
                 "enableDdosProtection": true,
                 "ddosProtectionPlan": {
-                    "id": "[parameters('ddosProtectionPlanName')]"
+                    "id": "[reference(resourceId('Microsoft.Network/ddosProtectionPlans', parameters('ddosProtectionPlanName')))]"
                 }
             }
         }
