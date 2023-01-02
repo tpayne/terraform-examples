@@ -54,6 +54,7 @@ Notes
 Issues
 ------
 - This example is is only intended as a sample on how to create a system. You will need to configure it as needed
+- This example only demos how to sub-contract/modularise some of the template functionality - mostly the DB items. It does not similarly split up the frontend or backend components. This is left as an exercise for someone as and when
 
 Liability Warning
 -----------------
