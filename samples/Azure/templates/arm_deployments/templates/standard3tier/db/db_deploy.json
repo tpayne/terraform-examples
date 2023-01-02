@@ -2756,7 +2756,7 @@
                 "peeringState": "Connected",
                 "peeringSyncLevel": "FullyInSync",
                 "remoteVirtualNetwork": {
-                    "id": "[reference(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName')))]"
+                    "id": "[resourceId(subscription().subscriptionId, resourceGroup().id, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName'))]"
                 },
                 "allowVirtualNetworkAccess": true,
                 "allowForwardedTraffic": true,
@@ -2970,7 +2970,7 @@
                             "peeringState": "Connected",
                             "peeringSyncLevel": "FullyInSync",
                             "remoteVirtualNetwork": {
-                                "id": "[reference(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName')))]"
+                                "id": "[resourceId(subscription().subscriptionId, resourceGroup().id, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName'))]"
                             },
                             "allowVirtualNetworkAccess": true,
                             "allowForwardedTraffic": true,
@@ -2993,7 +2993,7 @@
                 ],
                 "enableDdosProtection": true,
                 "ddosProtectionPlan": {
-                    "id": "[reference(resourceId('Microsoft.Network/ddosProtectionPlans', parameters('ddosProtectionPlanName')))]"
+                    "id": "[resourceId(subscription().id,resourceGroup().id,'Microsoft.Network/ddosProtectionPlans', parameters('ddosProtectionPlanName'))]"
                 }
             }
         }
