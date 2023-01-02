@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "ddosProtectionPlanName": {
-            "type": "String"
+            "type": "Object"
         },
         "loadBalancerDbName": {
             "type": "String"
@@ -42,7 +42,7 @@
             "type": "String"
         },
         "virtualNetworkBeId": {
-            "type": "String"
+            "type": "Object"
         },
         "virtualNetworkBeName": {
             "type": "String"
