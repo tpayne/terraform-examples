@@ -2670,6 +2670,135 @@
                     }
                 ]
             }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachineScaleSets",
+            "apiVersion": "2022-03-01",
+            "name": "[parameters('virtualMachineScaleSetsDbName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]",
+                "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]",
+                "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccountDbMigName'))]"
+            ],
+            "tags": {
+                "test": "test"
+            },
+            "sku": {
+                "name": "Standard_B1s",
+                "tier": "Standard",
+                "capacity": 2
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "singlePlacementGroup": true,
+                "orchestrationMode": "Uniform",
+                "upgradePolicy": {
+                    "mode": "Automatic",
+                    "automaticOSUpgradePolicy": {
+                        "enableAutomaticOSUpgrade": false,
+                        "useRollingUpgradePolicy": false,
+                        "disableAutomaticRollback": false
+                    }
+                },
+                "virtualMachineProfile": {
+                    "osProfile": {
+                        "computerNamePrefix": "mig",
+                        "adminUsername": "[parameters('adminUsername')]",
+                        "adminPassword": "[parameters('adminPassword')]",
+                        "linuxConfiguration": {},
+                        "secrets": [],
+                        "allowExtensionOperations": true
+                    },
+                    "storageProfile": {
+                        "osDisk": {
+                            "osType": "Linux",
+                            "createOption": "FromImage",
+                            "caching": "ReadWrite",
+                            "managedDisk": {
+                                "storageAccountType": "Standard_LRS"
+                            },
+                            "diskSizeGB": 30
+                        },
+                        "imageReference": {
+                            "publisher": "Canonical",
+                            "offer": "UbuntuServer",
+                            "sku": "18.04-LTS",
+                            "version": "latest"
+                        },
+                        "dataDisks": [
+                            {
+                                "lun": 0,
+                                "createOption": "Empty",
+                                "caching": "ReadWrite",
+                                "managedDisk": {
+                                    "storageAccountType": "Standard_LRS"
+                                },
+                                "diskSizeGB": 10
+                            }
+                        ]
+                    },
+                    "networkProfile": {
+                        "networkInterfaceConfigurations": [
+                            {
+                                "name": "terraformnetworkprofile",
+                                "properties": {
+                                    "primary": true,
+                                    "enableAcceleratedNetworking": false,
+                                    "disableTcpStateTracking": false,
+                                    "dnsSettings": {
+                                        "dnsServers": []
+                                    },
+                                    "enableIPForwarding": false,
+                                    "ipConfigurations": [
+                                        {
+                                            "name": "IPConfiguration",
+                                            "properties": {
+                                                "primary": true,
+                                                "subnet": {
+                                                    "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
+                                                },
+                                                "privateIPAddressVersion": "IPv4",
+                                                "loadBalancerBackendAddressPools": [
+                                                    {
+                                                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "diagnosticsProfile": {
+                        "bootDiagnostics": {
+                            "enabled": true,
+                            "storageUri": "[concat('https://', parameters('storageAccountDbMigName'), '.blob.core.windows.net/')]"
+                        }
+                    },
+                    "extensionProfile": {
+                        "extensions": [
+                            {
+                                "name": "MSILinuxExtension",
+                                "properties": {
+                                    "autoUpgradeMinorVersion": false,
+                                    "publisher": "Microsoft.ManagedIdentity",
+                                    "type": "ManagedIdentityExtensionForLinux",
+                                    "typeHandlerVersion": "1.0",
+                                    "settings": {
+                                        "port": 50342
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                "overprovision": true,
+                "doNotRunExtensionsOnOverprovisionedVMs": false
+            }
         }
     ],
     "outputs": {
