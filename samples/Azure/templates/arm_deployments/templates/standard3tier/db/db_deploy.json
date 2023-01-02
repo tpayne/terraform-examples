@@ -80,6 +80,61 @@
     },
     "resources": [
         {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "vnetSetup",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/tpayne/terraform-examples/main/samples/Azure/templates/arm_deployments/templates/standard3tier/db/vnet_deploy.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "ddosProtectionPlanName": {
+                        "value": "[parameters('ddosProtectionPlanName')]"
+                    },
+                    "dbServerName": {
+                        "value": "[parameters('dbServerName')]"
+                    },
+                    "networkInterfaceDbProxyName": {
+                        "value": "[parameters('networkInterfaceDbProxyName')]"
+                    },
+                    "publicIPAddressDbProxyName": {
+                        "value": "[parameters('publicIPAddressDbProxyName')]"
+                    },
+                    "publicIPAddressDbProxyIpAddr": {
+                        "value": "[parameters('publicIPAddressDbProxyIpAddr')]"
+                    },
+                    "privateIPAddressDb": {
+                        "value": "[parameters('privateIPAddressDb')]"
+                    },
+                    "virtualNetworkBeNameIpCidr": {
+                        "value": "[parameters('virtualNetworkBeNameIpCidr')]"
+                    },
+                    "virtualNetworkDbNameIpCidr": {
+                        "value": "[parameters('virtualNetworkDbNameIpCidr')]"
+                    },
+                    "virtualSubNetworkDbNameIpCidr": {
+                        "value": "[parameters('virtualSubNetworkDbNameIpCidr')]"
+                    },
+                    "virtualNetworkBeName": {
+                        "value": "[parameters('virtualNetworkBeName')]"
+                    },
+                    "virtualNetworkDbName": {
+                        "value": "[parameters('virtualNetworkDbName')]"
+                    },
+                    "networkInterfaceDbName": {
+                        "value": "[parameters('networkInterfaceDbName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
             "type": "Microsoft.DBforPostgreSQL/servers",
             "apiVersion": "2017-12-01",
             "name": "[parameters('dbServerName')]",
@@ -111,29 +166,6 @@
                 "createMode": "Default",
                 "administratorLogin": "[parameters('administratorLogin')]",
                 "administratorLoginPassword": "[parameters('administratorLoginPassword')]"
-            }
-        },
-        {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2022-05-01",
-            "name": "[parameters('publicIPAddressDbProxyName')]",
-            "location": "[parameters('location')]",
-            "tags": {
-                "test": "test"
-            },
-            "sku": {
-                "name": "Standard",
-                "tier": "Regional"
-            },
-            "properties": {
-                "ipAddress": "[parameters('publicIPAddressDbProxyIpAddr')]",
-                "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Static",
-                "idleTimeoutInMinutes": 4,
-                "ipTags": [],
-                "ddosSettings": {
-                    "protectionMode": "VirtualNetworkInherited"
-                }
             }
         },
         {
@@ -185,7 +217,6 @@
                 "accessTier": "Hot"
             }
         },
-
         {
             "type": "Microsoft.Compute/virtualMachineScaleSets/extensions",
             "apiVersion": "2022-08-01",
@@ -2351,74 +2382,12 @@
             "properties": {}
         },
         {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2022-05-01",
-            "name": "[parameters('networkInterfaceDbName')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
-            ],
-            "tags": {
-                "test": "test"
-            },
-            "kind": "Regular",
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "privateEndpointIpConfig.ed402222-2d40-46dc-8710-e55bb8a4e8e1",
-                        "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceDbName')), '/ipConfigurations/privateEndpointIpConfig.ed402222-2d40-46dc-8710-e55bb8a4e8e1')]",
-                        "etag": "W/\"fbcee52c-eb06-4dbe-8cc7-fa382091e881\"",
-                        "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
-                        "properties": {
-                            "provisioningState": "Succeeded",
-                            "privateIPAddress": "[parameters('privateIPAddressDb')]",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4",
-                            "privateLinkConnectionProperties": {
-                                "groupId": "postgresqlServer",
-                                "requiredMemberName": "postgresqlServer",
-                                "fqdns": [
-                                    "[concat(parameters('dbServerName'),'.postgres.database.azure.com')]"
-                                ]
-                            }
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
-                },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "disableTcpStateTracking": false,
-                "nicType": "Standard"
-            }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "apiVersion": "2022-05-01",
-            "name": "[concat(parameters('virtualNetworkDbName'), '/subnet-database-001')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkDbName'))]"
-            ],
-            "properties": {
-                "addressPrefix": "[parameters('virtualSubNetworkDbNameIpCidr')]",
-                "serviceEndpoints": [],
-                "delegations": [],
-                "privateEndpointNetworkPolicies": "Disabled",
-                "privateLinkServiceNetworkPolicies": "Enabled"
-            }
-        },
-        {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2022-03-01",
             "name": "[parameters('virtualMachineDbProxyName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceDbProxyName'))]",
+                "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]",
                 "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccountDbMigName'))]"
             ],
             "tags": {
@@ -2460,7 +2429,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceDbProxyName'))]",
+                            "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/networkInterfaces', parameters('networkInterfaceDbProxyName'))]",
                             "properties": {
                                 "primary": false
                             }
@@ -2503,7 +2472,7 @@
             "name": "[parameters('loadBalancerDbName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
+                "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]"
             ],
             "tags": {
                 "env": "development",
@@ -2522,7 +2491,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
+                                "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
                             },
                             "privateIPAddressVersion": "IPv4"
                         }
@@ -2658,56 +2627,13 @@
             }
         },
         {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2022-05-01",
-            "name": "[parameters('networkInterfaceDbProxyName')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressDbProxyName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
-            ],
-            "tags": {
-                "test": "test"
-            },
-            "kind": "Regular",
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "[parameters('networkInterfaceDbProxyName')]",
-                        "id": "[concat(resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceDbProxyName')), concat('/ipConfigurations/', parameters('networkInterfaceDbProxyName')))]",
-                        "etag": "W/\"1568093e-bc51-444c-838e-557f1f16e3a7\"",
-                        "type": "Microsoft.Network/networkInterfaces/ipConfigurations",
-                        "properties": {
-                            "provisioningState": "Succeeded",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressDbProxyName'))]"
-                            },
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
-                },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "disableTcpStateTracking": false,
-                "nicType": "Standard"
-            }
-        },
-        {
             "type": "Microsoft.Network/privateEndpoints",
             "apiVersion": "2022-05-01",
             "name": "[parameters('privateEndpointDbName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('dbServerName'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
+                "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]"
             ],
             "tags": {
                 "test": "test"
@@ -2732,7 +2658,7 @@
                 ],
                 "manualPrivateLinkServiceConnections": [],
                 "subnet": {
-                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
+                    "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
                 },
                 "ipConfigurations": [],
                 "customDnsConfigs": [
@@ -2744,267 +2670,12 @@
                     }
                 ]
             }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-            "apiVersion": "2022-05-01",
-            "name": "[concat(parameters('virtualNetworkDbName'), '/dbpeering-001')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkDbName'))]"
-            ],
-            "properties": {
-                "peeringState": "Connected",
-                "peeringSyncLevel": "FullyInSync",
-                "remoteVirtualNetwork": {
-                    "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName'))]"
-                },
-                "allowVirtualNetworkAccess": true,
-                "allowForwardedTraffic": true,
-                "allowGatewayTransit": false,
-                "useRemoteGateways": false,
-                "doNotVerifyRemoteGateways": false,
-                "remoteAddressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('virtualNetworkBeNameIpCidr')]"
-                    ]
-                },
-                "remoteVirtualNetworkAddressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('virtualNetworkBeNameIpCidr')]"
-                    ]
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-            "apiVersion": "2022-05-01",
-            "name": "[concat(parameters('virtualNetworkBeName'), '/dbpeering-002')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkDbName'))]"
-            ],
-            "properties": {
-                "peeringState": "Connected",
-                "peeringSyncLevel": "FullyInSync",
-                "remoteVirtualNetwork": {
-                    "id": "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkDbName'))]"
-                },
-                "allowVirtualNetworkAccess": true,
-                "allowForwardedTraffic": true,
-                "allowGatewayTransit": false,
-                "useRemoteGateways": false,
-                "doNotVerifyRemoteGateways": false,
-                "remoteAddressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('virtualNetworkDbNameIpCidr')]"
-                    ]
-                },
-                "remoteVirtualNetworkAddressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('virtualNetworkDbNameIpCidr')]"
-                    ]
-                }
-            }
-        },
-        {
-            "type": "Microsoft.Compute/virtualMachineScaleSets",
-            "apiVersion": "2022-03-01",
-            "name": "[parameters('virtualMachineScaleSetsDbName')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]",
-                "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]",
-                "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccountDbMigName'))]"
-            ],
-            "tags": {
-                "test": "test"
-            },
-            "sku": {
-                "name": "Standard_B1s",
-                "tier": "Standard",
-                "capacity": 2
-            },
-            "identity": {
-                "type": "SystemAssigned"
-            },
-            "properties": {
-                "singlePlacementGroup": true,
-                "orchestrationMode": "Uniform",
-                "upgradePolicy": {
-                    "mode": "Automatic",
-                    "automaticOSUpgradePolicy": {
-                        "enableAutomaticOSUpgrade": false,
-                        "useRollingUpgradePolicy": false,
-                        "disableAutomaticRollback": false
-                    }
-                },
-                "virtualMachineProfile": {
-                    "osProfile": {
-                        "computerNamePrefix": "mig",
-                        "adminUsername": "[parameters('adminUsername')]",
-                        "adminPassword": "[parameters('adminPassword')]",
-                        "linuxConfiguration": {},
-                        "secrets": [],
-                        "allowExtensionOperations": true
-                    },
-                    "storageProfile": {
-                        "osDisk": {
-                            "osType": "Linux",
-                            "createOption": "FromImage",
-                            "caching": "ReadWrite",
-                            "managedDisk": {
-                                "storageAccountType": "Standard_LRS"
-                            },
-                            "diskSizeGB": 30
-                        },
-                        "imageReference": {
-                            "publisher": "Canonical",
-                            "offer": "UbuntuServer",
-                            "sku": "18.04-LTS",
-                            "version": "latest"
-                        },
-                        "dataDisks": [
-                            {
-                                "lun": 0,
-                                "createOption": "Empty",
-                                "caching": "ReadWrite",
-                                "managedDisk": {
-                                    "storageAccountType": "Standard_LRS"
-                                },
-                                "diskSizeGB": 10
-                            }
-                        ]
-                    },
-                    "networkProfile": {
-                        "networkInterfaceConfigurations": [
-                            {
-                                "name": "terraformnetworkprofile",
-                                "properties": {
-                                    "primary": true,
-                                    "enableAcceleratedNetworking": false,
-                                    "disableTcpStateTracking": false,
-                                    "dnsSettings": {
-                                        "dnsServers": []
-                                    },
-                                    "enableIPForwarding": false,
-                                    "ipConfigurations": [
-                                        {
-                                            "name": "IPConfiguration",
-                                            "properties": {
-                                                "primary": true,
-                                                "subnet": {
-                                                    "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
-                                                },
-                                                "privateIPAddressVersion": "IPv4",
-                                                "loadBalancerBackendAddressPools": [
-                                                    {
-                                                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]"
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ]
-                                }
-                            }
-                        ]
-                    },
-                    "diagnosticsProfile": {
-                        "bootDiagnostics": {
-                            "enabled": true,
-                            "storageUri": "[concat('https://', parameters('storageAccountDbMigName'), '.blob.core.windows.net/')]"
-                        }
-                    },
-                    "extensionProfile": {
-                        "extensions": [
-                            {
-                                "name": "MSILinuxExtension",
-                                "properties": {
-                                    "autoUpgradeMinorVersion": false,
-                                    "publisher": "Microsoft.ManagedIdentity",
-                                    "type": "ManagedIdentityExtensionForLinux",
-                                    "typeHandlerVersion": "1.0",
-                                    "settings": {
-                                        "port": 50342
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                },
-                "overprovision": true,
-                "doNotRunExtensionsOnOverprovisionedVMs": false
-            }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2022-05-01",
-            "name": "[parameters('virtualNetworkDbName')]",
-            "location": "[parameters('location')]",
-            "tags": {
-                "test": "test"
-            },
-            "properties": {
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('virtualNetworkDbNameIpCidr')]"
-                    ]
-                },
-                "dhcpOptions": {
-                    "dnsServers": []
-                },
-                "subnets": [
-                    {
-                        "name": "subnet-database-001",
-                        "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]",
-                        "properties": {
-                            "addressPrefix": "[parameters('virtualSubNetworkDbNameIpCidr')]",
-                            "serviceEndpoints": [],
-                            "delegations": [],
-                            "privateEndpointNetworkPolicies": "Disabled",
-                            "privateLinkServiceNetworkPolicies": "Enabled"
-                        },
-                        "type": "Microsoft.Network/virtualNetworks/subnets"
-                    }
-                ],
-                "virtualNetworkPeerings": [
-                    {
-                        "name": "dbpeering-001",
-                        "id": "[resourceId('Microsoft.Network/virtualNetworks/virtualNetworkPeerings', parameters('virtualNetworkDbName'), 'dbpeering-001')]",
-                        "properties": {
-                            "peeringState": "Connected",
-                            "peeringSyncLevel": "FullyInSync",
-                            "remoteVirtualNetwork": {
-                                "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName'))]"
-                            },
-                            "allowVirtualNetworkAccess": true,
-                            "allowForwardedTraffic": true,
-                            "allowGatewayTransit": false,
-                            "useRemoteGateways": false,
-                            "doNotVerifyRemoteGateways": false,
-                            "remoteAddressSpace": {
-                                "addressPrefixes": [
-                                    "[parameters('virtualNetworkBeNameIpCidr')]"
-                                ]
-                            },
-                            "remoteVirtualNetworkAddressSpace": {
-                                "addressPrefixes": [
-                                    "[parameters('virtualNetworkBeNameIpCidr')]"
-                                ]
-                            }
-                        },
-                        "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings"
-                    }
-                ],
-                "enableDdosProtection": true,
-                "ddosProtectionPlan": {
-                    "id": "[resourceId(subscription().subscriptionId,resourceGroup().name,'Microsoft.Network/ddosProtectionPlans', parameters('ddosProtectionPlanName'))]"
-                }
-            }
         }
     ],
     "outputs": {
         "dbProxyIpAddr": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddressDbProxyName'))).ipAddress]"
+            "value": "reference('vnetSetup').outputs.dbProxyIpAddr.value"
         }
     }
 }
