@@ -237,7 +237,7 @@
                         "value": "[parameters('virtualNetworkDbName')]"
                     },
                     "virtualNetworkBeName": {
-                        "value": "[parameters('virtualNetworkDbName')]"
+                        "value": "[parameters('virtualNetworkBeName')]"
                     },
                     "virtualMachineScaleSetsDbName": {
                         "value": "[parameters('virtualMachineScaleSetsDbName')]"
