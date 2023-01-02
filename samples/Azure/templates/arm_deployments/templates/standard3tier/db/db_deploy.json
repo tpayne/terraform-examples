@@ -2936,9 +2936,6 @@
             "apiVersion": "2022-05-01",
             "name": "[parameters('virtualNetworkDbName')]",
             "location": "[parameters('location')]",
-            "dependsOn": [
-                "[reference(resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkBeName')))]"
-            ],
             "tags": {
                 "test": "test"
             },
