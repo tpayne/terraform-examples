@@ -2804,7 +2804,7 @@
     "outputs": {
         "dbProxyIpAddr": {
             "type": "string",
-            "value": "reference('vnetSetup').outputs.dbProxyIpAddr.value"
+            "value": "[reference('vnetSetup').outputs.dbProxyIpAddr.value]"
         }
     }
 }
