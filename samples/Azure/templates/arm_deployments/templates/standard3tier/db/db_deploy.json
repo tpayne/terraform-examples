@@ -2782,9 +2782,6 @@
             "type": "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
             "apiVersion": "2022-05-01",
             "name": "[concat(parameters('virtualNetworkBeName'), '/dbpeering-002')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkDbName'))]"
-            ],
             "properties": {
                 "peeringState": "Connected",
                 "peeringSyncLevel": "FullyInSync",
