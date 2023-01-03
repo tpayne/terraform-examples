@@ -1,0 +1,99 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachineName": {
+            "type": "String"
+        },
+        "storageAccountName": {
+            "type": "String"
+        },
+        "networkInterfaceName": {
+            "type": "String"
+        },
+        "adminUsername": {
+            "type": "String"
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "minLength": 8,
+            "maxLength": 128
+        },
+        "osDetails": {
+            "type": "object",
+            "defaultValue": {
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "18.04-LTS",
+                "version": "latest"
+            }
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "imageReference": "[parameters('osDetails')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2022-03-01",
+            "name": "[parameters('virtualMachineName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "test": "test"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_B1s"
+                },
+                "storageProfile": {
+                    "imageReference": "[variables('imageReference')]",
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[parameters('virtualMachineName')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "writeAcceleratorEnabled": false,
+                        "managedDisk": {
+                            "storageAccountType": "Standard_LRS"
+                        },
+                        "deleteOption": "Detach",
+                        "diskSizeGB": 30
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachineName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "linuxConfiguration": {},
+                    "secrets": [],
+                    "allowExtensionOperations": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]",
+                            "properties": {
+                                "primary": false
+                            }
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/')]"
+                    }
+                }
+            }
+        },
+
+    ],
+    "outputs": {
+    }
+}
