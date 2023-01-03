@@ -148,8 +148,6 @@
                 },
                 "dependsOn": [
                     "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]",
-                    "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName'))]",
-                    "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]",
                     "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccountDbMigName'))]"
                 ],
                 "parameters": {
@@ -290,15 +288,6 @@
             }
         },
         {
-            "type": "Microsoft.Network/loadBalancers/backendAddressPools",
-            "apiVersion": "2022-05-01",
-            "name": "[concat(parameters('loadBalancerDbName'), '/', parameters('loadBalancerDbName'))]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName'))]"
-            ],
-            "properties": {}
-        },
-        {
             "type": "Microsoft.DBforPostgreSQL/servers/securityAlertPolicies",
             "apiVersion": "2017-12-01",
             "name": "[concat(parameters('dbServerName'), '/Default')]",
@@ -318,166 +307,6 @@
                 "storageAccountAccessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountDbMigName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]",
                 "storageEndpoint": "[concat('https://', parameters('storageAccountDbMigName'), '.blob.core.windows.net/')]",
                 "retentionDays": 0
-            }
-        },
-        {
-            "type": "Microsoft.Network/loadBalancers",
-            "apiVersion": "2022-05-01",
-            "name": "[parameters('loadBalancerDbName')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]"
-            ],
-            "tags": {
-                "env": "development",
-                "team": "dev",
-                "test": "test"
-            },
-            "sku": {
-                "name": "Standard",
-                "tier": "Regional"
-            },
-            "properties": {
-                "frontendIPConfigurations": [
-                    {
-                        "name": "InternalIpAddress",
-                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/frontendIPConfigurations/InternalIpAddress')]",
-                        "properties": {
-                            "privateIPAllocationMethod": "Dynamic",
-                            "subnet": {
-                                "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
-                            },
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "backendAddressPools": [
-                    {
-                        "name": "[parameters('loadBalancerDbName')]",
-                        "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]",
-                        "properties": {}
-                    }
-                ],
-                "loadBalancingRules": [
-                    {
-                        "name": "Tcp-5432-5432",
-                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/loadBalancingRules/Tcp-5432-5432')]",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/frontendIPConfigurations/InternalIpAddress')]"
-                            },
-                            "frontendPort": 5432,
-                            "backendPort": 5432,
-                            "enableFloatingIP": false,
-                            "idleTimeoutInMinutes": 4,
-                            "protocol": "Tcp",
-                            "enableTcpReset": false,
-                            "loadDistribution": "Default",
-                            "backendAddressPool": {
-                                "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]"
-                            },
-                            "backendAddressPools": [
-                                {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]"
-                                }
-                            ],
-                            "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/probes/probe-port-5432')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "Tcp-22-22",
-                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/loadBalancingRules/Tcp-22-22')]",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/frontendIPConfigurations/InternalIpAddress')]"
-                            },
-                            "frontendPort": 22,
-                            "backendPort": 22,
-                            "enableFloatingIP": false,
-                            "idleTimeoutInMinutes": 4,
-                            "protocol": "Tcp",
-                            "enableTcpReset": false,
-                            "loadDistribution": "Default",
-                            "backendAddressPool": {
-                                "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]"
-                            },
-                            "backendAddressPools": [
-                                {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]"
-                                }
-                            ],
-                            "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/probes/probe-port-22')]"
-                            }
-                        }
-                    },
-                    {
-                        "name": "Tcp-80-80",
-                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/loadBalancingRules/Tcp-80-80')]",
-                        "properties": {
-                            "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/frontendIPConfigurations/InternalIpAddress')]"
-                            },
-                            "frontendPort": 80,
-                            "backendPort": 80,
-                            "enableFloatingIP": false,
-                            "idleTimeoutInMinutes": 4,
-                            "protocol": "Tcp",
-                            "enableTcpReset": false,
-                            "loadDistribution": "Default",
-                            "backendAddressPool": {
-                                "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]"
-                            },
-                            "backendAddressPools": [
-                                {
-                                    "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]"
-                                }
-                            ],
-                            "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/probes/probe-port-80')]"
-                            }
-                        }
-                    }
-                ],
-                "probes": [
-                    {
-                        "name": "probe-port-5432",
-                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/probes/probe-port-5432')]",
-                        "properties": {
-                            "protocol": "Tcp",
-                            "port": 5432,
-                            "intervalInSeconds": 15,
-                            "numberOfProbes": 2,
-                            "probeThreshold": 1
-                        }
-                    },
-                    {
-                        "name": "probe-port-22",
-                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/probes/probe-port-22')]",
-                        "properties": {
-                            "protocol": "Tcp",
-                            "port": 22,
-                            "intervalInSeconds": 15,
-                            "numberOfProbes": 2,
-                            "probeThreshold": 1
-                        }
-                    },
-                    {
-                        "name": "probe-port-80",
-                        "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName')), '/probes/probe-port-80')]",
-                        "properties": {
-                            "protocol": "Tcp",
-                            "port": 80,
-                            "intervalInSeconds": 15,
-                            "numberOfProbes": 2,
-                            "probeThreshold": 1
-                        }
-                    }
-                ],
-                "inboundNatRules": [],
-                "inboundNatPools": []
             }
         },
         {
