@@ -352,7 +352,7 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
-                                "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
+                                "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'subnet-database-001')]"
                             },
                             "privateIPAddressVersion": "IPv4"
                         }
