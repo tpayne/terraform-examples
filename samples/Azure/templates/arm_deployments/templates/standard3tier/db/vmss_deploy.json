@@ -197,8 +197,6 @@
             "name": "[parameters('virtualMachineScaleSetsName')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId(subscription().subscriptionId, resourceGroup().name,'Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerName'), parameters('loadBalancerName'))]",
-                "[resourceId(subscription().subscriptionId, resourceGroup().name,'Microsoft.Storage/StorageAccounts', parameters('storageAccountName'))]"
             ],
             "tags": {
                 "test": "test"
@@ -282,7 +280,7 @@
                                                 "privateIPAddressVersion": "IPv4",
                                                 "loadBalancerBackendAddressPools": [
                                                     {
-                                                        "id": "[resourceId(subscription().subscriptionId, resourceGroup().name,'Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerName'), parameters('loadBalancerName'))]"
+                                                        "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/loadBalancers/backendAddressPools', toLower(parameters('loadBalancerName')), toLower(parameters('loadBalancerName')))]"
                                                     }
                                                 ]
                                             }

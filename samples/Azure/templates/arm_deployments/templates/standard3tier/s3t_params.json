@@ -9,7 +9,7 @@
         "value": "testemail@noreply.com"
     },
     "loadBalancerDbName": {
-        "value": "db-lb"
+        "value": "db-lb001"
     },
     "dbServerName": {
         "value": "pgdb30122023"
@@ -21,7 +21,7 @@
         "value": "stacc30122023"
     },
     "loadBalancerBeName": {
-        "value": "be-lb"
+        "value": "be-lb001"
     },
     "privateEndpointDbName": {
         "value": "pep001"
@@ -39,7 +39,7 @@
         "value": "festacc30122023"
     },
     "loadBalancerFeName": {
-        "value": "fe-lb"
+        "value": "fe-lb001"
     },
     "virtualNetworkBeName": {
         "value": "bevnet"
