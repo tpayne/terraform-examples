@@ -28,12 +28,28 @@
                 "version": "latest"
             }
         },
+        "osDisk": {
+            "type": "object",
+            "defaultValue": {
+                "osType": "Linux",
+                "name": "[parameters('virtualMachineName')]",
+                "createOption": "FromImage",
+                "caching": "ReadWrite",
+                "writeAcceleratorEnabled": false,
+                "managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                },
+                "deleteOption": "Detach",
+                "diskSizeGB": 30
+            }
+        },
         "location": {
             "type": "string"
         }
     },
     "variables": {
-        "imageReference": "[parameters('osDetails')]"
+        "imageReference": "[parameters('osDetails')]",
+        "osDisk": "[parameters('osDisk')]"
     },
     "resources": [
         {
@@ -52,18 +68,7 @@
                 },
                 "storageProfile": {
                     "imageReference": "[variables('imageReference')]",
-                    "osDisk": {
-                        "osType": "Linux",
-                        "name": "[parameters('virtualMachineName')]",
-                        "createOption": "FromImage",
-                        "caching": "ReadWrite",
-                        "writeAcceleratorEnabled": false,
-                        "managedDisk": {
-                            "storageAccountType": "Standard_LRS"
-                        },
-                        "deleteOption": "Detach",
-                        "diskSizeGB": 30
-                    },
+                    "osDisk": "[variables('osDisk')]",
                     "dataDisks": []
                 },
                 "osProfile": {
