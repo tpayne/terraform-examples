@@ -100,7 +100,7 @@ You may need to enable various services as well...
 	gcloud services enable servicenetworking.googleapis.com
 	gcloud services enable iam.googleapis.com sqladmin.googleapis.com
 	gcloud services list
-	
+
 Edit the `terraform.tfvars` file to replace the project and creds values with those specific for you, then do...
 
 	terraform init && terraform plan && terraform apply -auto-approve
@@ -180,6 +180,7 @@ These examples also show you how to use `Azure's IMDS` in web pages.
 |[Azure/templates/standard3tier/](samples/Azure/templates/standard3tier/) | A standard 3 tier example using NAT routers, load balancers, instance groups and database | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azst] |
 |[Azure/templates/vpn-classic/](samples/Azure/templates/vpn-classic/) | A standard VPN peering host example using NAT routers, internal load balancers and instance groups | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azvpnclassic] |
 |[Azure/templates/vpn-hybrid/](samples/Azure/templates/vpn-hybrid/) | A standard hybrid VPN example using NAT routers, internal load balancers and instance groups | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azvpnclassic] |
+|[Azure/templates/arm_deployments/](samples/Azure/templates/arm_deployments/) | A set of various ARM templates that demonstrate ARM functionality. They are installed using a Terraform module | [<img src="https://azure.microsoft.com/svghandler/cloud-shell.png" alt="Run in Azure Shell" width="80" height="50">][run_button_azarm] |
 |[Azure/terragrunt/](samples/Azure/terragrunt/) | Examples using Terragrunt ||
 
 If you use the `Deploy` button, you will need to manually clone this git repo as Azure does not do it for you.
@@ -290,4 +291,4 @@ GCP References
 [run_button_azvpnclassic]: https://shell.azure.com/
 [run_button_azvpnhybrid]: https://shell.azure.com/
 [run_button_azst]: https://shell.azure.com/
-
+[run_button_azarm]: https://shell.azure.com/
