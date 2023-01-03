@@ -137,7 +137,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2021-04-01",
-            "name": "vmssSetup",
+            "name": "vmssDbSetup",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]",
                 "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccountDbMigName'))]"
