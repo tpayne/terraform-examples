@@ -148,6 +148,7 @@
                 },
                 "dependsOn": [
                     "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]",
+                    "[resourceId('Microsoft.Network/loadBalancers', parameters('loadBalancerDbName'))]",
                     "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerDbName'), parameters('loadBalancerDbName'))]",
                     "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccountDbMigName'))]"
                 ],
@@ -297,7 +298,6 @@
             ],
             "properties": {}
         },
-
         {
             "type": "Microsoft.DBforPostgreSQL/servers/securityAlertPolicies",
             "apiVersion": "2017-12-01",
