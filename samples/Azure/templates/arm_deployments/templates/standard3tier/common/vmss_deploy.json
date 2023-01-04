@@ -46,12 +46,24 @@
                 "diskSizeGB": 30
             }
         },
+        "cmdToRun": {
+            "type": "string",
+            "defaultValue": "NULL"
+        },
+        "scriptUri": {
+            "type": "string",
+            "defaultValue": "NULL"
+        },
         "location": {
             "type": "string"
         }
     },
     "variables": {
         "imageReference": "[parameters('osDetails')]",
+        "cmdRun": {
+            "commandToExecute": "[if(equals(parameters('cmdToRun'), 'NULL'), json('null'), parameters('cmdToRun'))]",
+            "fileUris": "[if(equals(parameters('scriptUri'), 'NULL'), json('null'), parameters('scriptUri'))]"
+        },
         "osDisk": "[parameters('osDisk')]"
     },
     "resources": [
@@ -258,6 +270,23 @@
                 },
                 "overprovision": true,
                 "doNotRunExtensionsOnOverprovisionedVMs": false
+            }
+        },
+        {
+            "condition": "[not(equals(parameters('cmdToRun'), 'NULL'))]",
+            "type": "Microsoft.Compute/virtualMachineScaleSets/extensions",
+            "name": "[concat(parameters('virtualMachineScaleSetsName'),'/customScript')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "2020-12-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSetsName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": "[variables('cmdRun')]"
             }
         }
     ],
