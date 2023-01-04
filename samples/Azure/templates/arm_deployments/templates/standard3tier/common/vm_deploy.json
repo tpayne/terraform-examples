@@ -59,8 +59,8 @@
         "imageReference": "[parameters('osDetails')]",
         "osDisk": "[parameters('osDisk')]",
         "cmdRun": {
-            "commandToExecute": "[if(equals(parameters('cmdToRun'), 'NULL'), json('null'),parameters('cmdToRun'))]",
-            "fileUris": "[if(equals(parameters('scriptUri'), 'NULL'), json('null'),parameters('scriptUri'))]"
+            "commandToExecute": "[parameters('cmdToRun')]",
+            "fileUris": "[parameters('scriptUri')]"
         }
     },
     "resources": [
@@ -110,6 +110,7 @@
             }
         },
         {
+            "condition": "[not(equals(parameters('cmdToRun'), 'NULL'))]",
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(parameters('virtualMachineName'),'/customScript')]",
             "location": "[parameters('location')]",
