@@ -27,6 +27,20 @@ The following instructions show how to deploy it.
 
     (terraform init && terraform plan && terraform apply -auto-approve)
 
+You can just deploy a specific template by doing something like...
+
+```console
+    (az group delete -n testdemo -y || true) && \
+        (az group delete -n NetworkWatcherRG -y || true) && \
+        terraform destroy -auto-approve && \
+        (terraform apply -target \
+            module.arm_deployments3t.azurerm_resource_group_template_deployment.armDeployment \
+            -auto-approve || true) &&  \
+    (az group delete -n testdemo -y || true) && \
+    (az group delete -n NetworkWatcherRG -y || true) && \
+    terraform destroy -auto-approve
+```
+
 Running the Sample in Azure Cloud Shell
 ---------------------------------------
 To run the example in Cloud Shell, press the button below.
