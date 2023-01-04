@@ -45,11 +45,26 @@
         },
         "location": {
             "type": "string"
+        },
+        "cmdToRun": {
+            "type": "string",
+            "defaultValue": "NULL"
+        },
+        "scriptUri": {
+            "type": "string",
+            "defaultValue": "NULL"
         }
     },
     "variables": {
         "imageReference": "[parameters('osDetails')]",
-        "osDisk": "[parameters('osDisk')]"
+        "osDisk": "[parameters('osDisk')]",
+        "cmd": {
+            "commandToExecute": "[parameters('cmdToRun')]",
+            "fileUris": [
+                "[parameters('scriptUri')]"
+            ]
+        },
+        "cmdRun": "[if(equals(parameters('cmdToRun'), 'NULL'), variables('cmd'), json('null'))]"
     },
     "resources": [
         {
@@ -97,7 +112,22 @@
                 }
             }
         },
-
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('virtualMachineName'),'/customScript')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "2020-12-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": "[variables('cmdRun')]"
+            }
+        }
     ],
     "outputs": {
     }
