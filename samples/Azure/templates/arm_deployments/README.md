@@ -60,6 +60,8 @@ To clean up do...
 Notes
 -----
 - https://github.com/Azure/azure-quickstart-templates
+- https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-string#substring
+- https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-object#json
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/deploy-rest
 - https://learn.microsoft.com/en-us/azure/templates/microsoft.containerservice/managedclusters?pivots=deployment-language-arm-template
 - https://learn.microsoft.com/en-us/azure/templates/microsoft.operationalinsights/workspaces?pivots=deployment-language-arm-template
