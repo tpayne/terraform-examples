@@ -50,6 +50,11 @@ Notes
 - https://learn.microsoft.com/en-us/azure/templates/microsoft.operationalinsights/workspaces?pivots=deployment-language-arm-template
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/outputs?tabs=azure-powershell
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/linked-templates?tabs=azure-powershell
+- https://resources.azure.com/providers/Microsoft.Compute/operations
+- https://resources.azure.com/
+- https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux#template-deployment
+- https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.compute/vmss-custom-script-windows/azuredeploy.json
+- https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/best-practices
 
 Issues
 ------
