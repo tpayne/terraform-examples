@@ -59,8 +59,10 @@
         "imageReference": "[parameters('osDetails')]",
         "osDisk": "[parameters('osDisk')]",
         "cmdRun": {
-            "commandToExecute": "[if(equals(parameters('cmdToRun'), 'NULL'), json('null'), parameters('cmdToRun'))]",
-            "fileUris": "[if(equals(parameters('scriptUri'), 'NULL'), json('null'), parameters('scriptUri'))]"
+            "fileUris": [
+                "[if(equals(parameters('scriptUri'), 'NULL'), json('null'), parameters('scriptUri'))]"
+            ],
+            "commandToExecute": "[if(equals(parameters('cmdToRun'), 'NULL'), json('null'), parameters('cmdToRun'))]"
         }
     },
     "resources": [
