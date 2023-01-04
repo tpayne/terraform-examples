@@ -110,12 +110,6 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
-                    },
-                    "cmdToRun": {
-                        "value": "/bin/sh startup.sh.tpl"
-                    },
-                    "scriptUri": {
-                        "value": "https://raw.githubusercontent.com/tpayne/terraform-examples/main/samples/Azure/templates/standard3tier/templates/startup.sh.tpl"
                     }
                 }
             }
