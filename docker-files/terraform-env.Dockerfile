@@ -7,7 +7,7 @@ RUN apk add --no-cache terraform --repository=http://dl-cdn.alpinelinux.org/alpi
 RUN apk -U upgrade
 
 # Install required tools
-RUN apk add --no-cache curl bash gzip unzip
+RUN apk add --no-cache curl gzip unzip
 RUN apk add --no-cache terraform
 
 ENV TFDOCS_VERSION="v0.16.0"
@@ -30,10 +30,11 @@ RUN curl -sSLo ./tflint-linux-amd64.zip \
         && mv ./tflint /usr/local/bin/tflint
 
 WORKDIR /terraform-tools
+COPY scripts/checker.sh .
 
 ARG account=terraform
 RUN addgroup -S ${account} \
     && adduser -S ${account} -G ${account}
 USER ${account}:${account}
 
-CMD ["/bin/bash"]
+CMD ["/bin/sh"]
