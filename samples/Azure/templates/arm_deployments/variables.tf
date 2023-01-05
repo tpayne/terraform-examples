@@ -1,4 +1,5 @@
 # Declare variables that can be used. They do not need to be populated...
+#
 
 variable "name" {
   type    = string # Type - not needed, but showing it...
@@ -17,5 +18,3 @@ variable "tags" {
     team = "dev"
   }
 }
-
-

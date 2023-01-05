@@ -1,0 +1,59 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-ast
+      - id: check-builtin-literals
+      - id: check-case-conflict
+      - id: check-docstring-first
+      - id: check-shebang-scripts-are-executable
+      - id: check-json
+      - id: check-xml
+      - id: check-yaml
+      - id: debug-statements
+      - id: detect-aws-credentials
+        args:
+          - --allow-missing-credentials
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+  - repo: https://github.com/sirosen/check-jsonschema
+    rev: 0.19.1
+    hooks:
+      - id: check-github-workflows
+  - repo: local
+    hooks:
+      - id: terraform-fmt
+        name: Terraform fmt
+        stages: [ commit ]
+        language: docker_image
+        entry: ghcr.io/tpayne/terraform-examples/terraform-tools:latest /terraform-tools/checker.sh fmt
+        files: (\.tf|\.tfvars)$
+        exclude: \.terraform\/.*$
+      - id: terraform-tflint
+        name: Terraform validate with tflint
+        stages: [ commit ]
+        language: docker_image
+        entry: ghcr.io/tpayne/terraform-examples/terraform-tools:latest /terraform-tools/checker.sh lint
+        files: (\.tf|\.tfvars)$
+        exclude: \.terraform\/.*$
+        require_serial: true
+      - id: terraform-tfsec
+        name: Terraform security checks
+        stages: [ commit ]
+        language: docker_image
+        entry: ghcr.io/tpayne/terraform-examples/terraform-tools:latest /terraform-tools/checker.sh sec
+        files: (\.tf|\.tfvars)$
+        exclude: \.terraform\/.*$
+      - id: terraform-docs
+        name: Terraform docs
+        stages: [ commit ]
+        language: docker_image
+        entry: ghcr.io/tpayne/terraform-examples/terraform-tools:latest /terraform-tools/checker.sh docs
+        files: (\.tf)$
+        exclude: \.terraform\/.*$

@@ -41,15 +41,19 @@ runTFLint() {
 
 if [ "x$1" = "xfmt" ]; then
   shift
+  echo "$@"
   runTFFmt "$@"
 elif [ "x$1" = "xdocs" ]; then
   shift
+  echo "$@"
   runTFDocs "$@"
 elif [ "x$1" = "xsec" ]; then
   shift
+  echo "$@"
   runTFSec "$@"
 elif [ "x$1" = "xlint" ]; then
   shift
+  echo "$@"
   runTFLint "$@"
 fi
 
