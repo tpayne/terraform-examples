@@ -6,6 +6,8 @@ Note: These examples only work for `Mac` and some need `Docker` installed. There
 * GCP
 * Azure
 * AWS
+* Azure ARM
+* GitOps
 
 How to Install
 --------------
