@@ -11,16 +11,18 @@ RUN apk add --no-cache curl gzip unzip
 RUN apk add --no-cache terraform
 
 ENV TFDOCS_VERSION="v0.16.0"
-RUN curl -sSLo ./tfdocs-linux-amd64.gz \
+RUN curl -sSLo ./tfdocs-linux-amd64.tar.gz \
         "https://terraform-docs.io/dl/${TFDOCS_VERSION}/terraform-docs-${TFDOCS_VERSION}-linux-amd64.tar.gz" \
-		&& gunzip ./tfdocs-linux-amd64.gz \
-        && chmod a+rx ./tfdocs-linux-amd64 \
-        && mv ./tfdocs-linux-amd64 /usr/local/bin/terraform-docs
+		&& gunzip ./tfdocs-linux-amd64.tar.gz \
+        && tar xf ./tfdocs-linux-amd64.tar terraform-docs \
+        && chmod a+rx ./terraform-docs \
+        && rm ./tfdocs-linux-amd64.tar \
+        && mv ./terraform-docs /usr/local/bin/terraform-docs
 
 ENV TFSEC_VERSION="v1.28.1"
-RUN curl -sSLo /usr/bin/tfsec \
+RUN curl -sSLo /usr/local/bin/tfsec \
     "https://github.com/aquasecurity/tfsec/releases/download/${TFSEC_VERSION}/tfsec-linux-amd64" \
-		&& chmod +x /usr/bin/tfsec
+		&& chmod +x /usr/local/bin/tfsec
 
 ENV TFLINT_VERSION="v0.44.1"
 RUN curl -sSLo ./tflint-linux-amd64.zip \
