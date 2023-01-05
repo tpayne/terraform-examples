@@ -47,18 +47,3 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/terraform-tools:latest
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Extract image tags and labels - argo-env
-        uses: docker/metadata-action@v4
-        id: metad
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/terraform-tools
-
-      - name: Build and Push Argo Environment Docker image
-        uses: docker/build-push-action@v3
-        with:
-          context: docker-files/
-          file: docker-files/terraform-env.Dockerfile
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/terraform-tools:latest
-          labels: ${{ steps.metad.outputs.labels }}
