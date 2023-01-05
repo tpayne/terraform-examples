@@ -39,7 +39,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/terraform-tools
 
-      - name: Build and Push CD Promote Docker image
+      - name: Build and Push Docker image
         uses: docker/build-push-action@v3
         with:
           context: docker-files/
