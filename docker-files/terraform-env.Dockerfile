@@ -66,10 +66,15 @@ RUN curl -sSLo /tmp/tool.zip \
     "https://aka.ms/arm-ttk-latest" \
         && mkdir -p arm-template-toolkit \
         && unzip -u /tmp/tool.zip -d ./arm-template-toolkit/ \
+        && echo '#!/bin/sh' > ./arm-template-toolkit/runcmd.sh \
+        && chmod a+rx ./arm-template-toolkit/runcmd.sh \
+        && echo "cd arm-ttk/" >> ./arm-template-toolkit/runcmd.sh \
+        && echo 'pwsh << EOF' >> ./arm-template-toolkit/runcmd.sh \
         && echo "Get-ChildItem *.ps1, *.psd1, *.ps1xml, *.psm1 -Recurse | Unblock-File" \
-                > ./arm-template-toolkit/runcmd.sh \
+                >> ./arm-template-toolkit/runcmd.sh \
         && echo "Import-Module ./arm-ttk.psd1"  \
-                >> ./arm-template-toolkit/runcmd.sh
+                >> ./arm-template-toolkit/runcmd.sh \
+        && echo 'EOF' >> ./arm-template-toolkit/runcmd.sh
 
 # Account name
 ARG account=terraform
