@@ -25,6 +25,7 @@ RUN apk add --no-cache \
 RUN apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
             lttng-ust
 
+# renovate: datasource=github-releases depName=terraform-docs/terraform-docs
 ENV TFDOCS_VERSION="v0.16.0"
 RUN curl -sSLo ./tfdocs-linux-amd64.tar.gz \
         "https://terraform-docs.io/dl/${TFDOCS_VERSION}/terraform-docs-${TFDOCS_VERSION}-linux-amd64.tar.gz" \
