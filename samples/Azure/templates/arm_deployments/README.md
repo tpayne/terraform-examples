@@ -59,6 +59,7 @@ To clean up do...
 
 Notes
 -----
+- The terraform-tools image has a `pwsh` ARM best practices checker installed on it. For notes, see https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/test-toolkit#install-on-linux
 - https://github.com/Azure/azure-quickstart-templates
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-string#substring
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/template-functions-object#json
