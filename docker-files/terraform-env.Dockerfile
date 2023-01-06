@@ -34,11 +34,13 @@ RUN curl -sSLo ./tfdocs-linux-amd64.tar.gz \
         && rm ./tfdocs-linux-amd64.tar \
         && mv ./terraform-docs /usr/local/bin/terraform-docs
 
+# renovate: datasource=github-releases depName=aquasecurity/tfsec
 ENV TFSEC_VERSION="v1.28.1"
 RUN curl -sSLo /usr/local/bin/tfsec \
     "https://github.com/aquasecurity/tfsec/releases/download/${TFSEC_VERSION}/tfsec-linux-amd64" \
 		&& chmod +x /usr/local/bin/tfsec
 
+# renovate: datasource=github-releases terraform-linters/tflint
 ENV TFLINT_VERSION="v0.44.1"
 RUN curl -sSLo ./tflint-linux-amd64.zip \
     "https://github.com/terraform-linters/tflint/releases/download/${TFLINT_VERSION}/tflint_linux_amd64.zip" \
@@ -49,6 +51,7 @@ RUN curl -sSLo ./tflint-linux-amd64.zip \
 
 
 # Download the powershell '.tar.gz' archive
+# renovate: datasource=github-releases depName=PowerShell/PowerShell extractVersion=^v-(?<version>.*)$
 ENV PSH_VERSION="7.3.0"
 RUN curl -sSLo /tmp/powershell.tar.gz \
     "https://github.com/PowerShell/PowerShell/releases/download/v${PSH_VERSION}/powershell-${PSH_VERSION}-linux-alpine-x64.tar.gz" \
