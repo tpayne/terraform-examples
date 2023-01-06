@@ -9,6 +9,21 @@ RUN apk -U upgrade
 # Install required tools
 RUN apk add --no-cache curl gzip unzip
 RUN apk add --no-cache terraform
+RUN apk add --no-cache \
+            ca-certificates \
+            less \
+            ncurses-terminfo-base \
+            krb5-libs \
+            libgcc \
+            libintl \
+            libssl1.1 \
+            libstdc++ \
+            tzdata \
+            userspace-rcu \
+            zlib \
+            icu-libs
+RUN apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
+            lttng-ust
 
 ENV TFDOCS_VERSION="v0.16.0"
 RUN curl -sSLo ./tfdocs-linux-amd64.tar.gz \
@@ -31,8 +46,29 @@ RUN curl -sSLo ./tflint-linux-amd64.zip \
         && chmod a+rx ./tflint \
         && mv ./tflint /usr/local/bin/tflint
 
+
+
+# Download the powershell '.tar.gz' archive
+ENV PSH_VERSION="7.3.0"
+RUN curl -sSLo /tmp/powershell.tar.gz \
+    "https://github.com/PowerShell/PowerShell/releases/download/v${PSH_VERSION}/powershell-${PSH_VERSION}-linux-alpine-x64.tar.gz" \
+        && mkdir -p /opt/microsoft/powershell/7 \
+        && tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 \
+        && chmod +x /opt/microsoft/powershell/7/pwsh \
+        && ln -s /opt/microsoft/powershell/7/pwsh /usr/local/bin/pwsh
+
 WORKDIR /terraform-tools
 COPY scripts/checker.sh .
+
+RUN curl -sSLo /tmp/tool.zip \
+    "https://aka.ms/arm-ttk-latest" \
+        && mkdir -p arm-template-toolkit \
+        && unzip -u /tmp/tool.zip -d ./arm-template-toolkit/ \
+        && echo "Get-ChildItem *.ps1, *.psd1, *.ps1xml, *.psm1 -Recurse | Unblock-File" \
+                > ./arm-template-toolkit/runcmd.sh \
+        && echo "Import-Module ./arm-ttk.psd1"  \
+                >> ./arm-template-toolkit/runcmd.sh
+
 
 ARG account=terraform
 RUN addgroup -S ${account} \
