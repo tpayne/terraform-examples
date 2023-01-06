@@ -48,8 +48,6 @@ RUN curl -sSLo ./tflint-linux-amd64.zip \
         && chmod a+rx ./tflint \
         && mv ./tflint /usr/local/bin/tflint
 
-
-
 # Download the powershell '.tar.gz' archive
 # renovate: datasource=github-releases depName=PowerShell/PowerShell extractVersion=^v-(?<version>.*)$
 ENV PSH_VERSION="7.3.0"
@@ -72,7 +70,7 @@ RUN curl -sSLo /tmp/tool.zip \
         && echo "Import-Module ./arm-ttk.psd1"  \
                 >> ./arm-template-toolkit/runcmd.sh
 
-
+# Account name
 ARG account=terraform
 RUN addgroup -S ${account} \
     && adduser -S ${account} -G ${account}
