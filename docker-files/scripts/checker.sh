@@ -42,7 +42,7 @@ runTFLint() {
 runArmScan() {
   paths=$(getPaths "$@")
 
-  cd /terraform-tools/arm-ttk/
+  cd /terraform-tools/arm-template-toolkit/arm-ttk/
 
   for path in ${paths}; do
 pwsh << EOF
