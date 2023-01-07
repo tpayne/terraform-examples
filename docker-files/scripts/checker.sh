@@ -50,7 +50,6 @@ pwsh << EOF
 EOF
   done
   return $?
-
 }
 
 if [ "x$1" = "xfmt" ]; then
