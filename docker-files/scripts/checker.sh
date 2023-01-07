@@ -39,6 +39,20 @@ runTFLint() {
   return $?
 }
 
+runArmScan() {
+  paths=$(getPaths "$@")
+
+  for path in ${paths}; do
+pwsh << EOF
+      Get-ChildItem *.ps1, *.psd1, *.ps1xml, *.psm1 -Recurse | Unblock-File
+      Import-Module ./arm-ttk.psd1
+      Test-AzTemplate -TemplatePath ${path}
+EOF
+  done
+  return $?
+
+}
+
 if [ "x$1" = "xfmt" ]; then
   shift
   echo "$@"
@@ -55,6 +69,10 @@ elif [ "x$1" = "xlint" ]; then
   shift
   echo "$@"
   runTFLint "$@"
+elif [ "x$1" = "xarm" ]; then
+  shift
+  echo "$@"
+  runArmScan "$@"
 fi
 
 exit $?
