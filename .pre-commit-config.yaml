@@ -54,3 +54,10 @@ repos:
         entry: ghcr.io/tpayne/terraform-examples/terraform-tools:latest /terraform-tools/checker.sh docs
         files: (\.tf)$
         exclude: \.terraform\/.*$
+      - id: arm-templates
+        name: ARM templates
+        stages: [ commit ]
+        language: docker_image
+        entry: ghcr.io/tpayne/terraform-examples/terraform-tools:latest /terraform-tools/checker.sh arm
+        files: (\.json|\.jsonc)$
+        exclude: \.renovate\/.*$
