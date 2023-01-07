@@ -112,4 +112,4 @@ jobs:
         run: |
           echo '(samples/Azure/templates/arm_deployments/templates/)'
           echo '>>Ignore header errors<<'
-          (cd samples/Azure/templates/arm_deployments/templates/ &&  docker run -t --rm -v "$(pwd):/iac" -w /iac ghcr.io/tpayne/terraform-examples/terraform-tools:latest /terraform-tools/checker.sh arm .)
+          (cd samples/Azure/templates/arm_deployments/templates/ &&  docker run -t --rm -v "$(pwd):/iac" -w /iac ghcr.io/tpayne/terraform-examples/terraform-tools:latest /terraform-tools/checker.sh arm /iac/)
