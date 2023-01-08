@@ -73,6 +73,8 @@ Notes
 - https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux#template-deployment
 - https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.compute/vmss-custom-script-windows/azuredeploy.json
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/best-practices
+- [UI preview tool for templates](https://portal.azure.com/?feature.customPortal=false#view/Microsoft_Azure_CreateUIDef/SandboxBlade)
+- https://learn.microsoft.com/en-us/azure/azure-resource-manager/managed-applications/create-uidefinition-elements
 
 Issues
 ------
