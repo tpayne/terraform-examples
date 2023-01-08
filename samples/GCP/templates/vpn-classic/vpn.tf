@@ -30,7 +30,7 @@
 module "frontend_vpn" {
   depends_on  = [module.cloud-nat-fe.router_name]
   source      = "terraform-google-modules/vpn/google//modules/vpn_ha"
-  version     = "~> 1.5.0"
+  version     = "~> 2.3.0"
   project_id  = var.project
   network     = google_compute_network.frontend_vpc_network.self_link
   region      = var.region_fe
@@ -71,7 +71,7 @@ module "frontend_vpn" {
 module "backend_vpn" {
   depends_on  = [module.cloud-nat-be.router_name]
   source      = "terraform-google-modules/vpn/google//modules/vpn_ha"
-  version     = "~> 1.5.0"
+  version     = "~> 2.3.0"
   project_id  = var.project
   network     = google_compute_network.backend_vpc_network.self_link
   region      = var.region_be
@@ -115,7 +115,7 @@ module "backend_vpn" {
 
 module "frontend_vpn" {
   source             = "terraform-google-modules/vpn/google"
-  version            = "~> 1.5.0"
+  version            = "~> 2.3.0"
   project_id         = var.project
   network            = google_compute_network.frontend_vpc_network.self_link
   region             = var.region_fe
@@ -132,7 +132,7 @@ module "frontend_vpn" {
 
 module "backend_vpn" {
   source             = "terraform-google-modules/vpn/google"
-  version            = "~> 1.5.0"
+  version            = "~> 2.3.0"
   project_id         = var.project
   network            = google_compute_network.backend_vpc_network.self_link
   region             = var.region_be
