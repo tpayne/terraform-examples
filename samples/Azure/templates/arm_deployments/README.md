@@ -21,6 +21,14 @@ This was tested using Terraform version v0.15.2 and Azure versions...
 *  "azure-cli-core": "2.23.0",
 *  "azure-cli-telemetry": "1.0.6"
 
+Useful Commands
+---------------
+The following are useful commands to use when looking at this
+
+    az provider list --output table
+    az deployment sub list
+    az deployment group list -g <rgName>
+
 Usage
 -----
 The following instructions show how to deploy it.
