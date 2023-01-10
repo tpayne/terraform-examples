@@ -27,6 +27,9 @@ The following are useful commands to use when looking at this
 
 ```console
     az provider list --output table
+    az provider list \
+        --query "[].{Provider:namespace, Status:registrationState}" \
+        --out table | sort -u
     az deployment sub list
     az deployment group list -g <rgName>
     az group export -g <rgName>
