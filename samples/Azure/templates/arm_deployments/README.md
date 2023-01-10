@@ -86,6 +86,7 @@ Notes
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/best-practices
 - [UI preview tool for templates](https://portal.azure.com/?feature.customPortal=false#view/Microsoft_Azure_CreateUIDef/SandboxBlade)
 - https://learn.microsoft.com/en-us/azure/azure-resource-manager/managed-applications/create-uidefinition-elements
+- https://github.com/PacktPublishing
 
 Issues
 ------
