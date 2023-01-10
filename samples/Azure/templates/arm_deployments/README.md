@@ -25,9 +25,12 @@ Useful Commands
 ---------------
 The following are useful commands to use when looking at this
 
+```console
     az provider list --output table
     az deployment sub list
     az deployment group list -g <rgName>
+    az group export -g <rgName>
+```
 
 Usage
 -----
