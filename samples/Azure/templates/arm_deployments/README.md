@@ -26,7 +26,16 @@ Useful Commands
 The following are useful commands to use when looking at this
 
 ```console
-    az provider list --output table
+    az init
+    az account list
+    az account set --subscription <id>
+    az account list-locations --query [].name
+    az account list --query "[].{name:name,isDefault:isDefault}"
+    az config set defaults.location=uksouth defaults.group=<rgName>
+    az config set extension.use_dynamic_install=yes_without_prompt
+    az configure -l true
+    cat ~/.azure/config
+     az provider list --output table
     az provider list \
         --query "[].{Provider:namespace, Status:registrationState}" \
         --out table | sort -u
