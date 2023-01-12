@@ -2,7 +2,6 @@
 
 getPaths() {
   echo "$@" | tr ' ' '\n' | xargs -n1 dirname | sort -u
-  return $?
 }
 
 goPath() {
