@@ -47,3 +47,18 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/terraform-tools:latest
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Extract image tags and labels - azure-tools
+        uses: docker/metadata-action@v4
+        id: metab
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/azure-tools
+
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: docker-files/
+          file: docker-files/azure-env.Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/azure-tools:latest
+          labels: ${{ steps.metab.outputs.labels }}
