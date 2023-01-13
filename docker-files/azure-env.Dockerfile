@@ -1,5 +1,5 @@
 # This image is used for running Terraform
-FROM alpine:latest
+FROM --platform=amd64 alpine:latest
 
 # Set up APK repositories and upgrade
 RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main git
@@ -22,6 +22,7 @@ RUN apk add --no-cache \
             icu-libs \
             gcc \
             musl-dev \
+            musl \
             python3-dev \
             libffi-dev\
             openssl-dev \
@@ -34,7 +35,7 @@ RUN apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
 # renovate: datasource=github-releases depName=Azure/bicep extractVersion=^v-(?<version>.*)$
 ENV BICEP_VERSION="0.13.1"
 RUN curl -sSLo ./bicep-linux-x64 \
-        "https://github.com/Azure/bicep/releases/download/v${BICEP_VERSION}/bicep-linux-x64" \
+        "https://github.com/Azure/bicep/releases/download/v${BICEP_VERSION}/bicep-linux-musl-x64" \
 		&& chmod a+rx ./bicep-linux-x64 \
         && mv ./bicep-linux-x64 /usr/local/bin/bicep
 
