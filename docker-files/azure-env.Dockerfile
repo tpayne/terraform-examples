@@ -33,10 +33,10 @@ RUN apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
 
 # renovate: datasource=github-releases depName=Azure/bicep extractVersion=^v-(?<version>.*)$
 ENV BICEP_VERSION="0.13.1"
-RUN curl -sSLo ./bicep-linux-arm64 \
+RUN curl -sSLo ./bicep-linux-x64 \
         "https://github.com/Azure/bicep/releases/download/v${BICEP_VERSION}/bicep-linux-x64" \
-		&& chmod a+rx ./bicep-linux-arm64 \
-        && mv ./bicep-linux-arm64 /usr/local/bin/bicep
+		&& chmod a+rx ./bicep-linux-x64 \
+        && mv ./bicep-linux-x64 /usr/local/bin/bicep
 
 # Download the powershell '.tar.gz' archive
 # renovate: datasource=github-releases depName=PowerShell/PowerShell extractVersion=^v-(?<version>.*)$
