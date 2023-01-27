@@ -90,7 +90,7 @@ module "cloud-nat-bck" {
 # Load Balancer
 module "gce-lb-http" {
   source  = "GoogleCloudPlatform/lb-http/google"
-  version = "~> 6.0"
+  version = "~> 7.0"
 
   name    = "${var.project}-frontend-group-http-lb"
   project = var.project
