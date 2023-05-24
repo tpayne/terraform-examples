@@ -1,0 +1,297 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "loadBalancerName": {
+            "type": "String"
+        },
+        "storageAccountName": {
+            "type": "String"
+        },
+        "virtualNetworkName": {
+            "type": "String"
+        },
+        "virtualMachineScaleSetsName": {
+            "type": "String"
+        },
+        "autoscalesettingName": {
+            "type": "String"
+        },
+        "adminUsername": {
+            "type": "String"
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "minLength": 8,
+            "maxLength": 128
+        },
+        "osDetails": {
+            "type": "object",
+            "defaultValue": {
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "18.04-LTS",
+                "version": "latest"
+            }
+        },
+        "osDisk": {
+            "type": "object",
+            "defaultValue": {
+                "osType": "Linux",
+                "createOption": "FromImage",
+                "caching": "ReadWrite",
+                "managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                },
+                "diskSizeGB": 30
+            }
+        },
+        "cmdToRun": {
+            "type": "string",
+            "defaultValue": "NULL"
+        },
+        "scriptUri": {
+            "type": "string",
+            "defaultValue": "NULL"
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "imageReference": "[parameters('osDetails')]",
+        "cmdRun": {
+            "fileUris": [
+                "[if(equals(parameters('scriptUri'), 'NULL'), json('null'), parameters('scriptUri'))]"
+            ],
+            "commandToExecute": "[if(equals(parameters('cmdToRun'), 'NULL'), json('null'), parameters('cmdToRun'))]"
+        },
+        "osDisk": "[parameters('osDisk')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachineScaleSets/extensions",
+            "apiVersion": "2022-08-01",
+            "name": "[concat(parameters('virtualMachineScaleSetsName'), '/MSILinuxExtension')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSetsName'))]"
+            ],
+            "properties": {
+                "provisioningState": "Succeeded",
+                "autoUpgradeMinorVersion": false,
+                "publisher": "Microsoft.ManagedIdentity",
+                "type": "ManagedIdentityExtensionForLinux",
+                "typeHandlerVersion": "1.0",
+                "settings": {
+                    "port": 50342
+                }
+            }
+        },
+        {
+            "type": "microsoft.insights/autoscalesettings",
+            "apiVersion": "2022-10-01",
+            "name": "[parameters('autoscalesettingName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSetsName'))]"
+            ],
+            "tags": {
+                "test": "test"
+            },
+            "properties": {
+                "profiles": [
+                    {
+                        "name": "AutoScale",
+                        "capacity": {
+                            "minimum": "2",
+                            "maximum": "10",
+                            "default": "2"
+                        },
+                        "rules": [
+                            {
+                                "metricTrigger": {
+                                    "metricName": "Percentage CPU",
+                                    "metricNamespace": "microsoft.compute/virtualmachinescalesets",
+                                    "metricResourceUri": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSetsName'))]",
+                                    "timeGrain": "PT1M",
+                                    "statistic": "Average",
+                                    "timeWindow": "PT5M",
+                                    "timeAggregation": "Average",
+                                    "operator": "GreaterThan",
+                                    "threshold": 75,
+                                    "dimensions": [],
+                                    "dividePerInstance": false
+                                },
+                                "scaleAction": {
+                                    "direction": "Increase",
+                                    "type": "ChangeCount",
+                                    "value": "1",
+                                    "cooldown": "PT1M"
+                                }
+                            },
+                            {
+                                "metricTrigger": {
+                                    "metricName": "Percentage CPU",
+                                    "metricResourceUri": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSetsName'))]",
+                                    "timeGrain": "PT1M",
+                                    "statistic": "Average",
+                                    "timeWindow": "PT5M",
+                                    "timeAggregation": "Average",
+                                    "operator": "LessThan",
+                                    "threshold": 25,
+                                    "dimensions": [],
+                                    "dividePerInstance": false
+                                },
+                                "scaleAction": {
+                                    "direction": "Decrease",
+                                    "type": "ChangeCount",
+                                    "value": "1",
+                                    "cooldown": "PT1M"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "enabled": true,
+                "name": "[parameters('autoscalesettingName')]",
+                "targetResourceUri": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSetsName'))]",
+                "notifications": [],
+                "predictiveAutoscalePolicy": {
+                    "scaleMode": "Disabled"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachineScaleSets",
+            "apiVersion": "2022-03-01",
+            "name": "[parameters('virtualMachineScaleSetsName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "test": "test"
+            },
+            "sku": {
+                "name": "Standard_B1s",
+                "tier": "Standard",
+                "capacity": 2
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "singlePlacementGroup": true,
+                "orchestrationMode": "Uniform",
+                "upgradePolicy": {
+                    "mode": "Automatic",
+                    "automaticOSUpgradePolicy": {
+                        "enableAutomaticOSUpgrade": false,
+                        "useRollingUpgradePolicy": false,
+                        "disableAutomaticRollback": false
+                    }
+                },
+                "virtualMachineProfile": {
+                    "osProfile": {
+                        "computerNamePrefix": "mig",
+                        "adminUsername": "[parameters('adminUsername')]",
+                        "adminPassword": "[parameters('adminPassword')]",
+                        "linuxConfiguration": {},
+                        "secrets": [],
+                        "allowExtensionOperations": true
+                    },
+                    "storageProfile": {
+                        "osDisk": "[variables('osDisk')]",
+                        "imageReference": "[variables('imageReference')]",
+                        "dataDisks": [
+                            {
+                                "lun": 0,
+                                "createOption": "Empty",
+                                "caching": "ReadWrite",
+                                "managedDisk": {
+                                    "storageAccountType": "Standard_LRS"
+                                },
+                                "diskSizeGB": 10
+                            }
+                        ]
+                    },
+                    "networkProfile": {
+                        "networkInterfaceConfigurations": [
+                            {
+                                "name": "terraformnetworkprofile",
+                                "properties": {
+                                    "primary": true,
+                                    "enableAcceleratedNetworking": false,
+                                    "disableTcpStateTracking": false,
+                                    "dnsSettings": {
+                                        "dnsServers": []
+                                    },
+                                    "enableIPForwarding": false,
+                                    "ipConfigurations": [
+                                        {
+                                            "name": "IPConfiguration",
+                                            "properties": {
+                                                "primary": true,
+                                                "subnet": {
+                                                    "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), 'subnet-database-001')]"
+                                                },
+                                                "privateIPAddressVersion": "IPv4",
+                                                "loadBalancerBackendAddressPools": [
+                                                    {
+                                                        "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerName'), parameters('loadBalancerName'))]"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "diagnosticsProfile": {
+                        "bootDiagnostics": {
+                            "enabled": true,
+                            "storageUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/')]"
+                        }
+                    },
+                    "extensionProfile": {
+                        "extensions": [
+                            {
+                                "name": "MSILinuxExtension",
+                                "properties": {
+                                    "autoUpgradeMinorVersion": false,
+                                    "publisher": "Microsoft.ManagedIdentity",
+                                    "type": "ManagedIdentityExtensionForLinux",
+                                    "typeHandlerVersion": "1.0",
+                                    "settings": {
+                                        "port": 50342
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                },
+                "overprovision": true,
+                "doNotRunExtensionsOnOverprovisionedVMs": false
+            }
+        },
+        {
+            "condition": "[not(equals(parameters('cmdToRun'), 'NULL'))]",
+            "type": "Microsoft.Compute/virtualMachineScaleSets/extensions",
+            "name": "[concat(parameters('virtualMachineScaleSetsName'),'/customScript')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "2020-12-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachineScaleSets', parameters('virtualMachineScaleSetsName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": "[variables('cmdRun')]"
+            }
+        }
+    ],
+    "outputs": {
+    }
+}

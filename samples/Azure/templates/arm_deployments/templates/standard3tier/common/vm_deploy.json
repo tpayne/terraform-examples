@@ -1,0 +1,134 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachineName": {
+            "type": "String"
+        },
+        "storageAccountName": {
+            "type": "String"
+        },
+        "networkInterfaceName": {
+            "type": "String"
+        },
+        "adminUsername": {
+            "type": "String"
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "minLength": 8,
+            "maxLength": 128
+        },
+        "osDetails": {
+            "type": "object",
+            "defaultValue": {
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "18.04-LTS",
+                "version": "latest"
+            }
+        },
+        "osDisk": {
+            "type": "object",
+            "defaultValue": {
+                "osType": "Linux",
+                "name": "[parameters('virtualMachineName')]",
+                "createOption": "FromImage",
+                "caching": "ReadWrite",
+                "writeAcceleratorEnabled": false,
+                "managedDisk": {
+                    "storageAccountType": "Standard_LRS"
+                },
+                "deleteOption": "Detach",
+                "diskSizeGB": 30
+            }
+        },
+        "location": {
+            "type": "string"
+        },
+        "cmdToRun": {
+            "type": "string",
+            "defaultValue": "NULL"
+        },
+        "scriptUri": {
+            "type": "string",
+            "defaultValue": "NULL"
+        }
+    },
+    "variables": {
+        "imageReference": "[parameters('osDetails')]",
+        "osDisk": "[parameters('osDisk')]",
+        "cmdRun": {
+            "fileUris": [
+                "[if(equals(parameters('scriptUri'), 'NULL'), json('null'), parameters('scriptUri'))]"
+            ],
+            "commandToExecute": "[if(equals(parameters('cmdToRun'), 'NULL'), json('null'), parameters('cmdToRun'))]"
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2022-03-01",
+            "name": "[parameters('virtualMachineName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+            ],
+            "tags": {
+                "test": "test"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_B1s"
+                },
+                "storageProfile": {
+                    "imageReference": "[variables('imageReference')]",
+                    "osDisk": "[variables('osDisk')]",
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachineName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "linuxConfiguration": {},
+                    "secrets": [],
+                    "allowExtensionOperations": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]",
+                            "properties": {
+                                "primary": false
+                            }
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[not(equals(parameters('cmdToRun'), 'NULL'))]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(parameters('virtualMachineName'),'/customScript')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "2020-12-01",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": "[variables('cmdRun')]"
+            }
+        }
+    ],
+    "outputs": {
+    }
+}

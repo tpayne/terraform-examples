@@ -1,0 +1,362 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "ddosProtectionPlanName": {
+            "type": "String"
+        },
+        "loadBalancerDbName": {
+            "type": "String"
+        },
+        "dbServerName": {
+            "type": "String"
+        },
+        "privateEndpointDbName": {
+            "type": "String"
+        },
+        "virtualMachineDbProxyName": {
+            "type": "String"
+        },
+        "storageAccountDbMigName": {
+            "type": "String"
+        },
+        "networkInterfaceDbProxyName": {
+            "type": "String"
+        },
+        "publicIPAddressDbProxyName": {
+            "type": "String"
+        },
+        "publicIPAddressDbProxyIpAddr": {
+            "type": "String"
+        },
+        "privateIPAddressDb": {
+            "type": "String"
+        },
+        "virtualNetworkBeNameIpCidr": {
+            "type": "String"
+        },
+        "virtualNetworkDbNameIpCidr": {
+            "type": "String"
+        },
+        "virtualSubNetworkDbNameIpCidr": {
+            "type": "String"
+        },
+        "virtualNetworkBeName": {
+            "type": "String"
+        },
+        "virtualNetworkDbName": {
+            "type": "String"
+        },
+        "virtualMachineScaleSetsDbName": {
+            "type": "String"
+        },
+        "autoscalesettingDbName": {
+            "type": "String"
+        },
+        "networkInterfaceDbName": {
+            "type": "String"
+        },
+        "administratorLogin": {
+            "type": "String"
+        },
+        "adminUsername": {
+            "type": "String"
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "minLength": 8,
+            "maxLength": 128
+        },
+        "administratorLoginPassword": {
+            "type": "securestring",
+            "minLength": 8,
+            "maxLength": 128
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "vnetSetup",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/tpayne/terraform-examples/main/samples/Azure/templates/arm_deployments/templates/standard3tier/db/vnet_deploy.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "ddosProtectionPlanName": {
+                        "value": "[parameters('ddosProtectionPlanName')]"
+                    },
+                    "dbServerName": {
+                        "value": "[parameters('dbServerName')]"
+                    },
+                    "networkInterfaceDbProxyName": {
+                        "value": "[parameters('networkInterfaceDbProxyName')]"
+                    },
+                    "publicIPAddressDbProxyName": {
+                        "value": "[parameters('publicIPAddressDbProxyName')]"
+                    },
+                    "publicIPAddressDbProxyIpAddr": {
+                        "value": "[parameters('publicIPAddressDbProxyIpAddr')]"
+                    },
+                    "privateIPAddressDb": {
+                        "value": "[parameters('privateIPAddressDb')]"
+                    },
+                    "virtualNetworkBeNameIpCidr": {
+                        "value": "[parameters('virtualNetworkBeNameIpCidr')]"
+                    },
+                    "virtualNetworkDbNameIpCidr": {
+                        "value": "[parameters('virtualNetworkDbNameIpCidr')]"
+                    },
+                    "virtualSubNetworkDbNameIpCidr": {
+                        "value": "[parameters('virtualSubNetworkDbNameIpCidr')]"
+                    },
+                    "virtualNetworkBeName": {
+                        "value": "[parameters('virtualNetworkBeName')]"
+                    },
+                    "virtualNetworkDbName": {
+                        "value": "[parameters('virtualNetworkDbName')]"
+                    },
+                    "networkInterfaceDbName": {
+                        "value": "[parameters('networkInterfaceDbName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "vmssDbSetup",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]",
+                "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccountDbMigName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/tpayne/terraform-examples/main/samples/Azure/templates/arm_deployments/templates/standard3tier/db/vmss_deploy.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "loadBalancerName": {
+                        "value": "[parameters('loadBalancerDbName')]"
+                    },
+                    "virtualMachineProxyName": {
+                        "value": "[parameters('virtualMachineDbProxyName')]"
+                    },
+                    "storageAccountName": {
+                        "value": "[parameters('storageAccountDbMigName')]"
+                    },
+                    "networkInterfaceProxyName": {
+                        "value": "[parameters('networkInterfaceDbProxyName')]"
+                    },
+                    "virtualNetworkName": {
+                        "value": "[parameters('virtualNetworkDbName')]"
+                    },
+                    "virtualMachineScaleSetsName": {
+                        "value": "[parameters('virtualMachineScaleSetsDbName')]"
+                    },
+                    "autoscalesettingName": {
+                        "value": "[parameters('autoscalesettingDbName')]"
+                    },
+                    "adminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2021-04-01",
+            "name": "dbconfig",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('dbServerName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "https://raw.githubusercontent.com/tpayne/terraform-examples/main/samples/Azure/templates/arm_deployments/templates/standard3tier/db/configs.json",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "dbServerName": {
+                        "value": "[parameters('dbServerName')]"
+                    }
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DBforPostgreSQL/servers",
+            "apiVersion": "2017-12-01",
+            "name": "[parameters('dbServerName')]",
+            "location": "[parameters('location')]",
+            "tags": {
+                "test": "test"
+            },
+            "sku": {
+                "name": "GP_Gen5_4",
+                "tier": "GeneralPurpose",
+                "family": "Gen5",
+                "capacity": 4
+            },
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "storageProfile": {
+                    "storageMB": 5120,
+                    "backupRetentionDays": 7,
+                    "geoRedundantBackup": "Enabled",
+                    "storageAutogrow": "Enabled"
+                },
+                "version": "11",
+                "sslEnforcement": "Enabled",
+                "minimalTlsVersion": "TLS1_2",
+                "infrastructureEncryption": "Disabled",
+                "publicNetworkAccess": "Disabled",
+                "createMode": "Default",
+                "administratorLogin": "[parameters('administratorLogin')]",
+                "administratorLoginPassword": "[parameters('administratorLoginPassword')]"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2022-05-01",
+            "name": "[parameters('storageAccountDbMigName')]",
+            "location": "[parameters('location')]",
+            "tags": {
+                "test": "test"
+            },
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "identity": {
+                "type": "None"
+            },
+            "properties": {
+                "defaultToOAuthAuthentication": false,
+                "publicNetworkAccess": "Enabled",
+                "allowCrossTenantReplication": true,
+                "isNfsV3Enabled": false,
+                "isSftpEnabled": false,
+                "minimumTlsVersion": "TLS1_2",
+                "allowBlobPublicAccess": true,
+                "allowSharedKeyAccess": true,
+                "isHnsEnabled": false,
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "keyType": "Account",
+                            "enabled": true
+                        },
+                        "blob": {
+                            "keyType": "Account",
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            }
+        },
+        {
+            "type": "Microsoft.DBforPostgreSQL/servers/securityAlertPolicies",
+            "apiVersion": "2017-12-01",
+            "name": "[concat(parameters('dbServerName'), '/Default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('dbServerName'))]",
+                "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccountDbMigName'))]"
+            ],
+            "properties": {
+                "state": "Enabled",
+                "disabledAlerts": [
+                    ""
+                ],
+                "emailAddresses": [
+                    ""
+                ],
+                "emailAccountAdmins": false,
+                "storageAccountAccessKey": "[listKeys(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountDbMigName')), providers('Microsoft.Storage', 'storageAccounts').apiVersions[0]).keys[0].value]",
+                "storageEndpoint": "[concat('https://', parameters('storageAccountDbMigName'), '.blob.core.windows.net/')]",
+                "retentionDays": 0
+            }
+        },
+        {
+            "type": "Microsoft.Network/privateEndpoints",
+            "apiVersion": "2022-05-01",
+            "name": "[parameters('privateEndpointDbName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('dbServerName'))]",
+                "[resourceId('Microsoft.Resources/deployments', 'vnetSetup')]"
+            ],
+            "tags": {
+                "test": "test"
+            },
+            "properties": {
+                "privateLinkServiceConnections": [
+                    {
+                        "name": "pgdbspep",
+                        "id": "[concat(resourceId('Microsoft.Network/privateEndpoints', parameters('privateEndpointDbName')), '/privateLinkServiceConnections/pgdbspep')]",
+                        "properties": {
+                            "privateLinkServiceId": "[resourceId('Microsoft.DBforPostgreSQL/servers', parameters('dbServerName'))]",
+                            "groupIds": [
+                                "postgresqlServer"
+                            ],
+                            "privateLinkServiceConnectionState": {
+                                "status": "Approved",
+                                "description": "Auto-approved",
+                                "actionsRequired": "None"
+                            }
+                        }
+                    }
+                ],
+                "manualPrivateLinkServiceConnections": [],
+                "subnet": {
+                    "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkDbName'), 'subnet-database-001')]"
+                },
+                "ipConfigurations": [],
+                "customDnsConfigs": [
+                    {
+                        "fqdn": "[concat(parameters('dbServerName'),'.postgres.database.azure.com')]",
+                        "ipAddresses": [
+                            "[parameters('privateIPAddressDb')]"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+        "dbProxyIpAddr": {
+            "type": "string",
+            "value": "[reference('vnetSetup').outputs.dbProxyIpAddr.value]"
+        }
+    }
+}
