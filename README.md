@@ -243,6 +243,11 @@ For example...
 
 The documentation is just the default at the moment, but feel free to make more relevant contributions.
 
+Testing Frameworks
+------------------
+* https://github.com/inspec/inspec-azure/tree/main/test/integration/verify/controls
+* https://terratest.gruntwork.io/
+
 Github References
 -----------------
 * https://github.com/marketplace/actions/publish-unit-test-results
