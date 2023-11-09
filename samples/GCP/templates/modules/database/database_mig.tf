@@ -89,7 +89,7 @@ resource "google_compute_instance_template" "database_template" {
 # Primary mig...
 module "db-mig-001" {
   source            = "terraform-google-modules/vm/google//modules/mig"
-  version           = "8.0.0"
+  version           = "8.0.1"
   instance_template = google_compute_instance_template.database_template.self_link
   region            = var.region
   hostname          = "${var.name}-mig"
