@@ -120,7 +120,7 @@ resource "google_compute_instance_template" "frontend_template_bck" {
 # Primary mig...
 module "frontend-mig-001" {
   source            = "terraform-google-modules/vm/google//modules/mig"
-  version           = "8.0.1"
+  version           = "10.1.1"
   instance_template = google_compute_instance_template.frontend_template.self_link
   region            = var.region
   hostname          = "femig001"
@@ -144,7 +144,7 @@ module "frontend-mig-001" {
 # Secondary mig...
 module "frontend-mig-002" {
   source            = "terraform-google-modules/vm/google//modules/mig"
-  version           = "8.0.1"
+  version           = "10.1.1"
   instance_template = google_compute_instance_template.frontend_template_bck.self_link
   region            = var.region_bck
   hostname          = "femig002"
