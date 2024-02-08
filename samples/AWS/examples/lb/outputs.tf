@@ -43,7 +43,7 @@ output "zone_id" {
   value       = module.lb.lb_zone_id
 }
 
-output "target_group_names" { 
+output "target_group_names" {
   description = "Target group names"
   value       = module.lb.target_group_names
 }

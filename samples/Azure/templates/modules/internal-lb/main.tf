@@ -64,10 +64,10 @@ resource "azurerm_lb_backend_address_pool" "lb" {
 }
 
 resource "azurerm_lb_probe" "lb" {
-  for_each            = local.load_balancer_rules_map
-  name                = "probe-port-${each.value.backend_port}"
-  loadbalancer_id     = azurerm_lb.lb.id
-  port                = each.value.backend_port // local.probe_port
+  for_each        = local.load_balancer_rules_map
+  name            = "probe-port-${each.value.backend_port}"
+  loadbalancer_id = azurerm_lb.lb.id
+  port            = each.value.backend_port // local.probe_port
 }
 
 resource "azurerm_lb_rule" "lb" {
