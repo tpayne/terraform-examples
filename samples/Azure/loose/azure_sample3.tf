@@ -37,9 +37,11 @@ resource "azurerm_kubernetes_cluster" "clusterInstance" {
     type = "SystemAssigned"
   }
 
+  /*
   role_based_access_control {
     enabled = true
   }
+  */
 
   tags = var.tags
 }

@@ -21,7 +21,11 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
+  features {
+    resource_group {
+      prevent_deletion_if_contains_resources = false
+    }
+  }
 }
 
 # Create a resource group...
@@ -84,7 +88,7 @@ resource "azurerm_network_interface" "nic01" {
   ip_configuration {
     name                          = "myNICConfg001"
     subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = "dynamic"
+    private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.publicip.id
   }
 }
@@ -98,7 +102,7 @@ resource "azurerm_network_interface" "nics" {
   ip_configuration {
     name                          = "myNICConfg001"
     subnet_id                     = azurerm_subnet.subnet.id
-    private_ip_address_allocation = "dynamic"
+    private_ip_address_allocation = "Dynamic"
   }
 }
 
