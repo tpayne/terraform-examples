@@ -55,3 +55,31 @@ data.azurerm_public_ip.ip: Read complete after 1s [id=/subscriptions/2ad961d9-ff
 ```
 
 The assert logic and conditions can be customised based on the conditions wanted.
+
+## Requirements
+
+No requirements.
+
+## Providers
+
+No providers.
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_storagevalidation"></a> [storagevalidation](#module\_storagevalidation) | ./modules/storageaccount | n/a |
+
+## Resources
+
+No resources.
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_objectsToValidate"></a> [objectsToValidate](#input\_objectsToValidate) | n/a | <pre>map(object({<br>    resourceType = string<br>    resourceObj  = any<br>  }))</pre> | n/a | yes |
+
+## Outputs
+
+No outputs.
