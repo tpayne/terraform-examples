@@ -11,6 +11,7 @@ resource "azurerm_storage_account" "storageaccount" {
   account_replication_type = "LRS"
 }
 
+/*
 check "resource_check" {
   data "azurerm_storage_account" "tocheck" {
     name                = azurerm_storage_account.storageaccount.name
@@ -21,4 +22,18 @@ check "resource_check" {
     condition     = data.azurerm_storage_account.tocheck.name == "acheckrg"
     error_message = "Storage account does not exist"
   }
+}
+*/
+
+module "validate" {
+  source = "./modules/validateResource"
+  objectsToValidate = {
+    test1 = {
+      resourceType = "storageaccount"
+      resourceObj  = azurerm_storage_account.storageaccount
+    }
+  }
+  depends_on = [ 
+    azurerm_storage_account.storageaccount
+  ]
 }
