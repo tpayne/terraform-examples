@@ -1,3 +1,7 @@
+# Module README
+
+## Introduction
+
 This module is used as a sample for resource validation.
 
 It provides samples for an assert check and an error assert.
