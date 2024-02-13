@@ -1,3 +1,6 @@
+//
+// Create resources to validate
+//
 resource "azurerm_resource_group" "checkrg" {
   name     = "checkrg"
   location = "West Europe"
@@ -37,20 +40,11 @@ resource "azurerm_mssql_database" "serverdb" {
   }
 }
 
-/*
-check "resource_check" {
-  data "azurerm_storage_account" "tocheck" {
-    name                = azurerm_storage_account.storageaccount.name
-    resource_group_name = azurerm_storage_account.storageaccount.resource_group_name
-  }
+//
+// Resources to be validated
+//
 
-  assert {
-    condition     = data.azurerm_storage_account.tocheck.name == "acheckrg"
-    error_message = "Storage account does not exist"
-  }
-}
-*/
-
+// Validate storage account
 module "validatesa" {
   source = "./modules/validateResource"
   objectsToValidate = {
@@ -64,6 +58,7 @@ module "validatesa" {
   ]
 }
 
+// Validate databases
 module "validatemssql" {
   source = "./modules/validateResource"
   objectsToValidate = {

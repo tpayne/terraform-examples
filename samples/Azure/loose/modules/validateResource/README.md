@@ -6,6 +6,41 @@ This module is used as a sample for resource validation.
 
 It provides samples for an assert check and an error assert.
 
+## Usage
+
+The following is a usage example for storage accounts and MSSQL database.
+
+```
+// Validate storage account
+module "validatesa" {
+  source = "./modules/validateResource"
+  objectsToValidate = {
+    test1 = {
+      resourceType = "storageaccount"
+      resourceObj  = azurerm_storage_account.storageaccount
+    }
+  }
+  depends_on = [
+    azurerm_storage_account.storageaccount
+  ]
+}
+
+// Validate databases
+module "validatemssql" {
+  source = "./modules/validateResource"
+  objectsToValidate = {
+    test1 = {
+      resourceType = "mssql"
+      resourceObj  = azurerm_mssql_database.serverdb
+    }
+  }
+  depends_on = [
+    azurerm_mssql_database.serverdb
+  ]
+}
+```
+## Assert examples
+
 The check block will generate a warning only.
 
 ```
