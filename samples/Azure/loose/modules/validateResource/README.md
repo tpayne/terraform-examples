@@ -6,7 +6,7 @@ This module is used as a sample for resource validation.
 
 It provides samples for an assert check and an error assert.
 
-## Usage
+## Usage
 
 The following is a usage example for storage accounts and MSSQL database.
 
