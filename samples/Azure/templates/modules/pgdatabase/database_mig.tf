@@ -31,9 +31,6 @@
 # Startup script resource...
 #------------------------------
 
-data "template_file" "pg-group-startup-script" {
-  template = file(format("%s/templates/startup-pgclient.sh.tpl", path.module))
-}
 
 #------------------------------
 # Managed instance group template...
@@ -49,7 +46,7 @@ module "dbmig" {
   load_balancer_address_pool = var.load_balancer_address_pool
   size                       = var.size
   image                      = var.image
-  custom_data                = data.template_file.pg-group-startup-script.rendered
+  custom_data                = templatefile(format("%s/templates/startup-pgclient.sh.tpl", path.module), {})
   admin_user                 = var.admin_user
   admin_pwd                  = var.admin_pwd
   tags                       = var.tags

@@ -95,6 +95,7 @@ No providers.
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_mssqlvalidation"></a> [mssqlvalidation](#module\_mssqlvalidation) | ./modules/mssql | n/a |
+| <a name="module_pgsqlmodule"></a> [pgsqlmodule](#module\_pgsqlmodule) | ./modules/pgsqlmodule | n/a |
 | <a name="module_storagevalidation"></a> [storagevalidation](#module\_storagevalidation) | ./modules/storageaccount | n/a |
 
 ## Resources

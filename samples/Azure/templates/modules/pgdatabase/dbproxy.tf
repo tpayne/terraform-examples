@@ -28,10 +28,6 @@
 # Create compute resources...
 ##############################
 
-data "template_file" "dbproxy-startup-script" {
-  template = file(format("%s/templates/run_cloud_sql_proxy.tpl", path.module))
-}
-
 #------------------------------
 # Frontend bastion host...
 #------------------------------
@@ -45,7 +41,7 @@ module "dbproxy" {
   machine_type     = var.machine_type
   tags             = var.tags
   image            = var.image
-  custom_data      = data.template_file.dbproxy-startup-script.rendered
+  custom_data      = templatefile(format("%s/templates/run_cloud_sql_proxy.tpl", path.module), {})
   storage_endpoint = var.storage_endpoint
   admin_user       = var.admin_user
   admin_pwd        = var.admin_pwd

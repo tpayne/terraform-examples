@@ -127,5 +127,14 @@ module "database" {
   size                       = var.size
 }
 
-
+module "pgsqlvalidation" {
+  source = "../../loose/modules/validateResource"
+  objectsToValidate = {
+    test1 = {
+      resourceType = "pgsqlmodule"
+      resourceObj  = module.database
+    }
+  }
+  depends_on = [module.database]
+}
 

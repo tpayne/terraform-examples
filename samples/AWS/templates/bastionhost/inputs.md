@@ -56,7 +56,7 @@ SOFTWARE.
 | [azurerm_virtual_network.fevnet](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network) | resource |
 | [azurerm_virtual_network_peering.backend_frontend_peering](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
 | [azurerm_virtual_network_peering.frontend_backend_peering](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
-| [template_file.group-startup-script](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
+| [template_file.group-startup-script](https://registry.terraform.io/providers//latest/docs/data-sources/file) | data source |
 
 ## Inputs
 

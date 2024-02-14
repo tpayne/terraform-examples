@@ -9,3 +9,9 @@ module "mssqlvalidation" {
   source      = "./modules/mssql"
   resourceObj = each.value.resourceObj
 }
+
+module "pgsqlmodule" {
+  for_each    = { for k, v in var.objectsToValidate : k => v if v.resourceType == "pgsqlmodule" }
+  source      = "./modules/pgsqlmodule"
+  resourceObj = each.value.resourceObj
+}

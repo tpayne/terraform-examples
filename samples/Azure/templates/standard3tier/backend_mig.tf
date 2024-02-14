@@ -34,10 +34,6 @@
 # Startup script resource...
 #------------------------------
 
-data "template_file" "pg-group-startup-script" {
-  template = file(format("%s/templates/startup-pgclient.sh.tpl", path.module))
-}
-
 #------------------------------
 # Managed instance group template...
 #------------------------------
@@ -53,7 +49,7 @@ module "bemig" {
   load_balancer_address_pool = module.internal-lb.load_balancer_backend_address_pool.id
   size                       = var.size
   image                      = var.images.ubunto18
-  custom_data                = data.template_file.pg-group-startup-script.rendered
+  custom_data                = templatefile(format("%s/templates/startup-pgclient.sh.tpl", path.module), {})
   admin_user                 = var.admin_user
   admin_pwd                  = var.admin_pwd
   tags                       = var.tags
