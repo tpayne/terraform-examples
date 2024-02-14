@@ -39,6 +39,7 @@ module "validatemssql" {
   ]
 }
 ```
+
 ## Assert examples
 
 The check block will generate a warning only.
