@@ -11,6 +11,7 @@ check "resource_check" {
 
 // To error
 resource "null_resource" "asserttest" {
+  count = (var.assertError) ? 1 : 0
   triggers = alltrue([
     var.resourceObj.dbserver-id != null &&
     var.resourceObj.dbproxy-ip != null

@@ -5,3 +5,8 @@ variable "objectsToValidate" {
   }))
   nullable = false
 }
+
+variable "assertError" {
+  type    = bool
+  default = true
+}

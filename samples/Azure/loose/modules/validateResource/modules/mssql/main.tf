@@ -21,6 +21,7 @@ data "azurerm_mssql_database" "toFail" {
 }
 
 resource "null_resource" "asserttest" {
+  count = (var.assertError) ? 1 : 0
   triggers = alltrue([
     data.azurerm_mssql_database.toFail.name == "server-db" &&
     data.azurerm_mssql_database.toFail.collation == "SQL_Latin1_General_CP1_CI_AS"

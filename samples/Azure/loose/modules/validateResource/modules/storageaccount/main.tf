@@ -21,6 +21,7 @@ data "azurerm_storage_account" "toFail" {
 }
 
 resource "null_resource" "asserttest" {
+  count = (var.assertError) ? 1 : 0
   triggers = alltrue([
     data.azurerm_storage_account.toFail.name == "checkrg" &&
     data.azurerm_storage_account.toFail.account_tier == "Standard"
