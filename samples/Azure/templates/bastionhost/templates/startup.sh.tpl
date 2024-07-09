@@ -170,8 +170,8 @@ EOF
 
 ifconfig
 
-[[ -n "${PROXY_PATH}" ]] && mkdir -p /var/www/html/${PROXY_PATH} && \
-    cp /var/www/html/index.php /var/www/html/${PROXY_PATH}/index.php
+[[ -n "$${PROXY_PATH}" ]] && mkdir -p /var/www/html/$${PROXY_PATH} && \
+    cp /var/www/html/index.php /var/www/html/$${PROXY_PATH}/index.php
 
 echo 'Install Network services'
 chkconfig httpd on || systemctl enable httpd || systemctl enable apache2
