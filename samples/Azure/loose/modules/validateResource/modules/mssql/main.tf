@@ -1,8 +1,8 @@
 locals {
   toCheck = alltrue([
-              data.azurerm_mssql_database.toCheck.name == "server-db" &&
-              data.azurerm_mssql_database.toCheck.collation == "SQL_Latin1_General_CP1_CI_AS"
-            ])
+    data.azurerm_mssql_database.toCheck.name == "server-db" &&
+    data.azurerm_mssql_database.toCheck.collation == "SQL_Latin1_General_CP1_CI_AS"
+  ])
 }
 
 data "azurerm_mssql_database" "toCheck" {
