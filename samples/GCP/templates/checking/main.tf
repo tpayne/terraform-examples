@@ -52,3 +52,22 @@ module "validateProject" {
     }
   }
 }
+
+module "validateStorage" {
+  source      = "./module"
+  assertError = true
+  objectsToValidate = {
+    toFail = {
+      resourceType = "storage-bucket"
+      resourceObj = {
+        projectId = {
+          name = "something"
+        }
+        name = "somethingorother"
+        cmpObj = {
+          name = "somethingorother"
+        }
+      }
+    }
+  }
+}

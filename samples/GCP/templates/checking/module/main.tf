@@ -18,3 +18,10 @@ module "gcp-project" {
   resourceObj = each.value.resourceObj
   assertError = var.assertError
 }
+
+module "storage-bucket" {
+  for_each    = { for k, v in var.objectsToValidate : k => v if v.resourceType == local.storage-bucket }
+  source      = "./modules/storage-bucket"
+  resourceObj = each.value.resourceObj
+  assertError = var.assertError
+}

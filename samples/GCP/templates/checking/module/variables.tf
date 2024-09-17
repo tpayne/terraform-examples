@@ -17,7 +17,8 @@ variable "objectsToValidate" {
       contains([
         "http-endpoint",
         "github-repo",
-        "gcp-project"
+        "gcp-project",
+        "storage-bucket"
       ], v.resourceType)
     ])
     error_message = "A resource type specified is not valid"
