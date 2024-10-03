@@ -1,6 +1,9 @@
 locals {
   allowed-cidrs = "[${local.network-firewall-config.control-cidr}]"
 
+  company_name = "Contino"
+  email        = "someuser@contino.io"
+
   // APIM config
   apim-config = {
     client_cert_enabled = false

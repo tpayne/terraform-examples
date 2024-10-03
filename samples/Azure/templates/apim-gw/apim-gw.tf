@@ -2,11 +2,11 @@ resource "azurerm_api_management" "apim" {
   name                = "${var.project}-apim"
   location            = azurerm_resource_group.resourceGroup.location
   resource_group_name = azurerm_resource_group.resourceGroup.name
-  publisher_name      = data.azuread_user.terraform_user.company_name
-  publisher_email     = data.azuread_user.terraform_user.mail
+  publisher_name      = local.company_name
+  publisher_email     = local.email
 
   client_certificate_enabled = local.apim-config.client_cert_enabled
-  gateway_disabled           = local.apim-config.gw_enabled
+  gateway_disabled           = !(local.apim-config.gw_enabled)
   min_api_version            = local.apim-config.min_api_version
 
   sku_name = local.apim-config.sku_tier
