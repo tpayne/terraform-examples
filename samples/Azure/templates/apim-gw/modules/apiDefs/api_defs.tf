@@ -10,7 +10,7 @@ resource "azurerm_api_management_api" "apis" {
 
   import {
     content_format = each.value.content_format
-    content_value  = (strcontains(each.value.path, "link")) ? each.value.path : file("${each.value.path}")
+    content_value  = (strcontains(each.value.content_format, "link")) ? each.value.path : file("${each.value.path}")
   }
 }
 
