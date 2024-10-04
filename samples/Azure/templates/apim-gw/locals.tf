@@ -11,6 +11,7 @@ locals {
     identity_type       = "SystemAssigned"
     min_api_version     = null
     sku_tier            = "Basic_1"
+    zones               = null
   }
 
   // network firewall

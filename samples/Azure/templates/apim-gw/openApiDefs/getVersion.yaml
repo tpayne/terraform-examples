@@ -1,0 +1,99 @@
+openapi: "3.0.0"
+info:
+  title: Get version
+  version: 2.0.0
+paths:
+  /version/v1:
+    get:
+      operationId: getVersion
+      summary: Get version
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json:
+              examples: 
+                swVer:
+                  value:
+                    {
+                      "version": [
+                        {
+                            "status": "CURRENT",
+                            "version": "1.1",
+                        }
+                      ]
+                    }
+        '300':
+          description: |-
+            300 response
+          content:
+            application/json: 
+              examples: 
+                swVer:
+                  value: |
+                   {
+                      "version": [
+                        {
+                            "status": "CURRENT",
+                            "version": "1.1",
+                        }
+                      ]
+                   }
+  /version/v2:
+    get:
+      operationId: getVersionDetailsv2
+      summary: Show API version details
+      responses:
+        '200':
+          description: |-
+            200 response
+          content:
+            application/json: 
+              examples: 
+                swVer:
+                  value:
+                    {
+                      "version": [
+                        {
+                            "status": "EXPERIMENTAL",
+                            "version": "2.0"
+                        },
+                        "media-types": [
+                          {
+                              "base": "application/xml",
+                              "type": "application/vnd.openstack.compute+xml;version=2"
+                          },
+                          {
+                              "base": "application/json",
+                              "type": "application/vnd.openstack.compute+json;version=2"
+                          }
+                        ]
+                      ]
+                    }
+        '203':
+          description: |-
+            203 response
+          content:
+            application/json: 
+              examples: 
+                swVer:
+                  value:
+                    {
+                      "version": [
+                        {
+                            "status": "EXPERIMENTAL",
+                            "version": "2.0",
+                        },
+                        "media-types": [
+                          {
+                              "base": "application/xml",
+                              "type": "application/vnd.openstack.compute+xml;version=2"
+                          },
+                          {
+                              "base": "application/json",
+                              "type": "application/vnd.openstack.compute+json;version=2"
+                          }
+                        ]
+                      ]
+                    }

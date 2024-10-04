@@ -8,6 +8,7 @@ resource "azurerm_api_management" "apim" {
   client_certificate_enabled = local.apim-config.client_cert_enabled
   gateway_disabled           = !(local.apim-config.gw_enabled)
   min_api_version            = local.apim-config.min_api_version
+  zones                      = local.apim-config.zones
 
   sku_name = local.apim-config.sku_tier
 
