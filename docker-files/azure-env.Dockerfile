@@ -14,7 +14,6 @@ RUN apk add --no-cache \
             krb5-libs \
             libgcc \
             libintl \
-            libssl1.1 \
             libstdc++ \
             tzdata \
             userspace-rcu \
@@ -50,8 +49,8 @@ RUN curl -sSLo /tmp/powershell.tar.gz \
         && ln -s /opt/microsoft/powershell/7/pwsh /usr/local/bin/pwsh
 
 # Install az-cli
-RUN pip install --upgrade pip
-RUN pip install azure-cli
+RUN pip install --upgrade pip --break-system-packages
+RUN pip install azure-cli --break-system-packages
 
 WORKDIR /azure-tools
 
