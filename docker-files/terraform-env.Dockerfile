@@ -3,12 +3,10 @@ FROM alpine:latest
 
 # Set up APK repositories and upgrade
 RUN apk add --no-cache --repository=http://dl-cdn.alpinelinux.org/alpine/edge/main git
-RUN apk add --no-cache terraform --repository=http://dl-cdn.alpinelinux.org/alpine/edge/community
 RUN apk -U upgrade
 
 # Install required tools
-RUN apk add --no-cache curl gzip unzip
-RUN apk add --no-cache terraform
+RUN apk add --no-cache curl gzip unzip wget unzip libc6-compat
 RUN apk add --no-cache \
             ca-certificates \
             less \
@@ -16,7 +14,6 @@ RUN apk add --no-cache \
             krb5-libs \
             libgcc \
             libintl \
-            libssl1.1 \
             libstdc++ \
             tzdata \
             userspace-rcu \
@@ -24,6 +21,14 @@ RUN apk add --no-cache \
             icu-libs
 RUN apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
             lttng-ust
+
+# renovate: datasource=github-releases terraform-linters/tflint
+ENV TF_VERSION="1.9.7"
+RUN curl -sSLo ./terraform-linux-amd64.zip \
+    "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" \
+	    && unzip -u ./terraform-linux-amd64.zip -d . \
+        && chmod a+rx ./terraform \
+        && mv ./terraform /usr/local/bin/terraform
 
 # renovate: datasource=github-releases depName=terraform-docs/terraform-docs
 ENV TFDOCS_VERSION="v0.16.0"
