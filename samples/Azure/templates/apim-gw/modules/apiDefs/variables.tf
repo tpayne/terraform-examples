@@ -4,6 +4,7 @@ variable "apiDefs" {
     protocol       = optional(list(string), ["http"])
     content_format = optional(string, "openapi")
     path           = string
+    revision       = optional(string, "1")
   }))
   default = {
   }

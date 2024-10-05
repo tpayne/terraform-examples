@@ -3,7 +3,7 @@ resource "azurerm_api_management_api" "apis" {
   name                = each.key
   resource_group_name = var.resource_group_name
   api_management_name = var.apim_name
-  revision            = "1"
+  revision            = each.value.revision
   display_name        = "${each.key} Sample Local YAML API"
   path                = each.key
   protocols           = each.value.protocol
