@@ -38,7 +38,7 @@ resource "google_compute_router" "backend_router" {
 module "cloud-nat" {
   source     = "terraform-google-modules/cloud-nat/google"
   name       = "${var.project}-cloud-nat-backend-001"
-  version    = "2.2.1"
+  version    = "5.3.0"
   router     = google_compute_router.backend_router.name
   project_id = var.project
   region     = var.region

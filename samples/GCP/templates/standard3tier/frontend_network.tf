@@ -72,7 +72,7 @@ resource "google_compute_router" "frontend_router_bck" {
 module "cloud-nat" {
   source     = "terraform-google-modules/cloud-nat/google"
   name       = "${var.project}-cloud-nat-lb-http-router-frontend-001"
-  version    = "2.2.1"
+  version    = "5.3.0"
   router     = google_compute_router.frontend_router.name
   project_id = var.project
   region     = var.region
@@ -81,7 +81,7 @@ module "cloud-nat" {
 module "cloud-nat-bck" {
   source     = "terraform-google-modules/cloud-nat/google"
   name       = "${var.project}-cloud-nat-lb-http-router-frontend-002"
-  version    = "2.2.1"
+  version    = "5.3.0"
   router     = google_compute_router.frontend_router_bck.name
   project_id = var.project
   region     = var.region_bck
