@@ -1,0 +1,55 @@
+# sendhttprequest.yaml
+swagger: '2.0'
+info:
+  title: sendhttprequest optional-string
+  description: Sample API on API Gateway with a Google Cloud Functions backend
+  version: 1.0.0
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /sendhttprequestget:
+    get:
+      summary: Ping a relay
+      parameters:
+        - in: query
+          name: targetURL
+          required: true
+          type: string
+          description: Target url to ping
+      operationId: sendhttprequestget
+      x-google-backend:
+        # https://GCP_REGION-PROJECT_ID.cloudfunctions.net/function
+        address: https://us-central1-contini-9c93495766a50b89.cloudfunctions.net/sendhttprequest 
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+        '400':
+          description: A successful response
+          schema:
+            type: string
+  /sendhttprequestpost:
+    post:
+      summary: Ping a relay
+      parameters:
+        - in: query
+          name: targetURL
+          required: true
+          type: string
+          description: Target url to ping
+      operationId: sendhttprequestpost
+      x-google-backend:
+        # https://GCP_REGION-PROJECT_ID.cloudfunctions.net/function
+        address: https://us-central1-contini-9c93495766a50b89.cloudfunctions.net/sendhttprequest 
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+        '400':
+          description: A successful response
+          schema:
+            type: string
