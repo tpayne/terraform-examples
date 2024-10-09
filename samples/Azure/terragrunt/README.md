@@ -55,6 +55,7 @@ Notes
 * Terragrunt is a solution looking for a problem to solve. It is supposed to be aimed at keeping your code DRY, but you end up copying lots of config files around instead, so review your use-cases before using it as there might be better approaches
 * Terragrunt does cause some perfectly good Terraform modules to fail for some odd reasons
 * Terragrunt run-all does not work very well
+* If you get errors about TF or module versions, then try `terragrunt run-all init -upgrade`
 
 References
 ----------
