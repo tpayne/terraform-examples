@@ -132,19 +132,21 @@ resource "azurerm_kubernetes_cluster" "k8s_server" {
   dns_prefix          = "${var.project}-k8s"
 
   default_node_pool {
-    name                = "${var.project}dp"
-    node_count          = var.aks_nodes_pool_size
-    vm_size             = var.machine_types.dev
-    os_disk_size_gb     = var.os_disk_size
-    vnet_subnet_id      = azurerm_subnet.backend_subnet.id
-    type                = "VirtualMachineScaleSets"
-    enable_auto_scaling = true
-    min_count           = var.aks_nodes_pool_size
-    max_count           = var.aks_nodes_pool_maxsize
+    name                 = "${var.project}dp"
+    node_count           = var.aks_nodes_pool_size
+    vm_size              = var.machine_types.dev
+    os_disk_size_gb      = var.os_disk_size
+    vnet_subnet_id       = azurerm_subnet.backend_subnet.id
+    type                 = "VirtualMachineScaleSets"
+    auto_scaling_enabled = true
+    min_count            = var.aks_nodes_pool_size
+    max_count            = var.aks_nodes_pool_maxsize
   }
 
   # You can specify private or whitelisted, but not both
-  api_server_authorized_ip_ranges = [var.access_cidr_range]
+  api_server_access_profile {
+    authorized_ip_ranges = [var.access_cidr_range]
+  }
   #private_cluster_enabled = true
 
   kubernetes_version = var.aks_version
@@ -169,7 +171,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "k8s_server_nodes" {
   vm_size               = var.machine_types.dev
   vnet_subnet_id        = azurerm_subnet.backend_subnet.id
   node_count            = var.aks_nodes_pool_size
-  enable_auto_scaling   = true
+  auto_scaling_enabled  = true
   min_count             = var.aks_nodes_pool_size
   max_count             = var.aks_nodes_pool_maxsize
   orchestrator_version  = var.aks_version

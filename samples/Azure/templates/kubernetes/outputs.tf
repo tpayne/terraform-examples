@@ -25,11 +25,6 @@ output "kubernetes-id" {
   value       = azurerm_kubernetes_cluster.k8s_server.id
 }
 
-output "kubernetes-docker-bridge-cidr" {
-  description = "K8s Docker bridge cidr"
-  value       = azurerm_kubernetes_cluster.k8s_server.network_profile[0].docker_bridge_cidr
-}
-
 output "kubernetes-pod-cidr" {
   description = "K8s POD cidr"
   value       = azurerm_kubernetes_cluster.k8s_server.network_profile[0].pod_cidr

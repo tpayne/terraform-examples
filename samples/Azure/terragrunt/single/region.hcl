@@ -23,4 +23,5 @@
 // This region is a common variable used for all deployments
 locals {
     region_be = "uksouth"
+    aks_version = "1.30.0"
 }

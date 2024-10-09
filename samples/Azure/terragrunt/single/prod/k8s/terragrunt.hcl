@@ -35,6 +35,10 @@ include "root" {
 }
 
 inputs = {
+    tags = {
+      env  = local.env
+      team = local.env
+    }
     name      = "${local.env}_rg_001"
     project   = "tdm${local.env}"
     backend_cidr_range = "${local.backend_cidr}"
