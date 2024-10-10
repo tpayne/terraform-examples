@@ -46,6 +46,6 @@ inputs = {
     }
     name      = "${local.env}_rg_001"
     project   = "tdm${local.env}"
-    backend_cidr_range = "${local.backend_cidr}"
-    backendsn_cidr_range = "${local.backendsn_cidr}"
+    backend_cidr_range = local.backend_cidr
+    backendsn_cidr_range = local.backendsn_cidr
 }

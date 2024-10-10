@@ -44,8 +44,8 @@ include "defs" {
 inputs = {
     name      = "${local.env}_rg_002"
     project   = "tdmbh${local.env}"
-    backend_cidr_range = "${local.backend_cidr}"
-    backendsn_cidr_range = "${local.backendsn_cidr}"
-    frontend_cidr_range = "${local.frontend_cidr}"
-    frontendsn_cidr_range = "${local.frontendsn_cidr}"
+    backend_cidr_range = local.backend_cidr
+    backendsn_cidr_range = local.backendsn_cidr
+    frontend_cidr_range = local.frontend_cidr
+    frontendsn_cidr_range = local.frontendsn_cidr
 }
