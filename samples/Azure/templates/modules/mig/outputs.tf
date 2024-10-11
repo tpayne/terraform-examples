@@ -22,12 +22,12 @@
 
 output "vmss-name" {
   description = "The name of the Virtual Machine Scale Set."
-  value       = element(concat(azurerm_virtual_machine_scale_set.vmss.*.name, [""]), 0)
+  value       = element(concat(azurerm_linux_virtual_machine_scale_set.vmss.*.name, [""]), 0)
 }
 
 output "vmss-id" {
   description = "The resource ID of the Virtual Machine Scale Set."
-  value       = element(concat(azurerm_virtual_machine_scale_set.vmss.*.id, [""]), 0)
+  value       = element(concat(azurerm_linux_virtual_machine_scale_set.vmss.*.id, [""]), 0)
 }
 
 output "vmss-storage-endpoint" {
