@@ -66,17 +66,18 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 
   data_disk {
-    lun           = 0
-    caching       = "ReadWrite"
-    create_option = "Empty"
-    disk_size_gb  = 10
+    lun                  = 0
+    caching              = "ReadWrite"
+    create_option        = "Empty"
+    disk_size_gb         = 10
+    storage_account_type = var.sku_storage.localrs
   }
 
-  admin_username       = var.admin_user
-  admin_password       = var.admin_pwd
+  admin_username                  = var.admin_user
+  admin_password                  = var.admin_pwd
   disable_password_authentication = false
 
-  custom_data          = var.custom_data
+  custom_data = var.custom_data
 
 
   identity {
