@@ -113,8 +113,8 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
 resource "azurerm_monitor_autoscale_setting" "monitor" {
   name                = "${var.name}-autoscale-config"
-  target_resource_id  = azurerm_virtual_machine_scale_set.vmss.id
-  depends_on          = [azurerm_virtual_machine_scale_set.vmss]
+  target_resource_id  = azurerm_linux_virtual_machine_scale_set.vmss.id
+  depends_on          = [azurerm_linux_virtual_machine_scale_set.vmss]
   resource_group_name = var.resource_group
   location            = var.location
 
