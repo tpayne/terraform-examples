@@ -56,6 +56,7 @@ Notes
 * Terragrunt does cause some perfectly good Terraform modules to fail for some odd reasons
 * Terragrunt run-all does not work very well
 * If you get errors about TF or module versions, then try `terragrunt run-all init -upgrade`
+* You may also need to set your `ARM_SUBSCRIPTION_ID=` in the environment on Azure
 
 References
 ----------
