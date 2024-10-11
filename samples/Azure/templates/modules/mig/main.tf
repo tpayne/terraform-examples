@@ -43,11 +43,11 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   resource_group_name = var.resource_group
   location            = var.location
   sku                 = var.tier
-  upgrade_mode        = "Automatic"
+  upgrade_mode        = "Manual"
 
   automatic_os_upgrade_policy {
     disable_automatic_rollback  = false
-    enable_automatic_os_upgrade = true
+    enable_automatic_os_upgrade = false
   }
 
   dynamic "source_image_reference" {
