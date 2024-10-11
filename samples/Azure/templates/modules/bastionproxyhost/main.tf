@@ -85,7 +85,7 @@ resource "azurerm_virtual_machine" "proxyvm" {
     computer_name  = var.name
     admin_username = var.admin_user
     admin_password = var.admin_pwd
-    custom_data    = filebase64(var.custom_data)
+    custom_data    = var.custom_data
   }
 
   os_profile_linux_config {
