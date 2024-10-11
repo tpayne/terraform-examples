@@ -33,7 +33,7 @@ resource "azurerm_storage_account" "migstore" {
   name                     = "${var.name}migstor"
   resource_group_name      = var.resource_group
   location                 = var.location
-  account_tier             = var.tier
+  account_tier             = "Standard"
   account_replication_type = var.stacc_replication_type
 }
 
