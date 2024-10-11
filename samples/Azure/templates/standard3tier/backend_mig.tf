@@ -48,7 +48,7 @@ module "bemig" {
   load_balancer_address_pool = module.internal-lb.load_balancer_backend_address_pool.id
   size                       = var.size
   image                      = var.images.ubunto18
-  custom_data                = templatefile(format("%s/templates/startup-pgclient.sh.tpl", path.module), {})
+  custom_data                = filebase64(templatefile(format("%s/templates/startup-pgclient.sh.tpl", path.module), {}))
   admin_user                 = var.admin_user
   admin_pwd                  = var.admin_pwd
   tags                       = var.tags

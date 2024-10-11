@@ -47,7 +47,7 @@ module "femig" {
   load_balancer_address_pool = module.external-lb.load_balancer_backend_address_pool.id
   size                       = var.size
   image                      = var.images.ubunto18
-  custom_data                = templatefile(format("%s/templates/startup.sh.tpl", path.module), { PROXY_PATH = "" })
+  custom_data                = filebase64(templatefile(format("%s/templates/startup.sh.tpl", path.module), { PROXY_PATH = "" }))
   admin_user                 = var.admin_user
   admin_pwd                  = var.admin_pwd
   tags                       = var.tags

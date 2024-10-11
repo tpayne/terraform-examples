@@ -77,7 +77,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   admin_password                  = var.admin_pwd
   disable_password_authentication = false
 
-  custom_data = filebase64(var.custom_data)
+  custom_data = var.custom_data
 
 
   identity {
