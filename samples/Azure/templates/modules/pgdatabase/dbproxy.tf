@@ -41,7 +41,7 @@ module "dbproxy" {
   machine_type     = var.machine_type
   tags             = var.tags
   image            = var.image
-  custom_data      = templatefile(format("%s/templates/run_cloud_sql_proxy.tpl", path.module), {})
+  custom_data      = base64encode(templatefile(format("%s/templates/run_cloud_sql_proxy.tpl", path.module), {}))
   storage_endpoint = var.storage_endpoint
   admin_user       = var.admin_user
   admin_pwd        = var.admin_pwd

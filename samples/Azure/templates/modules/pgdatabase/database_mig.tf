@@ -45,7 +45,7 @@ module "dbmig" {
   load_balancer_address_pool = var.load_balancer_address_pool
   size                       = var.size
   image                      = var.image
-  custom_data                = templatefile(format("%s/templates/startup-pgclient.sh.tpl", path.module), {})
+  custom_data                = base64encode(templatefile(format("%s/templates/startup-pgclient.sh.tpl", path.module), {}))
   admin_user                 = var.admin_user
   admin_pwd                  = var.admin_pwd
   tags                       = var.tags

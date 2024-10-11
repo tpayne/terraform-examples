@@ -41,7 +41,7 @@ module "mig" {
   load_balancer_address_pool = module.internal-lb.load_balancer_backend_address_pool.id
   size                       = var.size
   image                      = var.images.ubunto18
-  custom_data                = templatefile(format("%s/templates/startup.sh.tpl", path.module), {})
+  custom_data                = base64encode(templatefile(format("%s/templates/startup.sh.tpl", path.module), {}))
   admin_user                 = var.admin_user
   admin_pwd                  = var.admin_pwd
   tags                       = var.tags
