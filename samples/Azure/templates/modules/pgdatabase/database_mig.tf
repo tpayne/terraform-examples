@@ -41,7 +41,6 @@ module "dbmig" {
   name                       = var.name
   resource_group             = var.resource_group
   location                   = var.location
-  machine_type               = var.machine_type
   subnet_id                  = var.subnet_id
   load_balancer_address_pool = var.load_balancer_address_pool
   size                       = var.size

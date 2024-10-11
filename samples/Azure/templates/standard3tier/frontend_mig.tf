@@ -43,7 +43,6 @@ module "femig" {
   name                       = "${var.project}fe001"
   resource_group             = azurerm_resource_group.resourceGroup.name
   location                   = azurerm_resource_group.resourceGroup.location
-  machine_type               = var.machine_types.micro
   subnet_id                  = azurerm_subnet.frontend_subnet.id
   load_balancer_address_pool = module.external-lb.load_balancer_backend_address_pool.id
   size                       = var.size
