@@ -130,7 +130,7 @@ resource "azurerm_monitor_autoscale_setting" "monitor" {
     rule {
       metric_trigger {
         metric_name        = "Percentage CPU"
-        metric_resource_id = azurerm_virtual_machine_scale_set.vmss.id
+        metric_resource_id = azurerm_linux_virtual_machine_scale_set.vmss.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"
@@ -151,7 +151,7 @@ resource "azurerm_monitor_autoscale_setting" "monitor" {
     rule {
       metric_trigger {
         metric_name        = "Percentage CPU"
-        metric_resource_id = azurerm_virtual_machine_scale_set.vmss.id
+        metric_resource_id = azurerm_linux_virtual_machine_scale_set.vmss.id
         time_grain         = "PT1M"
         statistic          = "Average"
         time_window        = "PT5M"
