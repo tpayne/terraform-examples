@@ -106,7 +106,7 @@ locals {
 }
 
 module "external-lb" {
-  source   = "../modules/external-lb"
+  source   = "github.com/tpayne/terraform-examples/samples/Azure/templates/modules/external-lb"
   defaults = local.external_load_balancer_defaults
   name     = "${var.project}-frontend-lb"
 

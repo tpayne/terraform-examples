@@ -47,8 +47,7 @@ resource "azurerm_subnet" "dbvnet_subnet001" {
   resource_group_name                            = azurerm_resource_group.resourceGroup.name
   virtual_network_name                           = azurerm_virtual_network.dbvnet.name
   address_prefixes                               = [var.dbvnetsn_cidr_range]
-  enforce_private_link_endpoint_network_policies = true
-  enforce_private_link_service_network_policies  = false
+  private_link_service_network_policies_enabled  = false
 }
 
 # Peering rules
@@ -87,7 +86,7 @@ locals {
 }
 
 module "db-internal-lb" {
-  source   = "../modules/internal-lb"
+  source   = "github.com/tpayne/terraform-examples/samples/Azure/templates/modules/internal-lb"
   defaults = local.db_load_balancer_defaults
   name     = "${var.project}-db-lb"
 
@@ -110,7 +109,7 @@ module "db-internal-lb" {
 }
 
 module "database" {
-  source                     = "../modules/pgdatabase"
+  source                     = "github.com/tpayne/terraform-examples/samples/Azure/templates/modules/pgdatabase"
   name                       = "${var.project}db001"
   sku                        = "GP_Gen5_4"
   dbversion                  = "11"
@@ -128,7 +127,7 @@ module "database" {
 }
 
 module "pgsqlvalidation" {
-  source = "../../loose/modules/validateResource"
+  source = "github.com/tpayne/terraform-examples/samples/Azure/loose/modules/validateResource"
   objectsToValidate = {
     test1 = {
       resourceType = "pgsqlmodule"

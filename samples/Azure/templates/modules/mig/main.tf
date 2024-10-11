@@ -38,23 +38,20 @@ resource "azurerm_storage_account" "migstore" {
 }
 
 # Primary mig...
-resource "azurerm_virtual_machine_scale_set" "vmss" {
+resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   name                = "${var.name}-vmss001"
   resource_group_name = var.resource_group
   location            = var.location
+  sku                 = var.tier
+  upgrade_mode        = "Automatic"
 
-  upgrade_policy_mode = "Automatic"
-
-  sku {
-    name     = var.machine_type
-    tier     = var.tier
-    capacity = var.size
+  automatic_os_upgrade_policy {
+    disable_automatic_rollback  = false
+    enable_automatic_os_upgrade = true
   }
 
-  dynamic "storage_profile_image_reference" {
-
+  dynamic "source_image_reference" {
     for_each = [1]
-
     content {
       publisher = var.profile_image[lower(var.image)]["publisher"]
       offer     = var.profile_image[lower(var.image)]["offer"]
@@ -63,30 +60,24 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
     }
   }
 
-  storage_profile_os_disk {
-    name              = ""
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = var.sku_storage.localrs
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = var.sku_storage.localrs
   }
 
-  storage_profile_data_disk {
+  data_disk {
     lun           = 0
     caching       = "ReadWrite"
     create_option = "Empty"
     disk_size_gb  = 10
   }
 
-  os_profile {
-    computer_name_prefix = "mig"
-    admin_username       = var.admin_user
-    admin_password       = var.admin_pwd
-    custom_data          = var.custom_data
-  }
+  admin_username       = var.admin_user
+  admin_password       = var.admin_pwd
+  disable_password_authentication = false
 
-  os_profile_linux_config {
-    disable_password_authentication = false
-  }
+  custom_data          = var.custom_data
+
 
   identity {
     type = "SystemAssigned"
@@ -100,7 +91,7 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
     settings             = "{\"port\": 50342}"
   }
 
-  network_profile {
+  network_interface {
     name    = "terraformnetworkprofile"
     primary = true
 
@@ -113,8 +104,7 @@ resource "azurerm_virtual_machine_scale_set" "vmss" {
   }
 
   boot_diagnostics {
-    enabled     = true
-    storage_uri = azurerm_storage_account.migstore.primary_blob_endpoint
+    storage_account_uri = azurerm_storage_account.migstore.primary_blob_endpoint
   }
 
   tags = var.tags

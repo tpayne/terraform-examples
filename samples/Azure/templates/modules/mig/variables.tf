@@ -17,7 +17,7 @@ variable "location" {
 
 variable "tier" {
   type    = string # Type - not needed, but showing it...
-  default = "Standard"
+  default = "Standard_F2"
 }
 
 variable "sku_storage" {
@@ -27,14 +27,14 @@ variable "sku_storage" {
   }
 }
 
+variable "size" {
+  type    = number # Type - not needed, but showing it...
+  default = 2
+}
+
 variable "stacc_replication_type" {
   type    = string # Type - not needed, but showing it...
   default = "LRS"
-}
-
-variable "machine_type" {
-  type    = string
-  default = ""
 }
 
 variable "image" {
@@ -108,11 +108,6 @@ variable "profile_image" {
       version   = "latest"
     }
   }
-}
-
-variable "size" {
-  type    = number # Type - not needed, but showing it...
-  default = 2
 }
 
 variable "custom_data" {

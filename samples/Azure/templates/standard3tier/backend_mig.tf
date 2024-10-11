@@ -40,7 +40,7 @@
 
 # IMPORTANT - These machines DO NOT have internet access...
 module "bemig" {
-  source                     = "../modules/mig/"
+  source                     = "github.com/tpayne/terraform-examples/samples/Azure/templates/modules/mig/"
   name                       = "${var.project}be001"
   resource_group             = azurerm_resource_group.resourceGroup.name
   location                   = azurerm_resource_group.resourceGroup.location
