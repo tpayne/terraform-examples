@@ -50,7 +50,7 @@ variable "tags" {
 variable "sku" {
   description = "Azure SKU."
   type        = string
-  default     = "Basic"
+  default     = "Standard"
 }
 
 variable "subnet_id" {

@@ -1,6 +1,9 @@
 # Declare variables that can be used. They do not need to be populated...
 
-variable "project" {}
+variable "project" {
+  type = string
+  default = null
+}
 
 variable "tags" {
   type = map(any)

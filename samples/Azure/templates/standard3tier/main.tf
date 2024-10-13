@@ -52,7 +52,7 @@ provider "azurerm" {
 
 # Create a resource group...
 resource "azurerm_resource_group" "resourceGroup" {
-  name     = "rg_001_3tx"
+  name     = "${var.project}rg001"
   location = var.region_be
   tags     = var.tags
 }

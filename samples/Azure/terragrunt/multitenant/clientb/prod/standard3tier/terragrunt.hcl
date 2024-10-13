@@ -24,6 +24,7 @@ locals {
   env_vars              = read_terragrunt_config(find_in_parent_folders("env.hcl"))
   region                = read_terragrunt_config(find_in_parent_folders("region.hcl"))
   client_vars           = read_terragrunt_config(find_in_parent_folders("client.hcl"))
+  common_vars           = read_terragrunt_config(find_in_parent_folders("base/common.hcl"))
   env                   = local.env_vars.locals.env
   client                = local.client_vars.locals.client
   frontend_cidr_range   = local.env_vars.locals.frontend_cidr_range
@@ -50,7 +51,6 @@ inputs = {
     env  = local.env
     team = local.env
   }
-  name                  = "${local.env}_rg_001"
   project               = "${local.client}${local.env}"
   frontend_cidr_range   = local.frontend_cidr_range
   frontendsn_cidr_range = local.frontendsn_cidr_range
