@@ -22,5 +22,8 @@
 
 // Common variables used for all deployments
 locals {
+  tags = {
+    costcenter = "bsc"
+  }
 }
 

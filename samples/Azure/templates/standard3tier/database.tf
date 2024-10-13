@@ -39,6 +39,8 @@ resource "azurerm_virtual_network" "dbvnet" {
     id     = azurerm_network_ddos_protection_plan.ddos.id
     enable = true
   }
+
+  tags = var.tags
 }
 
 # Subnet database layer
@@ -124,6 +126,7 @@ module "database" {
   machine_type               = var.machine_types.micro
   load_balancer_address_pool = module.db-internal-lb.load_balancer_backend_address_pool.id
   size                       = var.size
+  tags                       = var.tags
 }
 
 module "pgsqlvalidation" {
