@@ -48,10 +48,11 @@ include "defs" {
 
 inputs = {
   tags = merge(local.common_vars.locals.tags,
-               {
-                  env  = local.env
-                  team = local.env
-               })
+    {
+      env  = local.env
+      team = local.env
+    }
+  )
   project               = "${local.client}${local.env}"
   frontend_cidr_range   = local.frontend_cidr_range
   frontendsn_cidr_range = local.frontendsn_cidr_range
