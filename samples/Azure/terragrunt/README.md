@@ -50,6 +50,22 @@ If the destroy does not work - as it seems to be a little bit flakey - then do t
 The sample works by customising the name of the resources created to reflect the environment being used - either dev or prod. It also deploys
 multiple modules.
 
+The multi-tenanted sample is a mixture of the above two and is focused around having tenanted deployments with multi-environments. To deploy this, do...
+
+	(cd samples/Azure/terragrunt/multitenant/clienta/prod \
+	&& terragrunt run-all plan \
+	&& terragrunt run-all plan -target azurerm_resource_group.resourceGroup \
+	&& terragrunt run-all apply)
+
+The `-target` will show the different substitutions - tags and name.
+
+Then to clean-up, do...
+
+	(cd samples/Azure/terragrunt/multitenant/clienta/prod \
+	&& terragrunt run-all destroy)
+
+You can run it for different environments and clients to see what the differents are - i.e. client name, env name and deployment CIDR ranges.
+
 Notes
 -----
 * Terragrunt is a solution looking for a problem to solve. It is supposed to be aimed at keeping your code DRY, but you end up copying lots of config files around instead, so review your use-cases before using it as there might be better approaches
