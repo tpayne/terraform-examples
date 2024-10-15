@@ -45,7 +45,7 @@ inputs = {
   tags = {
     env  = local.env
     team = local.env
-  }  
+  }
   name                  = "${local.env}_rg_002"
   project               = "tdmbh${local.env}"
   backend_cidr_range    = local.backend_cidr
