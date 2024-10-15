@@ -76,6 +76,7 @@ Notes
 
 References
 ----------
+* https://terragrunt.gruntwork.io/docs/#reference
 * https://terragrunt.gruntwork.io/docs/getting-started/install/
 * https://blog.boltops.com/2020/09/28/terraform-vs-terragrunt-vs-terraspace/#:~:text=For%20example%3A%20terragrunt%20apply%20%3D%3E%20terraform%20apply%20terragrunt,beneficial%20logic%20before%20and%20after%20the%20terraform%20calls.
 * https://ifi.tech/2020/11/26/implementing-terragrunt-with-terraform-on-azure/
