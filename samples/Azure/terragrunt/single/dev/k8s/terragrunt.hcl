@@ -21,11 +21,11 @@
  */
 
 locals {
-    env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-    region = read_terragrunt_config(find_in_parent_folders("region.hcl"))
-    env = local.env_vars.locals.env
-    backend_cidr = local.env_vars.locals.backend_cidr
-    backendsn_cidr = local.env_vars.locals.backendsn_cidr
+  env_vars       = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  region         = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+  env            = local.env_vars.locals.env
+  backend_cidr   = local.env_vars.locals.backend_cidr
+  backendsn_cidr = local.env_vars.locals.backendsn_cidr
 }
 
 # Include the root `terragrunt.hcl` configuration. The root configuration contains settings that are common across all
@@ -35,12 +35,12 @@ include "root" {
 }
 
 inputs = {
-    tags = {
-      env  = local.env
-      team = local.env
-    }  
-    name      = "${local.env}_rg_001"
-    project   = "tdm${local.env}"
-    backend_cidr_range = "${local.backend_cidr}"
-    backendsn_cidr_range = "${local.backendsn_cidr}"
+  tags = {
+    env  = local.env
+    team = local.env
+  }
+  name                 = "${local.env}_rg_001"
+  project              = "tdm${local.env}"
+  backend_cidr_range   = "${local.backend_cidr}"
+  backendsn_cidr_range = "${local.backendsn_cidr}"
 }

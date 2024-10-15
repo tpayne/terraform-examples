@@ -21,15 +21,15 @@
  */
 
 terraform {
-    source = "../../../../templates/kubernetes"
+  source = "../../../../templates/kubernetes"
 }
 
 locals {
-    env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-    region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+  env_vars    = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
 }
 
 inputs = merge(
-    local.env_vars.locals,
-    local.region_vars.locals,
+  local.env_vars.locals,
+  local.region_vars.locals,
 )

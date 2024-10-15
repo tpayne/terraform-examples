@@ -22,9 +22,9 @@
 
 // The env is deployment specific and affects the resource naming
 locals {
-    env = "prod"
-    frontend_cidr = "10.3.0.0/16"
-    frontendsn_cidr = "10.3.1.0/24"
-    backend_cidr = "10.4.0.0/16"
-    backendsn_cidr = "10.4.1.0/24"
+  env             = "prod"
+  frontend_cidr   = "10.3.0.0/16"
+  frontendsn_cidr = "10.3.1.0/24"
+  backend_cidr    = "10.4.0.0/16"
+  backendsn_cidr  = "10.4.1.0/24"
 }

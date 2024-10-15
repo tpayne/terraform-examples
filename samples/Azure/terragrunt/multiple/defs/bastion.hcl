@@ -21,5 +21,5 @@
  */
 
 terraform {
-    source = "../../../../templates/bastionhost"
+  source = "../../../../templates/bastionhost"
 }
