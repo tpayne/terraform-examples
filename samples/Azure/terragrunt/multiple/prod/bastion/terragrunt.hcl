@@ -28,6 +28,7 @@ locals {
   backendsn_cidr  = local.env_vars.locals.backendsn_cidr
   frontend_cidr   = local.env_vars.locals.frontend_cidr
   frontendsn_cidr = local.env_vars.locals.frontendsn_cidr
+  region_be       = local.region.locals.region_be
 }
 
 # Include the root `terragrunt.hcl` configuration. The root configuration contains 
@@ -52,4 +53,5 @@ inputs = {
   backendsn_cidr_range  = local.backendsn_cidr
   frontend_cidr_range   = local.frontend_cidr
   frontendsn_cidr_range = local.frontendsn_cidr
+  region_be             = local.region_be
 }
