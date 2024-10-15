@@ -34,6 +34,10 @@ include "root" {
   path = find_in_parent_folders()
 }
 
+include "defs" {
+  path = "${dirname(find_in_parent_folders())}/defs/k8s.hcl"
+}
+
 inputs = {
   tags = {
     env  = local.env
