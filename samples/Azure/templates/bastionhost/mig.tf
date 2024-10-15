@@ -38,7 +38,6 @@ module "mig" {
   name                       = var.project
   resource_group             = azurerm_resource_group.resourceGroup.name
   location                   = azurerm_resource_group.resourceGroup.location
-  machine_type               = var.machine_types.micro
   subnet_id                  = azurerm_subnet.backend_subnet.id
   load_balancer_address_pool = module.internal-lb.load_balancer_backend_address_pool.id
   size                       = var.size
@@ -48,5 +47,4 @@ module "mig" {
   admin_pwd                  = var.admin_pwd
   tags                       = var.tags
 }
-
 
