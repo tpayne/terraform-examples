@@ -4,7 +4,7 @@ locals {
   neptune-engine            = "neptune"
   neptune-db-instance-class = "db.serverless"
   neptune-family            = "neptune1.2"
-
+  
   neptune-config-params = {
     common-cluster-params = [
       {
@@ -29,7 +29,7 @@ locals {
     // Common configuration
     common = {
       instanceClass        = local.neptune-db-instance-class
-      doDeletionProtection = true
+      doDeletionProtection = !(var.can_delete)
       cloudwatchExports    = ["audit", "slowquery"]
       engine               = local.neptune-engine
       engineVersion        = local.neptune-engine-version

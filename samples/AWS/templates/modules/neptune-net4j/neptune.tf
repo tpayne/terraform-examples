@@ -146,7 +146,7 @@ resource "aws_neptune_event_subscription" "this" {
 // Security groups
 //
 resource "aws_security_group" "this" {
-  count = (var.vpc_id != null) ? 1 : 0
+  count = (var.create_security_group) ? 1 : 0
 
   name        = "neptune-sg-${var.cluster_name}"
   description = "Neptune security group"

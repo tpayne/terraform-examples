@@ -23,6 +23,12 @@ variable "create_cluster_snapshot" {
   default     = true
 }
 
+variable "create_security_group" {
+  type        = bool
+  description = "Create security group on VPC"
+  default     = true
+}
+
 variable "cluster_name" {
   type        = string
   description = "The cluster name to use"
@@ -38,6 +44,12 @@ variable "cluster_endpoints" {
     tags             = map(string)
   }))
   default = {}
+}
+
+variable "can_delete" {
+  description = "Whether or not the cluster is delete protected"
+  type        = bool
+  default     = true
 }
 
 variable "db_config" {
@@ -131,4 +143,5 @@ variable "vpc_id" {
   description = "(Optional) The VPC ID for the Neptune cluster and security group"
   type        = string
   default     = null
+  nullable    = true
 }

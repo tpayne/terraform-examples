@@ -30,9 +30,10 @@ resource "aws_vpc" "this" {
 
 # Subnet network layer
 resource "aws_subnet" "this" {
+  for_each          = { for index, sn in local.subnets : sn.region => sn }
   vpc_id            = aws_vpc.this.id
-  cidr_block        = local.subnet_cidr
-  availability_zone = "${data.aws_region.current.name}a"
+  cidr_block        = each.value.subnetCidr
+  availability_zone = each.value.region
 }
 
 # Neptune module
@@ -42,5 +43,6 @@ module "neptunedb" {
   db_config    = "dev"
   region       = data.aws_region.current.name
   vpc_id       = aws_vpc.this.id
-  subnet_ids   = [aws_subnet.this.id]
+  subnet_ids   = [ for r in aws_subnet.this : "${r.id}" ]
+  can_delete   = true
 }
