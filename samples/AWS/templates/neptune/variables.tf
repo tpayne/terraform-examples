@@ -1,10 +1,3 @@
-variable "access_cidr" {
-  type        = string
-  default     = ""
-  nullable    = true
-  description = "(Optional) The accessible CIDR to use"
-}
-
 variable "create_cluster" {
   type        = bool
   description = "Create a Neptune cluster"
@@ -29,17 +22,6 @@ variable "cluster_name" {
   nullable    = false
 }
 
-variable "cluster_endpoints" {
-  description = "(Optional) A map of cluster endpoints to create."
-  type = map(object({
-    endpoint_type    = string
-    static_members   = list(string)
-    excluded_members = list(string)
-    tags             = map(string)
-  }))
-  default = {}
-}
-
 variable "db_config" {
   type        = string
   description = "The db config to use"
@@ -57,30 +39,35 @@ variable "db_config" {
   }
 }
 
-variable "enable_serverless" {
-  description = "Whether or not to create a Serverless Neptune cluster"
-  type        = bool
-  default     = true
-}
-
-variable "event_subscriptions" {
-  description = <<-EOT
-    Map of Neptune event subscriptions with names and SNS topic ARNs
-  EOT
-  type        = map(string)
-  default     = null
-}
-
 variable "kms_key_arn" {
   type        = string
   description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_arn, storage_encrypted needs to be set to true."
   default     = null
 }
 
-variable "iam_roles" {
-  description = "(Optional) A List of ARNs for the IAM roles to associate to the Neptune Cluster"
-  type        = list(string)
-  default     = null
+variable "region" {
+  type        = string
+  default     = "eu-west-2"
+  description = "The region to use"
+}
+
+variable "access_cidr" {
+  type        = string
+  default     = ""
+  nullable    = true
+  description = "(Optional) The accessible CIDR to use"
+}
+
+variable "enable_serverless" {
+  description = "Whether or not to create a Serverless Neptune cluster"
+  type        = bool
+  default     = true
+}
+
+variable "tags" {
+  default = {
+  }
+  description = "(Optional) Resource tags to use"
 }
 
 variable "neptune_cluster_parameters" {
@@ -103,10 +90,24 @@ variable "neptune_db_parameters" {
   ]
 }
 
-variable "region" {
+variable "subnet_ids" {
+  description = "(Optional) A list of subnet IDs to associate with the Neptune cluster"
+  type        = list(string)
+  default     = null
+}
+
+variable "event_subscriptions" {
+  description = <<-EOT
+    Map of Neptune event subscriptions with names and SNS topic ARNs
+  EOT
+  type        = map(string)
+  default     = null
+}
+
+variable "vpc_id" {
+  description = "(Optional) The VPC ID for the Neptune cluster and security group"
   type        = string
-  default     = "eu-west-2"
-  description = "The region to use"
+  default     = null
 }
 
 variable "role_name" {
@@ -115,20 +116,19 @@ variable "role_name" {
   default     = "iam-role-neptune"
 }
 
-variable "subnet_ids" {
-  description = "(Optional) A list of subnet IDs to associate with the Neptune cluster"
+variable "iam_roles" {
+  description = "(Optional) A List of ARNs for the IAM roles to associate to the Neptune Cluster"
   type        = list(string)
   default     = null
 }
 
-variable "tags" {
-  default = {
-  }
-  description = "(Optional) Resource tags to use"
-}
-
-variable "vpc_id" {
-  description = "(Optional) The VPC ID for the Neptune cluster and security group"
-  type        = string
-  default     = null
+variable "cluster_endpoints" {
+  description = "(Optional) A map of cluster endpoints to create."
+  type = map(object({
+    endpoint_type    = string
+    static_members   = list(string)
+    excluded_members = list(string)
+    tags             = map(string)
+  }))
+  default = {}
 }
