@@ -1,6 +1,6 @@
 variable "access_cidr" {
-  type        = string
-  default     = ""
+  type        = list(string)
+  default     = []
   nullable    = true
   description = "(Optional) The accessible CIDR to use"
 }

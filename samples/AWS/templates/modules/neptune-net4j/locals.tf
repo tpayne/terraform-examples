@@ -20,7 +20,7 @@ locals {
     ]
   }
 
-  allowed-cidrs = "[${local.network-firewall-config.control-cidr},${join(", ", [for s in local.network-firewall-config.subnet-cidr : format("%q", s)])}]"
+  allowed-cidrs = local.network-firewall-config.control-cidr
 
   neptune-config = {
     snapshot = {
@@ -67,8 +67,7 @@ locals {
 
   // Network firewall
   network-firewall-config = {
-    control-cidr = (var.access_cidr != null && length(var.access_cidr) > 0) ? var.access_cidr : "${data.external.routerip.result["ip"]}/32"
-    subnet-cidr  = []
+    control-cidr = (length(var.access_cidr) != 0) ? var.access_cidr : ["${data.external.routerip.result["ip"]}/32"]
 
     allow = [
       {

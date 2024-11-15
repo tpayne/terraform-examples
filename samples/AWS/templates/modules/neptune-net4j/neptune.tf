@@ -156,7 +156,7 @@ resource "aws_security_group" "this" {
     for_each = local.network-firewall-config.allow
     content {
       protocol    = lookup(ingress.value, "protocol")
-      cidr_blocks = [local.network-firewall-config.control-cidr]
+      cidr_blocks = local.network-firewall-config.control-cidr
       from_port   = tonumber(lookup(ingress.value, "ports"))
       to_port     = tonumber(lookup(ingress.value, "ports"))
     }
@@ -166,7 +166,7 @@ resource "aws_security_group" "this" {
     for_each = local.network-firewall-config.allow
     content {
       protocol    = lookup(egress.value, "protocol")
-      cidr_blocks = [local.network-firewall-config.control-cidr]
+      cidr_blocks = local.network-firewall-config.control-cidr
       from_port   = tonumber(lookup(egress.value, "ports"))
       to_port     = tonumber(lookup(egress.value, "ports"))
     }
