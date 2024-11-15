@@ -4,7 +4,7 @@ locals {
   neptune-engine            = "neptune"
   neptune-db-instance-class = "db.serverless"
   neptune-family            = "neptune1.2"
-  
+
   neptune-config-params = {
     common-cluster-params = [
       {

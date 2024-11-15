@@ -41,8 +41,9 @@ module "neptunedb" {
   source       = "../modules/neptune-net4j/"
   cluster_name = "test"
   db_config    = "dev"
+  can_delete   = true
   region       = data.aws_region.current.name
   vpc_id       = aws_vpc.this.id
-  subnet_ids   = [ for r in aws_subnet.this : "${r.id}" ]
-  can_delete   = true
+  subnet_ids   = [for r in aws_subnet.this : "${r.id}"]
+  az_list      = [for r in local.subnets : "${r.region}"]
 }

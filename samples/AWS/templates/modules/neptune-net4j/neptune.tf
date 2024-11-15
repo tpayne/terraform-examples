@@ -25,6 +25,8 @@ resource "aws_neptune_cluster" "this" {
   neptune_subnet_group_name            = try(aws_neptune_subnet_group.this[0].name, null)
   vpc_security_group_ids               = try([aws_security_group.this[0].id], [])
 
+  availability_zones = try(var.az_list, [])
+
   dynamic "serverless_v2_scaling_configuration" {
     for_each = var.enable_serverless ? [1] : []
     content {

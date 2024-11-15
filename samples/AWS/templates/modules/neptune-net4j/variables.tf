@@ -5,6 +5,13 @@ variable "access_cidr" {
   description = "(Optional) The accessible CIDR to use"
 }
 
+variable "az_list" {
+  type        = list(string)
+  default     = []
+  nullable    = true
+  description = "(Optional) The list of availability zones to use"
+}
+
 variable "create_cluster" {
   type        = bool
   description = "Create a Neptune cluster"

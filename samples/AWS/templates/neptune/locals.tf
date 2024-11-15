@@ -1,5 +1,5 @@
 locals {
-  cidrBlock   = "10.2.0.0/16"
+  cidrBlock = "10.2.0.0/16"
   subnets = [
     {
       subnetCidr = "10.2.1.0/24"
@@ -10,5 +10,5 @@ locals {
       region     = "eu-west-2b"
     }
   ]
-  region      = "eu-west-2"
+  region = "eu-west-2"
 }
