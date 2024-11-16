@@ -63,6 +63,14 @@ locals {
       preferredBackupWindow      = "08:00-09:00"
       minCapacity                = 2.5
       maxCapacity                = 128
+      clusterParams = concat(
+        local.neptune-config-params["common-cluster-params"],
+        var.neptune_cluster_parameters
+      )
+      dbParams = concat(
+        local.neptune-config-params["common-db-params"],
+        var.neptune_db_parameters
+      )
     }
   }
 
