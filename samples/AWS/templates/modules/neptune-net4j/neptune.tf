@@ -4,7 +4,7 @@
 resource "aws_neptune_cluster" "this" {
   count = var.create_cluster ? 1 : 0
 
-  cluster_identifier = var.cluster_name
+  cluster_identifier = local.neptune-cluster-name
 
   deletion_protection                 = local.neptune-config["common"].doDeletionProtection
   enable_cloudwatch_logs_exports      = local.neptune-config["common"].cloudwatchExports
@@ -19,13 +19,13 @@ resource "aws_neptune_cluster" "this" {
   backup_retention_period     = local.neptune-config[var.db_config].backupRetention
   preferred_backup_window     = local.neptune-config[var.db_config].preferredBackupWindow
 
-  iam_roles                            = try([aws_iam_role.this[0].arn], var.iam_roles)
-  kms_key_arn                          = try(var.kms_key_arn, null)
+  iam_roles                            = try([aws_iam_role.this[0].arn], var.cluster_config.iam_roles)
+  kms_key_arn                          = try(var.cluster_config.kms_key_arn, null)
   neptune_cluster_parameter_group_name = try(aws_neptune_cluster_parameter_group.this[0].name, null)
   neptune_subnet_group_name            = try(aws_neptune_subnet_group.this[0].name, null)
   vpc_security_group_ids               = try([aws_security_group.this[0].id], [])
 
-  availability_zones = try(var.az_list, [])
+  availability_zones = try(var.cluster_config.az_list, [])
 
   dynamic "serverless_v2_scaling_configuration" {
     for_each = var.enable_serverless ? [1] : []
@@ -52,11 +52,11 @@ resource "aws_neptune_cluster_instance" "this" {
 resource "aws_neptune_cluster_snapshot" "this" {
   count = var.create_cluster_snapshot ? 1 : 0
 
-  db_cluster_identifier          = try(aws_neptune_cluster.this[0].id, var.cluster_name)
-  db_cluster_snapshot_identifier = var.cluster_name
+  db_cluster_identifier          = try(aws_neptune_cluster.this[0].id, local.neptune-cluster-name)
+  db_cluster_snapshot_identifier = local.neptune-cluster-name
 
   dynamic "timeouts" {
-    for_each = var.cluster_name != null ? [1] : []
+    for_each = local.neptune-cluster-name != null ? [1] : []
     content {
       create = local.neptune-config["snapshot"].timeout
     }
@@ -84,7 +84,7 @@ resource "aws_neptune_cluster_endpoint" "this" {
 resource "aws_neptune_cluster_parameter_group" "this" {
   count = (length(local.neptune-config[var.db_config].clusterParams) > 0) ? 1 : 0
 
-  name        = "cluster-parameter-group-${var.cluster_name}"
+  name        = "cluster-parameter-group-${local.neptune-cluster-name}"
   description = "Neptune Cluster Parameter Group"
   family      = local.neptune-config["common"].family
 
@@ -102,7 +102,7 @@ resource "aws_neptune_cluster_parameter_group" "this" {
 resource "aws_neptune_parameter_group" "this" {
   count = (length(local.neptune-config[var.db_config].dbParams) > 0) ? 1 : 0
 
-  name        = "parameter-group-${var.cluster_name}"
+  name        = "parameter-group-${local.neptune-cluster-name}"
   description = "Neptune DB Parameter Group"
   family      = local.neptune-config["common"].family
 
@@ -123,7 +123,7 @@ resource "aws_neptune_parameter_group" "this" {
 resource "aws_neptune_subnet_group" "this" {
   count = (var.subnet_ids != null) ? 1 : 0
 
-  name        = "subnet-group-${var.cluster_name}"
+  name        = "subnet-group-${local.neptune-cluster-name}"
   description = "Neptune Subnet Group"
   subnet_ids  = var.subnet_ids
 
@@ -150,7 +150,7 @@ resource "aws_neptune_event_subscription" "this" {
 resource "aws_security_group" "this" {
   count = (var.create_security_group) ? 1 : 0
 
-  name        = "neptune-sg-${var.cluster_name}"
+  name        = "neptune-sg-${local.neptune-cluster-name}"
   description = "Neptune security group"
   vpc_id      = var.vpc_id
 

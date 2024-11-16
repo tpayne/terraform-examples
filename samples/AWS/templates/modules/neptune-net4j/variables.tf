@@ -5,11 +5,15 @@ variable "access_cidr" {
   description = "(Optional) The accessible CIDR to use"
 }
 
-variable "az_list" {
-  type        = list(string)
-  default     = []
-  nullable    = true
-  description = "(Optional) The list of availability zones to use"
+variable "cluster_config" {
+  type = object({
+    az_list        = optional(list(string), []),
+    cluster_name   = string,
+    iam_roles_arns = optional(list(string), null),
+    kms_key_arn    = optional(string, null),
+  })
+  description = "Cluster configuration information"
+  nullable    = false
 }
 
 variable "create_cluster" {
@@ -34,12 +38,6 @@ variable "create_security_group" {
   type        = bool
   description = "Create security group on VPC"
   default     = true
-}
-
-variable "cluster_name" {
-  type        = string
-  description = "The cluster name to use"
-  nullable    = false
 }
 
 variable "cluster_endpoints" {
@@ -87,18 +85,6 @@ variable "event_subscriptions" {
     Map of Neptune event subscriptions with names and SNS topic ARNs
   EOT
   type        = map(string)
-  default     = null
-}
-
-variable "kms_key_arn" {
-  type        = string
-  description = "(Optional) The ARN for the KMS encryption key. When specifying kms_key_arn, storage_encrypted needs to be set to true."
-  default     = null
-}
-
-variable "iam_roles" {
-  description = "(Optional) A List of ARNs for the IAM roles to associate to the Neptune Cluster"
-  type        = list(string)
   default     = null
 }
 
