@@ -17,6 +17,7 @@ output "neptune-cluster-snapshot" {
 output "neptune-db-instance" {
   description = "The details of the Neptune instances."
   value = {
-    ids = try([for r in aws_neptune_cluster_instance.this : "${r.arn}:${r.identifier}"], null)
+    ids       = { for r in aws_neptune_cluster_instance.this : r.arn => r.identifier }
+    endpoints = { for r in aws_neptune_cluster_instance.this : r.arn => r.endpoint }
   }
 }
