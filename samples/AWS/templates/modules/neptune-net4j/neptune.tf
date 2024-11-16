@@ -143,7 +143,7 @@ resource "aws_neptune_event_subscription" "this" {
   name          = each.key
   sns_topic_arn = each.value
   source_type   = var.event_subscriptions != null ? "db-instance" : null
-  source_ids    = try([for r in aws_neptune_cluster_instance.this : "${r.id}"],[])
+  source_ids    = try([for r in aws_neptune_cluster_instance.this : "${r.id}"], [])
 
   tags = var.tags
 }
