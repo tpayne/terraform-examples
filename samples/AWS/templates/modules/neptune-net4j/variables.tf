@@ -22,12 +22,6 @@ variable "create_cluster" {
   default     = true
 }
 
-variable "create_instance" {
-  type        = bool
-  description = "Create a Neptune DB instance"
-  default     = true
-}
-
 variable "create_cluster_snapshot" {
   type        = bool
   description = "Create a Neptune cluster snapshot"
@@ -86,6 +80,18 @@ variable "event_subscriptions" {
   EOT
   type        = map(string)
   default     = null
+}
+
+variable "instance_configs" {
+  type = list(object({
+    instance_name  = optional(string, null),
+    instance_class = optional(string, null),
+    az_name        = optional(string, null),
+    promotion_tier = optional(number, 0)
+  }))
+  description = "List of instance details"
+  default     = []
+  nullable    = false
 }
 
 variable "neptune_cluster_parameters" {

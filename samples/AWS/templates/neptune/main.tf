@@ -43,7 +43,15 @@ module "neptunedb" {
     cluster_name = "test"
     az_list      = [for r in local.subnets : "${r.region}"]
   }
-  db_config  = "dev"
+  db_config = "dev"
+  instance_configs = [
+    {
+      instance_name = "db01"
+    },
+    {
+      instance_name = "db02"
+    }
+  ]
   can_delete = true
   region     = data.aws_region.current.name
   vpc_id     = aws_vpc.this.id

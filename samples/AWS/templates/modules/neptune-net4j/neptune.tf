@@ -39,10 +39,14 @@ resource "aws_neptune_cluster" "this" {
 }
 
 resource "aws_neptune_cluster_instance" "this" {
-  count = var.create_instance ? 1 : 0
+  for_each = { for index, x in var.instance_configs : x.instance_name => x }
 
-  cluster_identifier           = aws_neptune_cluster.this[0].cluster_identifier
-  instance_class               = local.neptune-config["common"].instanceClass
+  identifier         = try(each.value.instance_name, null)
+  cluster_identifier = aws_neptune_cluster.this[0].cluster_identifier
+  instance_class     = (each.value.instance_class != null) ? each.value.instance_class : local.neptune-config["common"].instanceClass
+  availability_zone  = try(each.value.az_name, null)
+  promotion_tier     = try(each.value.promotion_tier, 0)
+
   neptune_parameter_group_name = aws_neptune_parameter_group.this[0].name
   neptune_subnet_group_name    = aws_neptune_subnet_group.this[0].name
 
@@ -139,7 +143,7 @@ resource "aws_neptune_event_subscription" "this" {
   name          = each.key
   sns_topic_arn = each.value
   source_type   = var.event_subscriptions != null ? "db-instance" : null
-  source_ids    = try([aws_neptune_cluster_instance.this[0].id], [])
+  source_ids    = try([for r in aws_neptune_cluster_instance.this : "${r.id}"],[])
 
   tags = var.tags
 }
