@@ -14,10 +14,11 @@ resource "aws_neptune_cluster" "this" {
   skip_final_snapshot                 = local.neptune-config["common"].doSkipFinalSnapshot
   storage_encrypted                   = local.neptune-config["common"].doStorageEncryption
 
-  allow_major_version_upgrade = local.neptune-config[var.db_config].doAllowMajorVersionUpgrade
-  apply_immediately           = local.neptune-config[var.db_config].doApplyImmediately
-  backup_retention_period     = local.neptune-config[var.db_config].backupRetention
-  preferred_backup_window     = local.neptune-config[var.db_config].preferredBackupWindow
+  allow_major_version_upgrade  = local.neptune-config[var.db_config].doAllowMajorVersionUpgrade
+  apply_immediately            = local.neptune-config[var.db_config].doApplyImmediately
+  backup_retention_period      = local.neptune-config[var.db_config].backupRetention
+  preferred_backup_window      = local.neptune-config[var.db_config].preferredBackupWindow
+  preferred_maintenance_window = local.neptune-config[var.db_config].preferredMaintWindow
 
   iam_roles                            = try([aws_iam_role.this[0].arn], var.cluster_config.iam_roles)
   kms_key_arn                          = try(var.cluster_config.kms_key_arn, null)
@@ -48,6 +49,9 @@ resource "aws_neptune_cluster_instance" "this" {
   availability_zone  = try(each.value.az_name, null)
   promotion_tier     = try(each.value.promotion_tier, 0)
 
+  apply_immediately            = local.neptune-config[var.db_config].doApplyImmediately
+  preferred_backup_window      = local.neptune-config[var.db_config].preferredBackupWindow
+  preferred_maintenance_window = local.neptune-config[var.db_config].preferredMaintWindow
   neptune_parameter_group_name = (var.create_groups) ? aws_neptune_parameter_group.this[0].name : each.value.db_param_group_name
   neptune_subnet_group_name    = (var.create_groups) ? aws_neptune_subnet_group.this[0].name : each.value.subnet_group_name
 
