@@ -36,6 +36,12 @@ resource "aws_subnet" "this" {
   availability_zone = each.value.region
 }
 
+resource "random_string" "this" {
+  length  = 8
+  special = false
+  upper   = false
+}
+
 # Neptune module
 module "neptunedb" {
   source = "../modules/neptune-net4j/"
@@ -47,9 +53,12 @@ module "neptunedb" {
   instance_configs = [
     {
       instance_name = "db01"
+      az_name       = "${local.region}a"
     },
     {
-      instance_name = "db02"
+      instance_name  = "db02"
+      az_name        = "${local.region}b"
+      promotion_tier = 1
     }
   ]
   can_delete = true
@@ -57,3 +66,31 @@ module "neptunedb" {
   vpc_id     = aws_vpc.this.id
   subnet_ids = [for r in aws_subnet.this : "${r.id}"]
 }
+
+/* Not needed
+module "neptunedb2" {
+  source                  = "../modules/neptune-net4j/"
+  db_config               = "dev"
+  create_cluster          = false
+  create_cluster_snapshot = false
+  create_groups           = false
+  create_role             = false
+  create_security_group   = false
+  cluster_config = {
+    cluster_arn  = module.neptunedb.neptune-cluster.arn
+    cluster_name = module.neptunedb.neptune-cluster.name
+  }
+  instance_configs = [
+    {
+      instance_name       = "db03"
+      promotion_tier      = 1
+      db_param_group_name = module.neptunedb.neptune-group-names.param_group_name
+      subnet_group_name   = module.neptunedb.neptune-group-names.subnet_group_name
+    }
+  ]
+  can_delete = true
+  region     = data.aws_region.current.name
+  vpc_id     = aws_vpc.this.id
+  subnet_ids = [for r in aws_subnet.this : "${r.id}"]
+}
+*/

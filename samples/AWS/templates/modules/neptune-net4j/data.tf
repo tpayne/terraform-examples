@@ -8,7 +8,7 @@ data "external" "routerip" {
 
 
 data "aws_iam_policy_document" "this" {
-  count = (var.role_name != null) ? 1 : 0
+  count = (var.role_name != null && var.create_role) ? 1 : 0
 
   statement {
     actions = [

@@ -8,12 +8,22 @@ variable "access_cidr" {
 variable "cluster_config" {
   type = object({
     az_list        = optional(list(string), []),
-    cluster_name   = string,
+    cluster_name   = optional(string, null),
+    cluster_arn    = optional(string, null),
     iam_roles_arns = optional(list(string), null),
     kms_key_arn    = optional(string, null),
   })
   description = "Cluster configuration information"
   nullable    = false
+
+  validation {
+    condition = alltrue(
+      [
+        (var.cluster_config.cluster_name != null)
+      ]
+    )
+    error_message = "The cluster_config specified is not valid"
+  }
 }
 
 variable "create_cluster" {
@@ -25,6 +35,18 @@ variable "create_cluster" {
 variable "create_cluster_snapshot" {
   type        = bool
   description = "Create a Neptune cluster snapshot"
+  default     = true
+}
+
+variable "create_groups" {
+  type        = bool
+  description = "Create cluster, db and subnet groups"
+  default     = true
+}
+
+variable "create_role" {
+  type        = bool
+  description = "Create IAM roles etc."
   default     = true
 }
 
@@ -84,10 +106,12 @@ variable "event_subscriptions" {
 
 variable "instance_configs" {
   type = list(object({
-    instance_name  = optional(string, null),
-    instance_class = optional(string, null),
-    az_name        = optional(string, null),
-    promotion_tier = optional(number, 0)
+    instance_name       = optional(string, null),
+    instance_class      = optional(string, null),
+    az_name             = optional(string, null),
+    db_param_group_name = optional(string, null),
+    subnet_group_name   = optional(string, null),
+    promotion_tier      = optional(number, 0)
   }))
   description = "List of instance details"
   default     = []

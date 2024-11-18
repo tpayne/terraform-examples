@@ -2,7 +2,7 @@
 // Cluster definition
 //
 resource "aws_neptune_cluster" "this" {
-  count = var.create_cluster ? 1 : 0
+  count = (var.create_cluster) ? 1 : 0
 
   cluster_identifier = local.neptune-cluster-name
 
@@ -42,13 +42,13 @@ resource "aws_neptune_cluster_instance" "this" {
   for_each = { for index, x in var.instance_configs : x.instance_name => x }
 
   identifier         = try(each.value.instance_name, null)
-  cluster_identifier = aws_neptune_cluster.this[0].cluster_identifier
+  cluster_identifier = try(aws_neptune_cluster.this[0].cluster_identifier, local.neptune-cluster-name)
   instance_class     = (each.value.instance_class != null) ? each.value.instance_class : local.neptune-config["common"].instanceClass
   availability_zone  = try(each.value.az_name, null)
   promotion_tier     = try(each.value.promotion_tier, 0)
 
-  neptune_parameter_group_name = aws_neptune_parameter_group.this[0].name
-  neptune_subnet_group_name    = aws_neptune_subnet_group.this[0].name
+  neptune_parameter_group_name = (var.create_groups) ? aws_neptune_parameter_group.this[0].name : each.value.db_param_group_name
+  neptune_subnet_group_name    = (var.create_groups) ? aws_neptune_subnet_group.this[0].name : each.value.subnet_group_name
 
   tags = var.tags
 }
@@ -86,7 +86,7 @@ resource "aws_neptune_cluster_endpoint" "this" {
 // Parameter groups
 //
 resource "aws_neptune_cluster_parameter_group" "this" {
-  count = (length(local.neptune-config[var.db_config].clusterParams) > 0) ? 1 : 0
+  count = (length(local.neptune-config[var.db_config].clusterParams) > 0 && var.create_groups) ? 1 : 0
 
   name        = "cluster-parameter-group-${local.neptune-cluster-name}"
   description = "Neptune Cluster Parameter Group"
@@ -104,7 +104,7 @@ resource "aws_neptune_cluster_parameter_group" "this" {
 }
 
 resource "aws_neptune_parameter_group" "this" {
-  count = (length(local.neptune-config[var.db_config].dbParams) > 0) ? 1 : 0
+  count = (length(local.neptune-config[var.db_config].dbParams) > 0 && var.create_groups) ? 1 : 0
 
   name        = "parameter-group-${local.neptune-cluster-name}"
   description = "Neptune DB Parameter Group"
@@ -125,7 +125,7 @@ resource "aws_neptune_parameter_group" "this" {
 // Subnet groups
 //
 resource "aws_neptune_subnet_group" "this" {
-  count = (var.subnet_ids != null) ? 1 : 0
+  count = (var.subnet_ids != null && var.create_groups) ? 1 : 0
 
   name        = "subnet-group-${local.neptune-cluster-name}"
   description = "Neptune Subnet Group"
@@ -185,7 +185,7 @@ resource "aws_security_group" "this" {
 // IAM role
 //
 resource "aws_iam_role" "this" {
-  count = (var.role_name != null) ? 1 : 0
+  count = (var.role_name != null && var.create_role) ? 1 : 0
 
   name               = var.role_name
   assume_role_policy = data.aws_iam_policy_document.this[0].json
@@ -195,7 +195,7 @@ resource "aws_iam_role" "this" {
 }
 
 resource "aws_iam_role_policy_attachment" "this" {
-  count = (var.role_name != null) ? 1 : 0
+  count = (var.role_name != null && var.create_role) ? 1 : 0
 
   role       = aws_iam_role.this[0].name
   policy_arn = "arn:${data.aws_partition.current.partition}:iam::aws:policy/service-role/ROSAKMSProviderPolicy"

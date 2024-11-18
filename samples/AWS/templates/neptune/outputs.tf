@@ -12,3 +12,8 @@ output "neptune-db-instance" {
   description = "The details of the Neptune instances."
   value       = module.neptunedb.neptune-db-instance
 }
+
+output "neptune-group-names" {
+  description = "The details of the Neptune groups."
+  value       = module.neptunedb.neptune-group-names
+}
