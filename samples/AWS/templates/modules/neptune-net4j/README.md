@@ -1,3 +1,31 @@
+Neptune DB Example
+==================
+
+This example uses terraform on AWS to create a standard Neptune DB sample.
+
+Status
+------
+````
+Ready for use
+````
+
+Generate docs
+-------------
+You can generate the terraform docs via...
+
+```bash
+  terraform-docs markdown . --output-mode inject --output-file README.md
+```
+
+Prerequisites
+-------------
+To run this tutorial, you must have ensured the following...
+
+* You have access to a AWS account as an admin or owner
+
+This was tested using Terraform version v1.9.5
+
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 No requirements.
@@ -67,3 +95,5 @@ No modules.
 | <a name="output_neptune-cluster-snapshot"></a> [neptune-cluster-snapshot](#output\_neptune-cluster-snapshot) | The details of the cluster snapshot |
 | <a name="output_neptune-db-instance"></a> [neptune-db-instance](#output\_neptune-db-instance) | The details of the Neptune instances. |
 | <a name="output_neptune-group-names"></a> [neptune-group-names](#output\_neptune-group-names) | The details of the group names |
+<!-- END_TF_DOCS -->
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
