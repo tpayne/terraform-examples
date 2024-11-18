@@ -12,6 +12,7 @@ variable "cluster_config" {
     cluster_arn    = optional(string, null),
     iam_roles_arns = optional(list(string), null),
     kms_key_arn    = optional(string, null),
+    source_arn     = optional(string, null)
   })
   description = "Cluster configuration information"
   nullable    = false

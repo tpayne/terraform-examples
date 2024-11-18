@@ -24,6 +24,7 @@ resource "aws_neptune_cluster" "this" {
   neptune_cluster_parameter_group_name = try(aws_neptune_cluster_parameter_group.this[0].name, null)
   neptune_subnet_group_name            = try(aws_neptune_subnet_group.this[0].name, null)
   vpc_security_group_ids               = try([aws_security_group.this[0].id], [])
+  replication_source_identifier        = try(var.cluster_config.source_arn, null)
 
   availability_zones = try(var.cluster_config.az_list, [])
 
