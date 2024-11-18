@@ -240,6 +240,7 @@ For example...
 	brew install terraform-docs
 	cd samples/Azure/templates
 	terraform-docs markdown standard3tier
+ 	terraform-docs markdown . | tee README.md
 
 The documentation is just the default at the moment, but feel free to make more relevant contributions.
 
