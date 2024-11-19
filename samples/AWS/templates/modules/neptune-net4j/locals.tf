@@ -43,8 +43,8 @@ locals {
       doAllowMajorVersionUpgrade = true
       doApplyImmediately         = true
       backupRetention            = 2
-      preferredBackupWindow      = "08:00-09:00"
-      preferredMaintWindow       = "Mon:00:00-Mon:03:00"
+      preferredBackupWindow      = "06:00-07:00"
+      preferredMaintWindow       = "Mon:08:00-Mon:09:00"
       minCapacity                = 2.5
       maxCapacity                = 128
       clusterParams = concat(
@@ -61,8 +61,8 @@ locals {
       doAllowMajorVersionUpgrade = true
       doApplyImmediately         = true
       backupRetention            = 30
-      preferredBackupWindow      = "08:00-09:00"
-      preferredMaintWindow       = "Mon:00:00-Mon:03:00"
+      preferredBackupWindow      = "06:00-07:00"
+      preferredMaintWindow       = "Mon:08:00-Mon:09:00"
       minCapacity                = 2.5
       maxCapacity                = 128
       clusterParams = concat(

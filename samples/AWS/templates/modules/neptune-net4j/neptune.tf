@@ -50,8 +50,8 @@ resource "aws_neptune_cluster_instance" "this" {
   promotion_tier     = try(each.value.promotion_tier, 0)
 
   apply_immediately            = local.neptune-config[var.db_config].doApplyImmediately
-  preferred_backup_window      = local.neptune-config[var.db_config].preferredBackupWindow
-  preferred_maintenance_window = local.neptune-config[var.db_config].preferredMaintWindow
+  //preferred_backup_window      = local.neptune-config[var.db_config].preferredBackupWindow
+  //preferred_maintenance_window = local.neptune-config[var.db_config].preferredMaintWindow
   neptune_parameter_group_name = (var.create_groups) ? aws_neptune_parameter_group.this[0].name : each.value.db_param_group_name
   neptune_subnet_group_name    = (var.create_groups) ? aws_neptune_subnet_group.this[0].name : each.value.subnet_group_name
 
