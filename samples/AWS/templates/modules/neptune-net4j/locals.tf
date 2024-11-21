@@ -1,11 +1,15 @@
 locals {
-  neptune-default-port      = 8182
-  neptune-engine-version    = "1.2.0.1"
-  neptune-engine            = "neptune"
+  // Neptune defaults for the module
+  neptune-default-port   = 8182
+  neptune-engine-version = "1.2.0.1"
+  neptune-engine         = "neptune"
+  neptune-family         = "neptune1.2"
+
+  // Using Neptune Serverless deployments by default. Can be overriden if required
   neptune-db-instance-class = "db.serverless"
-  neptune-family            = "neptune1.2"
   neptune-cluster-name      = var.cluster_config.cluster_name
 
+  // Default Neptune cluster and db config params
   neptune-config-params = {
     common-cluster-params = [
       {
@@ -27,7 +31,7 @@ locals {
     snapshot = {
       timeout = "20m"
     }
-    // Common configuration
+    // Common configuration for all profiles
     common = {
       instanceClass        = local.neptune-db-instance-class
       doDeletionProtection = !(var.can_delete)
@@ -40,6 +44,7 @@ locals {
       doStorageEncryption  = true
     }
     dev = {
+      // Dev specific profile
       doAllowMajorVersionUpgrade = true
       doApplyImmediately         = true
       backupRetention            = 2
@@ -56,8 +61,8 @@ locals {
         var.neptune_db_parameters
       )
     }
-    // Production configuration
     prod = {
+      // Production configuration
       doAllowMajorVersionUpgrade = true
       doApplyImmediately         = true
       backupRetention            = 30
@@ -76,7 +81,7 @@ locals {
     }
   }
 
-  // Network firewall
+  // Network firewall config
   network-firewall-config = {
     control-cidr = (length(var.access_cidr) != 0) ? var.access_cidr : ["${data.external.routerip.result["ip"]}/32"]
 

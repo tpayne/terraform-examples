@@ -70,6 +70,10 @@ resource "aws_neptune_cluster_snapshot" "this" {
       create = local.neptune-config["snapshot"].timeout
     }
   }
+
+  depends_on = [
+    aws_neptune_cluster_instance.this
+  ]
 }
 
 //
