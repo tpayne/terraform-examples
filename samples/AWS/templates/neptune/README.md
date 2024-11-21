@@ -1,9 +1,7 @@
 Neptune DB Example
 ==================
 
-This example uses terraform on AWS to create a standard Neptune DB sample.
-
-The database is hosted in a Neptune cluster with a write instance and a read replica instance each of which are hosted in separate availability zones in the same region.
+This sample uses Terraform on AWS to deploy a serverless Neptune cluster and read replica databases to different availability zones hosted in the same region. It is intended to demonstrate various capacilities of Neptune in a PoC capacity.
 
 Status
 ------
@@ -13,7 +11,7 @@ Ready for use
 
 Prerequisites
 -------------
-To run this tutorial, you must have ensured the following...
+To run this sample, you must have ensured the following...
 
 * You have access to a AWS account as an admin or owner
 
@@ -38,7 +36,7 @@ Notes
 
 Issues
 ------
-- This example is is only intended as a sample on how to create a system. You will need to configure it as needed
+- This example is is only intended as a sample to show how to create a system. You will need to configure and extend it as needed to better suit your requirements.
 
 Liability Warning
 -----------------
