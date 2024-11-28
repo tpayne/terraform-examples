@@ -84,7 +84,7 @@ resource "google_compute_instance_template" "backend_template" {
 # Primary mig...
 module "backend-mig-001" {
   source            = "terraform-google-modules/vm/google//modules/mig"
-  version           = "12.1.0"
+  version           = "12.1.1"
   instance_template = google_compute_instance_template.backend_template.self_link
   region            = var.region
   hostname          = "bemig001"
