@@ -25,6 +25,6 @@
 
 terraform {
   required_providers {
-    google = "< 6.15"
+    google = "< 6.16"
   }
 }
