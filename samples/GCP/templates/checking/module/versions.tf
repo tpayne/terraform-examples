@@ -3,7 +3,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "6.16.0"
+      version = "6.20.0"
     }
     terracurl = {
       source  = "devops-rob/terracurl"
