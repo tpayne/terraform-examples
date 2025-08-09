@@ -270,7 +270,7 @@ Azure References
 GCP References
 --------------
 * https://cloud.google.com/community/tutorials/modular-load-balancing-with-terraform
-* https://codelabs.developers.google.com/codelabs/cft-onboarding#0
+* https://codelabs.developers.google.com/cft-onboarding#0
 * https://registry.terraform.io/modules/terraform-google-modules/network/google/latest
 * https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_firewall#metadata
 * https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/cloudfunctions_function
